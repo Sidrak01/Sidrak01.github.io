@@ -211,23 +211,17 @@
     // 7. Habilite o Firestore: no menu lateral, vá em "Firestore Database", clique em "Criar banco de dados", inicie no "modo de teste" (para facilitar) e escolha um local para o servidor.
     // 8. PRONTO! Agora sua aplicação tem um backend completo.
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+        const firebaseConfig = {
+        apiKey: "AIzaSyBfG-3SV8Tkczas4cGcIQwv5atFZVcDKFs",
+        authDomain: "tutor-estudos.firebaseapp.com",
+        projectId: "tutor-estudos",
+        storageBucket: "tutor-estudos.firebasestorage.app",
+        messagingSenderId: "691817799067",
+        appId: "1:691817799067:web:090572d64ffc44aa5dd53e"
+    };
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBfG-3SV8Tkczas4cGcIQwv5atFZVcDKFs",
-  authDomain: "tutor-estudos.firebaseapp.com",
-  projectId: "tutor-estudos",
-  storageBucket: "tutor-estudos.firebasestorage.app",
-  messagingSenderId: "691817799067",
-  appId: "1:691817799067:web:090572d64ffc44aa5dd53e"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
@@ -311,7 +305,7 @@ const app = initializeApp(firebaseConfig);
         toggleAuthModeBtn.textContent = isLogin ? 'Entrar' : 'Cadastre-se';
         authError.textContent = '';
     });
-    
+
     // --- App Initialization ---
     function initializeAppUI() {
         if (!currentUser) return;
@@ -319,238 +313,5 @@ const app = initializeApp(firebaseConfig);
         
         // Render all UI components
         renderChart();
-        renderWeeklyPlan();
-        renderModals();
-        renderSyllabus();
-        
-        // Load state from userProgress
-        loadChecklistState();
-        updatePerformancePanel();
-    }
-    
-    function renderChart() {
-        const ctx = document.getElementById('examWeightsChart').getContext('2d');
-        new Chart(ctx, { type: 'doughnut', data: { labels: ['Conhecimentos Específicos', 'Português', 'Informática', 'Ética', 'Gerais'], datasets: [{ data: [60, 20, 10, 5, 5], backgroundColor: ['#92400E', '#B45309', '#D97706', '#F59E0B', '#FBBF24'], borderColor: '#F8F7F4', borderWidth: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15 } }, tooltip: { callbacks: { label: c => `${c.label}: ${c.parsed}%` } } } } });
-    }
-    
-    function renderWeeklyPlan() {
-        const tabsContainer = document.getElementById('tabs-container');
-        const contentContainer = document.getElementById('tabs-content-container');
-        tabsContainer.innerHTML = '';
-        contentContainer.innerHTML = '';
-
-        studyData.weeklyPlan.forEach((weekData, index) => {
-            tabsContainer.innerHTML += `<button class="tab-button px-4 py-2 rounded-md font-semibold ${index === 0 ? 'active' : ''}" data-target="week-${weekData.week}">Semana ${weekData.week}</button>`;
-            
-            let materialsHtml = weekData.materials.length > 0 ? '<h4 class="font-semibold mb-2 mt-4">Materiais de Apoio:</h4>' + weekData.materials.map(m => `<button class="modal-trigger text-amber-600 hover:underline" data-modal="${m.modal}">${m.label}</button>`).join('<br>') : '';
-            let quizHtml = weekData.quiz ? `<div class="mt-4"><button class="modal-trigger bg-amber-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-amber-700" data-modal="${weekData.quiz}">Exercícios / Simulado</button></div>` : '';
-            let scheduleHtml = weekData.schedule.map(s => `<p><strong>${s.day}:</strong> ${s.topics}</p>`).join('');
-
-            contentContainer.innerHTML += `
-                <div id="week-${weekData.week}" class="tab-content ${index > 0 ? 'hidden' : ''}">
-                    <h3 class="text-xl font-bold text-stone-700">${weekData.goal}</h3>
-                    <div class="mt-4 space-y-2">${scheduleHtml}</div>
-                    ${materialsHtml} ${quizHtml}
-                </div>`;
-        });
-        
-        tabsContainer.addEventListener('click', e => {
-            if (e.target.classList.contains('tab-button')) {
-                tabsContainer.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                contentContainer.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-                document.getElementById(e.target.dataset.target).classList.remove('hidden');
-            }
-        });
-    }
-
-    function renderSyllabus() {
-        const accordionContainer = document.getElementById('accordion-container');
-        accordionContainer.innerHTML = '';
-        Object.keys(syllabusData).forEach(subject => {
-            const item = document.createElement('div');
-            item.className = 'bg-white rounded-xl shadow-md overflow-hidden';
-            item.innerHTML = `
-                <button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-stone-700 hover:bg-amber-50 focus:outline-none">
-                    <span>${subject}</span>
-                    <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="accordion-content hidden p-5 border-t border-stone-200">
-                    <ul class="space-y-2">
-                        ${syllabusData[subject].map(topic => `<li class="checklist-item p-2 rounded-md" data-topic="${subject.replace(/\s/g, '-')}-${topic.replace(/\s/g, '-')}">${topic}</li>`).join('')}
-                    </ul>
-                </div>`;
-            accordionContainer.appendChild(item);
-        });
-        accordionContainer.addEventListener('click', e => {
-            if (e.target.closest('.accordion-button')) {
-                const button = e.target.closest('.accordion-button');
-                button.classList.toggle('open');
-                button.nextElementSibling.classList.toggle('hidden');
-            }
-            if (e.target.classList.contains('checklist-item')) {
-                e.target.classList.toggle('completed');
-                saveChecklistState(e.target);
-            }
-        });
-    }
-
-    function renderModals() {
-        const modalsContainer = document.getElementById('modals-container');
-        modalsContainer.innerHTML = '';
-        const allModalData = { ...studyData.summaries, ...studyData.quizzes, ...studyData.simulados };
-        Object.keys(allModalData).forEach(key => {
-            const data = allModalData[key];
-            if (!data) return;
-            const modal = document.createElement('div');
-            modal.id = key;
-            modal.className = 'modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50';
-            
-            let contentHtml = data.questions ? data.questions.map((q, i) => `
-                <div class="quiz-item mb-4" data-quiz-id="${key}" data-question-index="${i}">
-                    <p class="font-semibold">${i + 1}. ${q.q}</p>
-                    <div class="space-y-2 mt-2">${q.options.map(opt => `<div class="quiz-option border-2 border-stone-200 p-2 rounded-md" data-answer="${q.answer}">${opt}</div>`).join('')}</div>
-                    <p class="quiz-feedback hidden mt-2 text-sm"></p>
-                </div>`).join('') : data.content;
-
-            modal.innerHTML = `
-                <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-                    <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold">${data.title}</h3><button class="modal-close text-2xl">&times;</button></div>
-                    <div class="p-6 overflow-y-auto">${contentHtml}</div>
-                </div>`;
-            modalsContainer.appendChild(modal);
-        });
-    }
-
-    // --- State Management Functions ---
-    function loadChecklistState() {
-        const completed = userProgress.checklist || {};
-        document.querySelectorAll('.checklist-item').forEach(item => {
-            if (completed[item.dataset.topic]) { item.classList.add('completed'); }
-            else { item.classList.remove('completed'); }
-        });
-    }
-
-    function saveChecklistState(item) {
-        if (!userProgress.checklist) userProgress.checklist = {};
-        userProgress.checklist[item.dataset.topic] = item.classList.contains('completed');
-        saveUserProgress();
-    }
-    
-    function updatePerformancePanel() {
-        const results = userProgress.quizResults || {};
-        const panel = document.getElementById('performance-content');
-        if (Object.keys(results).length === 0) {
-            panel.innerHTML = '<p>Responda aos exercícios para ver seu desempenho aqui.</p>';
-            return;
-        }
-
-        let totalCorrect = 0, totalAnswered = 0;
-        const subjectStats = {}, wrongAnswers = [];
-
-        for (const quizId in results) {
-            const quizData = studyData.quizzes[quizId] || studyData.simulados[quizId];
-            if (!quizData) continue;
-            for (const qIndex in results[quizId]) {
-                const result = results[quizId][qIndex];
-                totalAnswered++;
-                const questionData = quizData.questions[qIndex];
-                const subject = (questionData.q.match(/^\[(.*?)\]/) || [])[1] || 'Geral';
-                
-                if (!subjectStats[subject]) subjectStats[subject] = { correct: 0, total: 0 };
-                subjectStats[subject].total++;
-
-                if (result.isCorrect) {
-                    totalCorrect++;
-                    subjectStats[subject].correct++;
-                } else {
-                    wrongAnswers.push({ question: questionData.q, yourAnswer: result.userAnswer, correctAnswer: questionData.answer });
-                }
-            }
-        }
-        
-        const overallPercentage = totalAnswered > 0 ? ((totalCorrect / totalAnswered) * 100).toFixed(0) : 0;
-        panel.innerHTML = `<div class="grid md:grid-cols-3 gap-4 mb-6">
-            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Acerto Geral</p><p class="text-2xl font-bold">${overallPercentage}%</p></div>
-            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Respondidas</p><p class="text-2xl font-bold">${totalAnswered}</p></div>
-            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Erradas</p><p class="text-2xl font-bold">${wrongAnswers.length}</p></div>
-        </div>
-        <h4 class="font-semibold mb-2">Desempenho por Disciplina:</h4>
-        <div class="space-y-2 mb-6">
-            ${Object.keys(subjectStats).map(s => `<div class="flex justify-between items-center"><p>${s}</p><p class="font-semibold">${((subjectStats[s].correct / subjectStats[s].total) * 100).toFixed(0)}%</p></div>`).join('')}
-        </div>
-        ${wrongAnswers.length > 0 ? `<h4 class="font-semibold mb-2">Revise seus erros:</h4><ul class="list-disc list-inside space-y-2 text-sm">${wrongAnswers.map(wa => `<li>${wa.question} <br><i>(Sua resposta: ${wa.yourAnswer} | Correta: ${wa.correctAnswer})</i></li>`).join('')}</ul>` : ''}`;
-    }
-
-    function loadQuizState(modal) {
-        const quizItems = modal.querySelectorAll('.quiz-item');
-        quizItems.forEach(item => {
-            const quizId = item.dataset.quizId;
-            const qIndex = item.dataset.questionIndex;
-            const results = userProgress.quizResults || {};
-            
-            // Reset visual state first
-            item.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('answered', 'correct', 'incorrect');
-            });
-            const feedback = item.querySelector('.quiz-feedback');
-            feedback.classList.add('hidden');
-
-            if (results[quizId] && results[quizId][qIndex]) {
-                const savedAnswer = results[quizId][qIndex];
-                item.querySelectorAll('.quiz-option').forEach(opt => {
-                    opt.classList.add('answered');
-                    if(opt.textContent === savedAnswer.userAnswer) {
-                        opt.classList.add(savedAnswer.isCorrect ? 'correct' : 'incorrect');
-                    }
-                    if(opt.textContent === opt.dataset.answer && !savedAnswer.isCorrect) {
-                         opt.classList.add('correct');
-                    }
-                });
-                feedback.textContent = savedAnswer.isCorrect ? 'Resposta Correta!' : `Incorreto. A resposta certa é: ${item.querySelector('.quiz-option').dataset.answer}`;
-                feedback.className = `quiz-feedback block mt-2 text-sm ${savedAnswer.isCorrect ? 'text-green-600' : 'text-red-600'}`;
-            }
-        });
-    }
-    
-    // --- Global Event Listener ---
-    document.body.addEventListener('click', async e => {
-        // Modal Triggers
-        if (e.target.classList.contains('modal-trigger')) {
-            const modalId = e.target.dataset.modal;
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                if(modal.querySelector('.quiz-item')) loadQuizState(modal);
-            }
-        }
-        // Modal Closers
-        if (e.target.classList.contains('modal-close') || e.target.classList.contains('modal')) {
-            e.target.closest('.modal')?.classList.remove('active');
-        }
-        // Quiz Option Click
-        if (e.target.classList.contains('quiz-option') && !e.target.closest('.quiz-item').querySelector('.answered')) {
-            const option = e.target;
-            const item = option.closest('.quiz-item');
-            const quizId = item.dataset.quizId;
-            const qIndex = item.dataset.questionIndex;
-            const correctAnswer = option.dataset.answer;
-            const isCorrect = option.textContent === correctAnswer;
-            
-            if (!userProgress.quizResults) userProgress.quizResults = {};
-            if (!userProgress.quizResults[quizId]) userProgress.quizResults[quizId] = {};
-            userProgress.quizResults[quizId][qIndex] = { userAnswer: option.textContent, isCorrect };
-            
-            await saveUserProgress();
-            
-            loadQuizState(item.closest('.modal'));
-            updatePerformancePanel();
-        }
-    });
-</script>
-
-</body>
-</html>
-
-
+// ... existing code ... -->
 
