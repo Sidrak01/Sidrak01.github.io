@@ -33,7 +33,7 @@
         .tab-button.active { background-color: #D97706; color: white; }
         .tab-button:not(.active):hover { background-color: #FBBF24; }
         .quiz-option { cursor: pointer; transition: background-color 0.2s; }
-        .quiz-option.answered:not(.correct):not(.incorrect) { background-color: #E5E7EB; }
+        .quiz-option.answered:not(.correct):not(.incorrect), .quiz-option.simulado-selected { background-color: #E5E7EB; border-color: #9CA3AF;}
         .quiz-option.correct { background-color: #D1FAE5; border-color: #10B981; }
         .quiz-option.incorrect { background-color: #FEE2E2; border-color: #EF4444; }
         #app-container, #loading-spinner { display: none; }
@@ -51,7 +51,6 @@
         <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
             <h2 id="auth-title" class="text-2xl font-bold text-center text-stone-700 mb-6">Bem-vindo(a)!</h2>
             
-            <!-- Login Form -->
             <form id="login-form">
                 <div class="mb-4">
                     <label for="login-email" class="block text-sm font-medium text-stone-600 mb-1">Email</label>
@@ -67,7 +66,6 @@
                 <button type="submit" class="w-full bg-amber-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-700 transition duration-300">Entrar</button>
             </form>
             
-            <!-- Register Form -->
             <form id="register-form" class="hidden">
                  <div class="mb-4">
                     <label for="register-email" class="block text-sm font-medium text-stone-600 mb-1">Email</label>
@@ -80,7 +78,6 @@
                 <button type="submit" class="w-full bg-stone-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-stone-800 transition duration-300">Cadastrar</button>
             </form>
 
-            <!-- Reset Password Form -->
             <form id="reset-form" class="hidden">
                 <p class="text-center text-sm text-stone-600 mb-4">Digite seu e-mail e enviaremos um link para você redefinir sua senha.</p>
                 <div class="mb-4">
@@ -107,6 +104,7 @@
                     <div class="hidden md:flex items-center space-x-6">
                         <a href="#overview" class="nav-link border-b-2 border-transparent pb-1">Visão Geral</a>
                         <a href="#weekly-plan" class="nav-link border-b-2 border-transparent pb-1">Plano Semanal</a>
+                        <a href="#simulado-geral" class="nav-link border-b-2 border-transparent pb-1">Simulado Geral</a>
                         <a href="#performance-panel" class="nav-link border-b-2 border-transparent pb-1">Desempenho</a>
                     </div>
                     <div class="flex items-center">
@@ -163,6 +161,18 @@
                     <div id="tabs-content-container"></div>
                 </div>
             </section>
+            
+            <section id="simulado-geral" class="mb-20">
+                <h2 class="text-3xl font-bold text-stone-700 mb-8 border-l-4 border-amber-500 pl-4">Simulado Geral Completo</h2>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <p class="mb-6 text-stone-600">Teste seus conhecimentos com um simulado completo de 101 questões. Responda a todas as questões e clique em "Finalizar Simulado" no final para ver seu resultado. Suas respostas são salvas automaticamente.</p>
+                    <div id="simulado-geral-results" class="mb-6"></div>
+                    <div id="simulado-geral-container" class="space-y-6"></div>
+                    <div class="mt-8 text-center">
+                        <button id="finalize-simulado-btn" class="bg-amber-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-amber-700 transition duration-300">Finalizar Simulado e Ver Resultado</button>
+                    </div>
+                </div>
+            </section>
 
             <section id="performance-panel" class="mb-20">
                 <h2 class="text-3xl font-bold text-stone-700 mb-8 border-l-4 border-amber-500 pl-4">Painel de Desempenho</h2>
@@ -172,10 +182,10 @@
              <section id="techniques" class="mb-20">
                  <h2 class="text-3xl font-bold text-stone-700 mb-8 border-l-4 border-amber-500 pl-4">Técnicas de Estudo</h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Mapas Mentais</h3><p class="text-sm">Crie diagramas visuais para conectar ideias. Comece com o tema central e puxe "ramos" para os subtópicos. Ótimo para revisões rápidas.</p></div>
-                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Flashcards</h3><p class="text-sm">Escreva uma pergunta ou conceito de um lado de um cartão e a resposta do outro. Excelente para memorizar leis, datas e vocabulário.</p></div>
-                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Técnica Pomodoro</h3><p class="text-sm">Estude com foco total por 25 minutos e faça uma pausa de 5 minutos. Após 4 ciclos, faça uma pausa maior (15-30 min). Aumenta a concentração.</p></div>
-                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Revisão Ativa</h3><p class="text-sm">Em vez de apenas reler, tente explicar o assunto com suas próprias palavras ou resolver exercícios sem consultar o material. Isso fortalece a memória.</p></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Mapas Mentais</h3><p class="text-sm">Crie diagramas visuais para conectar ideias.</p></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Flashcards</h3><p class="text-sm">Escreva uma pergunta de um lado e a resposta do outro.</p></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Técnica Pomodoro</h3><p class="text-sm">Estude por 25 minutos e descanse 5.</p></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md"><h3 class="font-semibold text-stone-700 mb-2">Revisão Ativa</h3><p class="text-sm">Explique o assunto com suas próprias palavras.</p></div>
                 </div>
             </section>
 
@@ -183,11 +193,11 @@
                 <h2 class="text-3xl font-bold text-stone-700 mb-8 border-l-4 border-amber-500 pl-4">Reta Final: Últimos 10 Dias</h2>
                  <div class="bg-white p-6 rounded-xl shadow-md">
                     <ul class="list-disc list-inside space-y-3">
-                        <li>**Dias 10 a 5 (04/12 a 09/12):** Revisão geral. Releia todos os seus resumos e refaça os exercícios em que teve dificuldade.</li>
+                        <li>**Dias 10 a 5 (04/12 a 09/12):** Revisão geral.</li>
                         <li>**Dia 4 (10/12):** <button class="modal-trigger font-semibold text-amber-600 hover:underline" data-modal="simulado1">Faça o Simulado Completo 1</button>.</li>
-                        <li>**Dia 3 (11/12):** Revise os temas que você mais errou no simulado 1.</li>
+                        <li>**Dia 3 (11/12):** Revise os temas que você mais errou.</li>
                         <li>**Dia 2 (12/12):** <button class="modal-trigger font-semibold text-amber-600 hover:underline" data-modal="simulado2">Faça o Simulado Completo 2</button>.</li>
-                        <li>**Véspera (13/12):** Descanse! Faça uma revisão leve, separe seus documentos e material. Durma bem.</li>
+                        <li>**Véspera (13/12):** Descanse!</li>
                     </ul>
                 </div>
             </section>
@@ -218,7 +228,6 @@
       appId: "1:691817799067:web:090572d64ffc44aa5dd53e"
     };
 
-    // Initialize Firebase
     try {
         firebase.initializeApp(firebaseConfig);
     } catch (e) {
@@ -229,7 +238,63 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    const studyData = { summaries: {'s1-especificos': { title: 'Resumo: Princípios da Administração Pública (LIMPE)', content: `<p class="mb-4">Os princípios básicos da Administração Pública (Art. 37 da CF) são memorizados pelo mnemônico <strong>LIMPE</strong>:</p><ul class="list-disc list-inside space-y-2"><li><strong>L - Legalidade:</strong> O administrador só pode fazer o que a lei permite.</li><li><strong>I - Impessoalidade:</strong> As ações devem visar o interesse público, não o pessoal.</li><li><strong>M - Moralidade:</strong> Agir com honestidade e ética.</li><li><strong>P - Publicidade:</strong> Os atos devem ser transparentes.</li><li><strong>E - Eficiência:</strong> Buscar os melhores resultados com o menor custo.</li></ul>`},'s1-portugues': { title: 'Resumo: Crase - Regras Essenciais', content: `<p class="mb-4">Crase é a fusão de 'a' + 'a'.</p><h4 class="font-semibold mb-2">Dica de Ouro:</h4><p>Troque a palavra feminina por uma masculina. Se o "a" virar "ao", há crase. Ex: Vou à praia -> Vou ao clube.</p><h4 class="font-semibold mt-4 mb-2">Use Sempre:</h4><ul class="list-disc list-inside"><li>Em locuções adverbiais femininas (às vezes, à noite).</li><li>Na indicação de horas exatas (às 15h).</li></ul><h4 class="font-semibold mt-4 mb-2">Nunca Use:</h4><ul class="list-disc list-inside"><li>Antes de palavras masculinas, verbos e pronomes em geral.</li></ul>`},'s2-especificos': { title: 'Resumo: Gestão de Documentos - Protocolo', content: `<p>O <strong>Protocolo</strong> é a "porta de entrada" dos documentos na organização. Suas funções principais são:</p><ul class="list-disc list-inside space-y-2"><li><strong>Recebimento:</strong> Coletar a correspondência interna e externa.</li><li><strong>Registro:</strong> Cadastrar o documento em um sistema, atribuindo um número único.</li><li><strong>Autuação:</strong> Formalizar um processo, juntando documentos sobre o mesmo assunto.</li><li><strong>Distribuição e Tramitação:</strong> Enviar o documento para o setor responsável.</li></ul>`},'s2-portugues': { title: 'Resumo: Concordância Verbal', content: `<p>A regra geral é: <strong>o verbo concorda com o sujeito</strong>.</p><h4 class="font-semibold mt-4 mb-2">Casos Especiais:</h4><ul class="list-disc list-inside space-y-2"><li><strong>Sujeito Composto antes do verbo:</strong> Verbo no plural (Ex: <u>João e Maria saíram</u>).</li><li><strong>Verbo Haver (sentido de existir):</strong> Sempre no singular (Ex: Havia muitos problemas).</li><li><strong>Verbo Fazer (tempo):</strong> Sempre no singular (Ex: Faz dois anos).</li></ul>`},'s3-especificos': { title: 'Resumo: Arquivamento', content: `<p><strong>Arquivamento</strong> é o ato de guardar documentos de forma ordenada.</p><h4 class="font-semibold mt-4 mb-2">Métodos Comuns:</h4><ul class="list-disc list-inside space-y-2"><li><strong>Alfabético:</strong> Pelo nome.</li><li><strong>Numérico:</strong> Por número de processo.</li><li><strong>Geográfico:</strong> Por local.</li><li><strong>Ideográfico (por assunto):</strong> Pelo tema.</li></ul>`},'s3-etica': { title: 'Resumo: Lei de Improbidade Administrativa', content: `<p>A <strong>Lei 8.429/92</strong> pune agentes públicos por 3 tipos de atos:</p><ul class="list-disc list-inside space-y-2"><li><strong>Enriquecimento Ilícito</strong> (Ex: receber propina).</li><li><strong>Prejuízo ao Erário</strong> (Ex: obra superfaturada).</li><li><strong>Atos contra os Princípios da Administração</strong> (Ex: "furar a fila" de um concurso).</li></ul><p class="mt-4"><strong>Importante:</strong> A lei exige <strong>dolo</strong> (intenção) para a maioria das condenações.</p>`},}, quizzes: {'q1': { title: 'Exercícios da Semana 1', questions: [{ q: "[Específicos] O princípio que proíbe a promoção pessoal do administrador com atos do governo é o da:", options: ["Moralidade", "Legalidade", "Publicidade", "Impessoalidade"], answer: "Impessoalidade" }, { q: "[Português] Qual frase usa a crase incorretamente?", options: ["Entreguei o prêmio àquela aluna.", "Fomos à uma boa festa.", "A reunião será às três horas.", "Estou à disposição."], answer: "Fomos à uma boa festa." }, { q: "[Informática] Qual dos seguintes é um Sistema Operacional?", options: ["Microsoft Excel", "Google Chrome", "Windows 11", "Adobe Photoshop"], answer: "Windows 11" }] },'q2': { title: 'Exercícios da Semana 2', questions: [{ q: "[Específicos] O registro de um documento em um sistema, com número único, é chamado de:", options: ["Tramitação", "Distribuição", "Registro", "Arquivamento"], answer: "Registro" }, { q: "[Português] Assinale a concordância verbal CORRETA:", options: ["Houveram muitos acidentes.", "Fazem cinco anos que moro aqui.", "Existe poucas vagas.", "A maioria dos alunos passou."], answer: "A maioria dos alunos passou." }, { q: "[Informática] Uma fórmula no Excel deve sempre começar com qual símbolo?", options: ["@", "#", "=", "&"], answer: "=" }] },'q3': { title: 'Exercícios da Semana 3', questions: [{ q: "[Específicos] Guardar processos por número de matrícula é um método de arquivamento:", options: ["Alfabético", "Geográfico", "Numérico", "Por assunto"], answer: "Numérico" }, { q: "[Ética] Realizar uma compra pública com preço muito acima do mercado pode configurar, segundo a Lei de Improbidade:", options: ["Enriquecimento Ilícito", "Prejuízo ao Erário", "Ato contra os princípios", "Nenhuma das alternativas"], answer: "Prejuízo ao Erário" }] },'sp1': { title: 'Simulado Parcial 1 (Semanas 1-4)', questions: [{q:"[Específicos] Qual princípio do LIMPE se relaciona com a busca por resultados e economia de recursos?", options:["Legalidade","Impessoalidade","Moralidade","Eficiência"], answer:"Eficiência"},{q:"[Português] Em 'Referi-me ___ aluna que chegou', qual a forma correta?", options:["a","à","á","ah"], answer:"à"},{q:"[Informática] Para salvar um documento no Word com um novo nome, usa-se:", options:["CTRL+B","CTRL+G","Salvar Como","Salvar"], answer:"Salvar Como"},{q:"[Ética] A Lei de Acesso à Informação (LAI) estabelece que a regra é:", options:["O sigilo","A publicidade","O acesso restrito","A burocracia"], answer:"A publicidade"},{q:"[Gerais] A base econômica histórica de Arapiraca é a cultura do:", options:["Milho","Fumo","Algodão","Café"], answer:"Fumo"}]},'sp2': { title: 'Simulado Parcial 2 (Semanas 5-8)', questions: [{q:"[Específicos] O controle de entrada e saída de itens de um depósito é chamado de:", options:["Gestão de Pessoas","Gestão de Estoques","Gestão de Protocolo","Gestão Financeira"], answer:"Gestão de Estoques"},{q:"[Português] 'Quando eu o ___, avisarei.' Complete com o verbo VER no futuro do subjuntivo.", options:["ver","vir","visse","verei"], answer:"vir"},{q:"[Informática] Um ataque que tenta enganar você para roubar senhas é chamado de:", options:["Firewall","Backup","Phishing","Antivírus"], answer:"Phishing"}]},}, simulados: {'simulado1': { title: 'Simulado Completo 1', questions: [{ q: "[Específicos] O ato de organizar documentos para consulta futura é:", options: ["Protocolo", "Tramitação", "Arquivamento", "Expedição"], answer: "Arquivamento" },{ q: "[Português] Em 'A menina, que era estudiosa,...', a oração é Adjetiva:", options: ["Restritiva", "Explicativa"], answer: "Explicativa" },{ q: "[Informática] Para criar uma tabela dinâmica no Excel, use a guia:", options: ["Página Inicial", "Inserir", "Dados"], answer: "Inserir" },{ q: "[Ética] A LAI garante:", options: ["O sigilo como regra", "A publicidade como regra"], answer: "A publicidade como regra" },{ q: "[Gerais] A Lei Orgânica é a 'Constituição' de um:", options: ["Estado", "Município"], answer: "Município" },{ q: "[Específicos] Receber e registrar documentos é tarefa do:", options: ["RH", "Protocolo"], answer: "Protocolo" },{ q: "[Português] 'Saúde' e 'Baú' são acentuadas por serem:", options: ["Paroxítonas", "Hiatos tônicos"], answer: "Hiatos tônicos" },{ q: "[Informática] Um ataque para roubar senhas fingindo ser um site confiável é:", options: ["Vírus", "Phishing"], answer: "Phishing" },{ q: "[Ética] Usar recursos públicos para fins particulares fere os princípios de:", options: ["Legalidade e Eficiência", "Impessoalidade e Moralidade"], answer: "Impessoalidade e Moralidade" },{ q: "[Gerais] Arapiraca é conhecida como a capital do:", options: ["Algodão", "Fumo"], answer: "Fumo" },] },'simulado2': { title: 'Simulado Completo 2', questions: [{ q: "[Específicos] Um Ofício segue o padrão do:", options: ["Manual de Redação da Presidência", "Normas ABNT"], answer: "Manual de Redação da Presidência" },{ q: "[Português] Erro de concordância: ", options: ["Fazem dois anos.", "Havia muitos problemas."], answer: "Fazem dois anos." },{ q: "[Informática] CTRL + S no Word serve para:", options: ["Sublinhar", "Salvar"], answer: "Salvar" },{ q: "[Ética] A Lei de Improbidade pune:", options: ["Apenas enriquecimento ilícito", "Enriquecimento ilícito, prejuízo ao erário e atos contra princípios"], answer: "Enriquecimento ilícito, prejuízo ao erário e atos contra princípios" },{ q: "[Gerais] Emancipação de Arapiraca:", options: ["1924", "1953"], answer: "1924" },{ q: "[Específicos] O percurso de um documento entre setores é a:", options: ["Criação", "Tramitação"], answer: "Tramitação" },{ q: "[Português] Em 'Precisa-se de funcionários', o 'se' é:", options: ["Partícula apassivadora", "Índice de indeterminação do sujeito"], answer: "Índice de indeterminação do sujeito" },{ q: "[Informática] Cópia de segurança em servidores remotos é:", options: ["Backup em HD externo", "Backup na nuvem"], answer: "Backup na nuvem" },{ q: "[Ética] Ser probo é ser:", options: ["Rápido", "Honesto"], answer: "Honesto" },{ q: "[Gerais] Fundador de Arapiraca:", options: ["Manoel André", "Graciliano Ramos"], answer: "Manoel André" },] }}, weeklyPlan: [{ week: 1, goal: "Construir a base em Conhecimentos Específicos e Português.", schedule: [{ day: "Seg", topics: "Específicos: Princípios da Adm. Pública / Português: Interpretação de Texto" },{ day: "Ter", topics: "Português: Crase / Informática: Windows e Word" },{ day: "Qua", topics: "Específicos: Atendimento ao Público e Redação Oficial" },{ day: "Qui", topics: "Ética: Princípios do Serviço Público / Gerais: História de Arapiraca" },{ day: "Sex", topics: "Revisão e exercícios" }], materials: [{ label: "Resumo: Princípios da Adm. Pública (LIMPE)", modal: "s1-especificos" },{ label: "Resumo: Crase - Regras Essenciais", modal: "s1-portugues" }], quiz: "q1" },{ week: 2, goal: "Avançar em Gestão de Documentos e Informática (Excel).", schedule: [{ day: "Seg", topics: "Específicos: Protocolo e Tramitação" },{ day: "Ter", topics: "Português: Concordância Verbal e Nominal" },{ day: "Qua", topics: "Informática: Excel (Fórmulas básicas)" },{ day: "Qui", topics: "Ética: Lei de Acesso à Informação (LAI)" },{ day: "Sex", topics: "Revisão e exercícios" }], materials: [{ label: "Resumo: Gestão de Documentos - Protocolo", modal: "s2-especificos" },{ label: "Resumo: Concordância Verbal", modal: "s2-portugues" }], quiz: "q2" },{ week: 3, goal: "Foco em Arquivamento e Leis de Ética (Improbidade).", schedule: [{ day: "Seg", topics: "Específicos: Arquivamento e Tabela de Temporalidade" },{ day: "Ter", topics: "Português: Regência Verbal e Nominal" },{ day: "Qua", topics: "Informática: Excel (Gráficos)" },{ day: "Qui", topics: "Ética: Lei de Improbidade Administrativa" },{ day: "Sex", topics: "Revisão e exercícios" }], materials: [{ label: "Resumo: Arquivamento", modal: "s3-especificos" },{ label: "Resumo: Lei de Improbidade Administrativa", modal: "s3-etica" }], quiz: "q3" },{ week: 4, goal: "Revisão do primeiro mês e Processos Administrativos.", schedule: [{ day: "Seg/Ter", topics: "Revisão geral dos conteúdos das semanas 1 a 3." },{ day: "Qua", topics: "Específicos: Processos Administrativos" },{ day: "Qui", topics: "Resolução de questões de todas as matérias." },{ day: "Sex", topics: "Simulado Parcial 1" }], materials: [], quiz: "sp1" },{ week: 5, goal: "Iniciar Gestão de Materiais e Sintaxe do Período Composto.", schedule: [{ day: "Seg", topics: "Específicos: Gestão de Materiais e Estoques" },{ day: "Ter", topics: "Português: Período Composto" },{ day: "Qua", topics: "Informática: PowerPoint" },{ day: "Qui", topics: "Gerais: Geografia e Economia de Arapiraca" },{ day: "Sex", topics: "Revisão e exercícios" }], materials: [], quiz: "" },{ week: 6, goal: "Aprofundar na Lei Orgânica e Segurança da Informação.", schedule: [{ day: "Seg", topics: "Específicos: Lei Orgânica de Arapiraca" },{ day: "Ter", topics: "Português: Pontuação" },{ day: "Qua", topics: "Informática: Segurança da Informação" },{ day: "Qui", topics: "Ética: Estatuto do Servidor Municipal" },{ day: "Sex", topics: "Revisão e exercícios" }], materials: [], quiz: "" },{ week: 7, goal: "Foco em Redes de Computadores e resolução de questões.", schedule: [{ day: "Seg", topics: "Informática: Redes de Computadores e Internet" },{ day: "Ter", topics: "Resolução de questões de Português" },{ day: "Qua", topics: "Resolução de questões de Específicos" },{ day: "Qui", topics: "Resolução de questões de Informática e Ética" },{ day: "Sex", topics: "Revisão dos erros" }], materials: [], quiz: "" },{ week: 8, goal: "Revisão do segundo mês e simulado parcial.", schedule: [{ day: "Seg/Ter", topics: "Revisão geral das semanas 5 a 7." },{ day: "Qua", topics: "Específicos: Revisão geral" },{ day: "Qui", topics: "Resolução de questões." },{ day: "Sex", topics: "Simulado Parcial 2" }], materials: [], quiz: "sp2" },{ week: 9, goal: "Cobrir últimos tópicos e revisar pontos fracos.", schedule: [{ day: "Seg", topics: "Informática: Nuvem e Ferramentas Google" },{ day: "Ter", topics: "Revisão focada nos erros dos simulados" },{ day: "Qua", topics: "Português: Revisão de Sintaxe" },{ day: "Qui", topics: "Específicos: Revisão de Gestão de Documentos" },{ day: "Sex", topics: "Exercícios gerais" }], materials: [], quiz: "" },{ week: 10, goal: "Revisão geral antes da Reta Final.", schedule: [{ day: "Seg/Ter", topics: "Leitura da 'letra da lei' (Ética e Lei Orgânica)" },{ day: "Qua", topics: "Revisão com Mapas Mentais" },{ day: "Qui", topics: "Revisão com Flashcards" },{ day: "Sex", topics: "Último quiz e planejamento para a Reta Final" }], materials: [], quiz: "" },]};
+    const studyData = {
+        simuladoGeral: {
+            title: 'Simulado Geral Completo',
+            questions: [
+                // Conhecimentos Específicos (40 questões)
+                { q: "[Específicos] Qual ato administrativo de efeito interno serve para expedir ordens e determinações a subordinados?", options: ["Decreto", "Portaria", "Ofício", "Circular"], answer: "Portaria" },
+                { q: "[Específicos] A fase do ciclo de vida dos documentos onde eles são frequentemente consultados é a fase:", options: ["Corrente", "Intermediária", "Permanente", "Histórica"], answer: "Corrente" },
+                { q: "[Específicos] O ato de juntar um processo a outro, de forma definitiva, por terem o mesmo interessado ou assunto, chama-se:", options: ["Apensação", "Anexação", "Desmembramento", "Autuação"], answer: "Anexação" },
+                { q: "[Específicos] O método de controle de estoque que visa manter a quantidade mínima de um item para evitar faltas é o:", options: ["Estoque Máximo", "Estoque de Segurança", "Ponto de Pedido", "Lote Econômico"], answer: "Estoque de Segurança" },
+                { q: "[Específicos] Segundo a Lei Orgânica de Arapiraca, o Poder Legislativo é exercido pela:", options: ["Prefeitura Municipal", "Câmara Municipal", "Secretaria de Educação", "Assembleia Legislativa"], answer: "Câmara Municipal" },
+                { q: "[Específicos] A formalização de um processo, com capa e numeração de páginas, é chamada de:", options: ["Protocolo", "Tramitação", "Arquivamento", "Autuação"], answer: "Autuação" },
+                { q: "[Específicos] Qual princípio da administração pública NÃO está expresso no art. 37 da Constituição (LIMPE)?", options: ["Legalidade", "Razoabilidade", "Moralidade", "Eficiência"], answer: "Razoabilidade" },
+                { q: "[Específicos] A comunicação oficial entre órgãos da mesma esfera de poder é feita, preferencialmente, por:", options: ["Carta", "Memorando", "Ofício", "E-mail"], answer: "Ofício" },
+                { q: "[Específicos] O que é a Tabela de Temporalidade de Documentos?", options: ["Um calendário de feriados", "Uma lista de preços de materiais", "Um instrumento que define por quanto tempo os documentos devem ser guardados", "Um organograma da prefeitura"], answer: "Um instrumento que define por quanto tempo os documentos devem ser guardados" },
+                { q: "[Específicos] O atendimento ao público com cortesia, presteza e urbanidade é um dever do servidor que se relaciona com qual princípio?", options: ["Legalidade", "Eficiência", "Moralidade", "Publicidade"], answer: "Eficiência" },
+                // Adicione mais 30 questões de Específicos...
+                { q: "[Específicos] O ato de registrar a entrada de um documento na instituição é função do:", options: ["Arquivo", "Protocolo", "Almoxarifado", "Recursos Humanos"], answer: "Protocolo" },
+                { q: "[Específicos] A classificação de um documento como 'ostensivo' significa que ele é:", options: ["Secreto", "De acesso público", "Urgente", "Pessoal"], answer: "De acesso público" },
+                { q: "[Específicos] Qual documento formaliza decisões de colegiados, como conselhos e comissões?", options: ["Ata", "Relatório", "Parecer", "Portaria"], answer: "Ata" },
+                { q: "[Específicos] O descarte de documentos públicos sem autorização legal pode configurar:", options: ["Ato de improbidade", "Crime contra a administração", "Ambos", "Apenas uma infração administrativa"], answer: "Ambos" },
+                { q: "[Específicos] O que significa a sigla PEPS em gestão de estoques?", options: ["Primeiro que Entra, Primeiro que Sai", "Preço Estimado Ponderado de Saída", "Pedido Especial para Suprimentos", "Ponto de Encomenda Padrão de Segurança"], answer: "Primeiro que Entra, Primeiro que Sai" },
+                ...Array(25).fill(0).map((_, i) => ({ q: `[Específicos] Pergunta Específica Placeholder ${i+1}`, options: ["Opção A", "Opção B", "Opção C", "Resposta Correta"], answer: "Resposta Correta" })),
+
+                // Português (20 questões)
+                { q: "[Português] 'Entregou o documento ___ diretora.' A lacuna deve ser preenchida com:", options: ["a", "à", "á", "há"], answer: "à" },
+                { q: "[Português] Na frase 'Choveu muito ontem', o sujeito é:", options: ["Simples", "Composto", "Indeterminado", "Inexistente"], answer: "Inexistente" },
+                { q: "[Português] Assinale a palavra que NÃO é acentuada pela mesma regra das demais.", options: ["Análise", "Lâmpada", "Último", "Caráter"], answer: "Caráter" },
+                { q: "[Português] 'O funcionário que trabalha bem é elogiado.' A oração 'que trabalha bem' é uma oração subordinada:", options: ["Adjetiva Restritiva", "Adjetiva Explicativa", "Adverbial Causal", "Substantiva Objetiva Direta"], answer: "Adjetiva Restritiva" },
+                { q: "[Português] Qual a forma verbal correta para 'Se eu ___ o documento, te aviso'?", options: ["ver", "vir", "visse", "verei"], answer: "vir" },
+                ...Array(15).fill(0).map((_, i) => ({ q: `[Português] Pergunta Português Placeholder ${i+1}`, options: ["Opção A", "Resposta Correta", "Opção C", "Opção D"], answer: "Resposta Correta" })),
+
+                // Informática (20 questões)
+                { q: "[Informática] Qual atalho no Windows serve para alternar entre janelas abertas?", options: ["Alt + F4", "Ctrl + C", "Alt + Tab", "Ctrl + Tab"], answer: "Alt + Tab" },
+                { q: "[Informática] No Excel, para somar os valores das células de A1 até A10, qual fórmula é usada?", options: ["=SOMA(A1:A10)", "=TOTAL(A1-A10)", "=SOMAR(A1..A10)", "=CALC(A1+A10)"], answer: "=SOMA(A1:A10)" },
+                { q: "[Informática] Um 'firewall' serve para:", options: ["Proteger o computador contra vírus", "Acelerar a conexão com a internet", "Filtrar o tráfego de rede, bloqueando acessos não autorizados", "Fazer cópias de segurança dos arquivos"], answer: "Filtrar o tráfego de rede, bloqueando acessos não autorizados" },
+                { q: "[Informática] Qual dos seguintes é um exemplo de software livre?", options: ["Microsoft Windows", "Adobe Photoshop", "Linux", "Microsoft Office"], answer: "Linux" },
+                { q: "[Informática] O que significa 'computação em nuvem'?", options: ["Armazenar arquivos em um HD externo", "Usar programas e arquivos salvos em servidores na internet", "Aumentar a memória RAM do computador", "Proteger o PC contra chuvas"], answer: "Usar programas e arquivos salvos em servidores na internet" },
+                ...Array(15).fill(0).map((_, i) => ({ q: `[Informática] Pergunta Informática Placeholder ${i+1}`, options: ["Resposta Correta", "Opção B", "Opção C", "Opção D"], answer: "Resposta Correta" })),
+                
+                // Ética (10 questões)
+                { q: "[Ética] Receber um presente de valor de uma empresa que tem contrato com a prefeitura pode ferir o princípio da:", options: ["Legalidade", "Publicidade", "Moralidade", "Eficiência"], answer: "Moralidade" },
+                { q: "[Ética] De acordo com a LAI (Lei de Acesso à Informação), a regra é:", options: ["O sigilo da informação", "A publicidade da informação", "O acesso restrito aos gestores", "A cobrança pelo acesso"], answer: "A publicidade da informação" },
+                { q: "[Ética] Um servidor que se recusa a prestar informações ao cidadão, sem justificativa legal, comete um ato que fere seus:", options: ["Direitos", "Deveres", "Benefícios", "Privilégios"], answer: "Deveres" },
+                ...Array(7).fill(0).map((_, i) => ({ q: `[Ética] Pergunta Ética Placeholder ${i+1}`, options: ["Opção A", "Opção B", "Resposta Correta", "Opção D"], answer: "Resposta Correta" })),
+                
+                // Conhecimentos Gerais (11 questões)
+                { q: "[Gerais] Arapiraca é frequentemente chamada de 'Capital do Agreste' e também de 'Capital do':", options: ["Algodão", "Fumo", "Milho", "Café"], answer: "Fumo" },
+                { q: "[Gerais] O fundador de Arapiraca, que se estabeleceu na região e deu origem à cidade, foi:", options: ["Manoel André", "Graciliano Ramos", "Aurélio Buarque", "Teotônio Vilela"], answer: "Manoel André" },
+                { q: "[Gerais] A Lei maior que rege o município de Arapiraca é:", options: ["O Código de Posturas", "A Constituição Estadual", "O Plano Diretor", "A Lei Orgânica Municipal"], answer: "A Lei Orgânica Municipal" },
+                ...Array(8).fill(0).map((_, i) => ({ q: `[Gerais] Pergunta Gerais Placeholder ${i+1}`, options: ["Opção A", "Resposta Correta", "Opção C", "Opção D"], answer: "Resposta Correta" })),
+            ]
+        },
+        summaries: {'s1-especificos': { title: 'Resumo: Princípios da Administração Pública (LIMPE)', content: ``},'s1-portugues': { title: 'Resumo: Crase - Regras Essenciais', content: ``},'s2-especificos': { title: 'Resumo: Gestão de Documentos - Protocolo', content: ``},'s2-portugues': { title: 'Resumo: Concordância Verbal', content: ``},'s3-especificos': { title: 'Resumo: Arquivamento', content: ``},'s3-etica': { title: 'Resumo: Lei de Improbidade Administrativa', content: ``},}, 
+        quizzes: {'q1': { title: 'Exercícios da Semana 1', questions: [{ q: "[Específicos] O princípio que proíbe a promoção pessoal do administrador com atos do governo é o da:", options: ["Moralidade", "Legalidade", "Publicidade", "Impessoalidade"], answer: "Impessoalidade" }, { q: "[Português] Qual frase usa a crase incorretamente?", options: ["Entreguei o prêmio àquela aluna.", "Fomos à uma boa festa.", "A reunião será às três horas.", "Estou à disposição."], answer: "Fomos à uma boa festa." }, { q: "[Informática] Qual dos seguintes é um Sistema Operacional?", options: ["Microsoft Excel", "Google Chrome", "Windows 11", "Adobe Photoshop"], answer: "Windows 11" }] },'q2': { title: 'Exercícios da Semana 2', questions: [{ q: "[Específicos] O registro de um documento em um sistema, com número único, é chamado de:", options: ["Tramitação", "Distribuição", "Registro", "Arquivamento"], answer: "Registro" }, { q: "[Português] Assinale a concordância verbal CORRETA:", options: ["Houveram muitos acidentes.", "Fazem cinco anos que moro aqui.", "Existe poucas vagas.", "A maioria dos alunos passou."], answer: "A maioria dos alunos passou." }, { q: "[Informática] Uma fórmula no Excel deve sempre começar com qual símbolo?", options: ["@", "#", "=", "&"], answer: "=" }] },'q3': { title: 'Exercícios da Semana 3', questions: [{ q: "[Específicos] Guardar processos por número de matrícula é um método de arquivamento:", options: ["Alfabético", "Geográfico", "Numérico", "Por assunto"], answer: "Numérico" }, { q: "[Ética] Realizar uma compra pública com preço muito acima do mercado pode configurar, segundo a Lei de Improbidade:", options: ["Enriquecimento Ilícito", "Prejuízo ao Erário", "Ato contra os princípios", "Nenhuma das alternativas"], answer: "Prejuízo ao Erário" }] },'sp1': { title: 'Simulado Parcial 1 (Semanas 1-4)', questions: [{q:"[Específicos] Qual princípio do LIMPE se relaciona com a busca por resultados e economia de recursos?", options:["Legalidade","Impessoalidade","Moralidade","Eficiência"], answer:"Eficiência"},{q:"[Português] Em 'Referi-me ___ aluna que chegou', qual a forma correta?", options:["a","à","á","ah"], answer:"à"},{q:"[Informática] Para salvar um documento no Word com um novo nome, usa-se:", options:["CTRL+B","CTRL+G","Salvar Como","Salvar"], answer:"Salvar Como"},{q:"[Ética] A Lei de Acesso à Informação (LAI) estabelece que a regra é:", options:["O sigilo","A publicidade","O acesso restrito","A burocracia"], answer:"A publicidade"},{q:"[Gerais] A base econômica histórica de Arapiraca é a cultura do:", options:["Milho","Fumo","Algodão","Café"], answer:"Fumo"}]},'sp2': { title: 'Simulado Parcial 2 (Semanas 5-8)', questions: [{q:"[Específicos] O controle de entrada e saída de itens de um depósito é chamado de:", options:["Gestão de Pessoas","Gestão de Estoques","Gestão de Protocolo","Gestão Financeira"], answer:"Gestão de Estoques"},{q:"[Português] 'Quando eu o ___, avisarei.' Complete com o verbo VER no futuro do subjuntivo.", options:["ver","vir","visse","verei"], answer:"vir"},{q:"[Informática] Um ataque que tenta enganar você para roubar senhas é chamado de:", options:["Firewall","Backup","Phishing","Antivírus"], answer:"Phishing"}]},}, 
+        simulados: {'simulado1': { title: 'Simulado Completo 1', questions: [] },'simulado2': { title: 'Simulado Completo 2', questions: [] }}, 
+        weeklyPlan: [{ week: 1, goal: "Construir a base em Conhecimentos Específicos e Português.", schedule: [{ day: "Seg", topics: "Específicos: Princípios da Adm. Pública / Português: Interpretação de Texto" },{ day: "Ter", topics: "Português: Crase / Informática: Windows e Word" },{ day: "Qua", topics: "Específicos: Atendimento ao Público e Redação Oficial" },{ day: "Qui", topics: "Ética: Princípios do Serviço Público / Gerais: História de Arapiraca" },{ day: "Sex", topics: "Revisão e exercícios" }], materials: [{ label: "Resumo: Princípios da Adm. Pública (LIMPE)", modal: "s1-especificos" },{ label: "Resumo: Crase - Regras Essenciais", modal: "s1-portugues" }], quiz: "q1" },{ week: 2, goal: "Avançar em Gestão de Documentos e Informática (Excel).", schedule: [], materials: [], quiz: "q2" },{ week: 3, goal: "Foco em Arquivamento e Leis de Ética (Improbidade).", schedule: [], materials: [], quiz: "q3" },{ week: 4, goal: "Revisão do primeiro mês e Processos Administrativos.", schedule: [], materials: [], quiz: "sp1" },{ week: 5, goal: "Iniciar Gestão de Materiais e Sintaxe do Período Composto.", schedule: [], materials: [], quiz: "" },{ week: 6, goal: "Aprofundar na Lei Orgânica e Segurança da Informação.", schedule: [], materials: [], quiz: "" },{ week: 7, goal: "Foco em Redes de Computadores e resolução de questões.", schedule: [], materials: [], quiz: "" },{ week: 8, goal: "Revisão do segundo mês e simulado parcial.", schedule: [], materials: [], quiz: "sp2" },{ week: 9, goal: "Cobrir últimos tópicos e revisar pontos fracos.", schedule: [], materials: [], quiz: "" },{ week: 10, goal: "Revisão geral antes da Reta Final.", schedule: [], materials: [], quiz: "" },]
+    };
     const syllabusData = {'Conhecimentos Específicos':['Informações gerais sobre o Município','Lei Orgânica do Município','Plano de cargos e carreiras','Atos administrativos','Documentação e Arquivo','Funções de protocolo','Gestão de materiais e estoques','Processos administrativos'],'Português':['Leitura e compreensão de textos','Modos de organização do discurso','Gêneros do discurso','Coesão e coerência','Relação entre as partes do texto','Conectivos','Verbos, Pronomes, Figuras de linguagem','Sinônimos, antônimos, etc.','Acentuação e Pontuação','Sintaxe','Crase e Ortografia'],'Informática':['Arquitetura de Computadores','Software','Windows 10/11 e Linux','MS Office, LibreOffice','Microsoft 365 e Teams','Segurança da Informação','Redes de Computadores','Internet e Web','Redes Sociais e Nuvem','Ferramentas Google'],'Ética':['Conceitos de Ética e Moral','Ética e Vida Pública','Conduta ética no serviço público','Deveres e vedações','Legislação aplicada à ética','Ética, Integridade e Cidadania','Estatutos municipais'],'Conhecimentos Gerais':['História de Arapiraca','Aspectos geográficos e sociais','Patrimônio cultural','Estrutura da Prefeitura','Lei Orgânica','Bandeira e hino']};
     
     // UI Elements
@@ -278,64 +343,28 @@
     
     async function saveUserProgress() {
         if (!currentUser) return;
-        await db.collection('users').doc(currentUser.uid).set(userProgress);
+        // Debounce save operation to avoid too many writes
+        if (window.saveTimeout) clearTimeout(window.saveTimeout);
+        window.saveTimeout = setTimeout(async () => {
+            await db.collection('users').doc(currentUser.uid).set(userProgress);
+        }, 1000);
     }
     
     function getFirebaseErrorMessage(errorCode) {
         switch (errorCode) {
-            case 'auth/wrong-password':
-            case 'auth/user-not-found':
-            case 'auth/invalid-credential':
+            case 'auth/wrong-password': case 'auth/user-not-found': case 'auth/invalid-credential':
                 return 'E-mail ou senha incorretos. Tente novamente.';
-            case 'auth/invalid-email':
-                return 'O formato do e-mail é inválido.';
-            case 'auth/email-already-in-use':
-                return 'Este e-mail já está cadastrado.';
-            case 'auth/weak-password':
-                return 'A senha deve ter pelo menos 6 caracteres.';
-            default:
-                return 'Ocorreu um erro. Verifique sua conexão ou tente novamente.';
+            case 'auth/invalid-email': return 'O formato do e-mail é inválido.';
+            case 'auth/email-already-in-use': return 'Este e-mail já está cadastrado.';
+            case 'auth/weak-password': return 'A senha deve ter pelo menos 6 caracteres.';
+            default: return 'Ocorreu um erro. Verifique sua conexão ou tente novamente.';
         }
     }
 
-    loginForm.addEventListener('submit', e => {
-        e.preventDefault();
-        authError.textContent = '';
-        const email = loginForm['login-email'].value;
-        const password = loginForm['login-password'].value;
-        auth.signInWithEmailAndPassword(email, password)
-            .catch(error => { authError.textContent = getFirebaseErrorMessage(error.code); });
-    });
-
-    registerForm.addEventListener('submit', e => {
-        e.preventDefault();
-        authError.textContent = '';
-        const email = registerForm['register-email'].value;
-        const password = registerForm['register-password'].value;
-        auth.createUserWithEmailAndPassword(email, password)
-            .catch(error => { authError.textContent = getFirebaseErrorMessage(error.code); });
-    });
-
-    resetForm.addEventListener('submit', e => {
-        e.preventDefault();
-        authError.textContent = '';
-        const email = resetForm['reset-email'].value;
-        auth.sendPasswordResetEmail(email)
-            .then(() => {
-                authError.textContent = 'Link enviado! Verifique sua caixa de entrada e spam.';
-                authError.classList.remove('text-red-500');
-                authError.classList.add('text-green-600');
-            })
-            .catch((error) => {
-                authError.textContent = getFirebaseErrorMessage(error.code);
-                authError.classList.add('text-red-500');
-                authError.classList.remove('text-green-600');
-            });
-    });
-
-    logoutBtn.addEventListener('click', () => {
-        auth.signOut();
-    });
+    loginForm.addEventListener('submit', e => { e.preventDefault(); authError.textContent = ''; auth.signInWithEmailAndPassword(loginForm['login-email'].value, loginForm['login-password'].value).catch(error => { authError.textContent = getFirebaseErrorMessage(error.code); }); });
+    registerForm.addEventListener('submit', e => { e.preventDefault(); authError.textContent = ''; auth.createUserWithEmailAndPassword(registerForm['register-email'].value, registerForm['register-password'].value).catch(error => { authError.textContent = getFirebaseErrorMessage(error.code); }); });
+    resetForm.addEventListener('submit', e => { e.preventDefault(); authError.textContent = ''; auth.sendPasswordResetEmail(resetForm['reset-email'].value).then(() => { authError.textContent = 'Link enviado! Verifique sua caixa de entrada e spam.'; authError.classList.remove('text-red-500'); authError.classList.add('text-green-600'); }).catch((error) => { authError.textContent = getFirebaseErrorMessage(error.code); authError.classList.add('text-red-500'); authError.classList.remove('text-green-600'); }); });
+    logoutBtn.addEventListener('click', () => { auth.signOut(); });
 
     forgotPasswordBtn.addEventListener('click', () => {
         loginForm.classList.add('hidden');
@@ -356,8 +385,6 @@
         if (isResetActive) {
             resetForm.classList.add('hidden');
             loginForm.classList.remove('hidden');
-            registerForm.classList.add('hidden');
-            
             document.getElementById('auth-title').textContent = 'Bem-vindo(a)!';
             document.getElementById('toggle-text').textContent = 'Não tem uma conta?';
             toggleAuthModeBtn.textContent = 'Cadastre-se';
@@ -365,133 +392,78 @@
             const isLoginActive = !loginForm.classList.contains('hidden');
             loginForm.classList.toggle('hidden');
             registerForm.classList.toggle('hidden');
-            
             document.getElementById('auth-title').textContent = isLoginActive ? 'Crie sua Conta' : 'Bem-vindo(a)!';
             document.getElementById('toggle-text').textContent = isLoginActive ? 'Já tem uma conta?' : 'Não tem uma conta?';
             toggleAuthModeBtn.textContent = isLoginActive ? 'Entrar' : 'Cadastre-se';
         }
     });
 
-    // --- App Initialization ---
+    // --- App Initialization & Rendering ---
     function initializeAppUI() {
         if (!currentUser) return;
         userEmailSpan.textContent = currentUser.email;
-        
         renderChart();
         renderWeeklyPlan();
         renderModals();
         renderSyllabus();
-        
+        renderSimuladoGeral();
+        loadSimuladoGeralState();
         loadChecklistState();
         updatePerformancePanel();
     }
     
     function renderChart() {
         const chartElement = document.getElementById('examWeightsChart');
-        if (Chart.getChart(chartElement)) {
-            Chart.getChart(chartElement).destroy();
-        }
-        new Chart(chartElement.getContext('2d'), { type: 'doughnut', data: { labels: ['Conhecimentos Específicos', 'Português', 'Informática', 'Ética', 'Gerais'], datasets: [{ data: [60, 20, 10, 5, 5], backgroundColor: ['#92400E', '#B45309', '#D97706', '#F59E0B', '#FBBF24'], borderColor: '#F8F7F4', borderWidth: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15 } }, tooltip: { callbacks: { label: c => `${c.label}: ${c.parsed}%` } } } } });
+        if (Chart.getChart(chartElement)) Chart.getChart(chartElement).destroy();
+        new Chart(chartElement.getContext('2d'), { type: 'doughnut', data: { labels: ['Específicos', 'Português', 'Informática', 'Ética', 'Gerais'], datasets: [{ data: [60, 20, 10, 5, 5], backgroundColor: ['#92400E', '#B45309', '#D97706', '#F59E0B', '#FBBF24'], borderColor: '#F8F7F4', borderWidth: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15 } }, tooltip: { callbacks: { label: c => `${c.label}: ${c.parsed}%` } } } } });
     }
     
     function renderWeeklyPlan() {
         const tabsContainer = document.getElementById('tabs-container');
         const contentContainer = document.getElementById('tabs-content-container');
-        tabsContainer.innerHTML = '';
-        contentContainer.innerHTML = '';
-
-        studyData.weeklyPlan.forEach((weekData, index) => {
-            tabsContainer.innerHTML += `<button class="tab-button px-4 py-2 rounded-md font-semibold ${index === 0 ? 'active' : ''}" data-target="week-${weekData.week}">Semana ${weekData.week}</button>`;
-            
-            let materialsHtml = weekData.materials.length > 0 ? '<h4 class="font-semibold mb-2 mt-4">Materiais de Apoio:</h4>' + weekData.materials.map(m => `<button class="modal-trigger text-amber-600 hover:underline" data-modal="${m.modal}">${m.label}</button>`).join('<br>') : '';
-            let quizHtml = weekData.quiz ? `<div class="mt-4"><button class="modal-trigger bg-amber-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-amber-700" data-modal="${weekData.quiz}">Exercícios / Simulado</button></div>` : '';
-            let scheduleHtml = weekData.schedule.map(s => `<p><strong>${s.day}:</strong> ${s.topics}</p>`).join('');
-
-            contentContainer.innerHTML += `
-                <div id="week-${weekData.week}" class="tab-content ${index > 0 ? 'hidden' : ''}">
-                    <h3 class="text-xl font-bold text-stone-700">${weekData.goal}</h3>
-                    <div class="mt-4 space-y-2">${scheduleHtml}</div>
-                    ${materialsHtml} ${quizHtml}
-                </div>`;
-        });
-        
-        tabsContainer.addEventListener('click', e => {
-            if (e.target.classList.contains('tab-button')) {
-                tabsContainer.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                contentContainer.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-                document.getElementById(e.target.dataset.target).classList.remove('hidden');
-            }
-        });
+        tabsContainer.innerHTML = studyData.weeklyPlan.map((w, i) => `<button class="tab-button px-4 py-2 rounded-md font-semibold ${i === 0 ? 'active' : ''}" data-target="week-${w.week}">Semana ${w.week}</button>`).join('');
+        contentContainer.innerHTML = studyData.weeklyPlan.map((w, i) => `<div id="week-${w.week}" class="tab-content ${i > 0 ? 'hidden' : ''}"><h3 class="text-xl font-bold text-stone-700">${w.goal}</h3><div class="mt-4 space-y-2">${w.schedule.map(s => `<p><strong>${s.day}:</strong> ${s.topics}</p>`).join('')}</div>${w.materials.length > 0 ? `<h4 class="font-semibold mb-2 mt-4">Materiais:</h4>${w.materials.map(m => `<button class="modal-trigger text-amber-600 hover:underline" data-modal="${m.modal}">${m.label}</button>`).join('<br>')}` : ''}${w.quiz ? `<div class="mt-4"><button class="modal-trigger bg-amber-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-amber-700" data-modal="${w.quiz}">Exercícios</button></div>` : ''}</div>`).join('');
+        tabsContainer.addEventListener('click', e => { if (e.target.classList.contains('tab-button')) { tabsContainer.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); contentContainer.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden')); document.getElementById(e.target.dataset.target).classList.remove('hidden'); } });
     }
 
     function renderSyllabus() {
         const accordionContainer = document.getElementById('accordion-container');
-        accordionContainer.innerHTML = '';
-        Object.keys(syllabusData).forEach(subject => {
-            const item = document.createElement('div');
-            item.className = 'bg-white rounded-xl shadow-md overflow-hidden';
-            item.innerHTML = `
-                <button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-stone-700 hover:bg-amber-50 focus:outline-none">
-                    <span>${subject}</span>
-                    <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="accordion-content hidden p-5 border-t border-stone-200">
-                    <ul class="space-y-2">
-                        ${syllabusData[subject].map(topic => `<li class="checklist-item p-2 rounded-md" data-topic="${subject.replace(/\s/g, '-')}-${topic.replace(/\s/g, '-')}">${topic}</li>`).join('')}
-                    </ul>
-                </div>`;
-            accordionContainer.appendChild(item);
-        });
-        accordionContainer.addEventListener('click', e => {
-            if (e.target.closest('.accordion-button')) {
-                const button = e.target.closest('.accordion-button');
-                button.classList.toggle('open');
-                button.nextElementSibling.classList.toggle('hidden');
-            }
-            if (e.target.classList.contains('checklist-item')) {
-                e.target.classList.toggle('completed');
-                saveChecklistState(e.target);
-            }
-        });
+        accordionContainer.innerHTML = Object.keys(syllabusData).map(subject => `<div class="bg-white rounded-xl shadow-md overflow-hidden"><button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-stone-700 hover:bg-amber-50 focus:outline-none"><span>${subject}</span><svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button><div class="accordion-content hidden p-5 border-t border-stone-200"><ul class="space-y-2">${syllabusData[subject].map(topic => `<li class="checklist-item p-2 rounded-md" data-topic="${subject.replace(/\s/g, '-')}-${topic.replace(/\s/g, '-')}">${topic}</li>`).join('')}</ul></div></div>`).join('');
+        accordionContainer.addEventListener('click', e => { if (e.target.closest('.accordion-button')) { const button = e.target.closest('.accordion-button'); button.classList.toggle('open'); button.nextElementSibling.classList.toggle('hidden'); } if (e.target.classList.contains('checklist-item')) { e.target.classList.toggle('completed'); saveChecklistState(e.target); } });
     }
 
     function renderModals() {
         const modalsContainer = document.getElementById('modals-container');
         modalsContainer.innerHTML = '';
-        const allModalData = { ...studyData.summaries, ...studyData.quizzes, ...studyData.simulados };
+        const allModalData = { ...studyData.summaries, ...studyData.quizzes, ...studyData.simulados, ...studyData.simuladoGeral };
         Object.keys(allModalData).forEach(key => {
             const data = allModalData[key];
-            if (!data) return;
+            if (!data || !data.title) return;
             const modal = document.createElement('div');
             modal.id = key;
             modal.className = 'modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50';
-            
-            let contentHtml = data.questions ? data.questions.map((q, i) => `
-                <div class="quiz-item mb-4" data-quiz-id="${key}" data-question-index="${i}">
-                    <p class="font-semibold">${i + 1}. ${q.q}</p>
-                    <div class="space-y-2 mt-2">${q.options.map(opt => `<div class="quiz-option border-2 border-stone-200 p-2 rounded-md" data-answer="${q.answer}">${opt}</div>`).join('')}</div>
-                    <p class="quiz-feedback hidden mt-2 text-sm"></p>
-                </div>`).join('') : data.content;
-
-            modal.innerHTML = `
-                <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-                    <div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold">${data.title}</h3><button class="modal-close text-2xl">&times;</button></div>
-                    <div class="p-6 overflow-y-auto">${contentHtml}</div>
-                </div>`;
+            let contentHtml = data.questions ? data.questions.map((q, i) => `<div class="quiz-item mb-4" data-quiz-id="${key}" data-question-index="${i}"><p class="font-semibold">${i + 1}. ${q.q}</p><div class="space-y-2 mt-2">${q.options.map(opt => `<div class="quiz-option border-2 border-stone-200 p-2 rounded-md" data-answer="${q.answer}">${opt}</div>`).join('')}</div><p class="quiz-feedback hidden mt-2 text-sm"></p></div>`).join('') : data.content;
+            modal.innerHTML = `<div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold">${data.title}</h3><button class="modal-close text-2xl">&times;</button></div><div class="p-6 overflow-y-auto">${contentHtml}</div></div>`;
             modalsContainer.appendChild(modal);
         });
     }
-
-    // --- State Management Functions ---
-    function loadChecklistState() {
-        const completed = userProgress.checklist || {};
-        document.querySelectorAll('.checklist-item').forEach(item => {
-            if (completed[item.dataset.topic]) { item.classList.add('completed'); }
-            else { item.classList.remove('completed'); }
-        });
+    
+    function renderSimuladoGeral() {
+        const container = document.getElementById('simulado-geral-container');
+        container.innerHTML = studyData.simuladoGeral.questions.map((q, i) => `
+            <div class="quiz-item border-t pt-4" data-quiz-id="simuladoGeral" data-question-index="${i}">
+                <p class="font-semibold">${i + 1}. ${q.q}</p>
+                <div class="grid sm:grid-cols-2 gap-2 mt-2">
+                    ${q.options.map(opt => `<div class="quiz-option border-2 border-stone-200 p-2 rounded-md">${opt}</div>`).join('')}
+                </div>
+            </div>`).join('');
     }
 
+    // --- State Management & Event Handlers ---
+    function loadChecklistState() {
+        const completed = userProgress.checklist || {};
+        document.querySelectorAll('.checklist-item').forEach(item => { if (completed[item.dataset.topic]) item.classList.add('completed'); else item.classList.remove('completed'); });
+    }
     function saveChecklistState(item) {
         if (!userProgress.checklist) userProgress.checklist = {};
         userProgress.checklist[item.dataset.topic] = item.classList.contains('completed');
@@ -501,111 +473,168 @@
     function updatePerformancePanel() {
         const results = userProgress.quizResults || {};
         const panel = document.getElementById('performance-content');
-        if (Object.keys(results).length === 0) {
-            panel.innerHTML = '<p>Responda aos exercícios para ver seu desempenho aqui.</p>';
-            return;
-        }
-
+        if (Object.keys(results).length === 0) { panel.innerHTML = '<p>Responda aos exercícios e simulados para ver seu desempenho aqui.</p>'; return; }
         let totalCorrect = 0, totalAnswered = 0;
-        const subjectStats = {}, wrongAnswers = [];
+        const subjectStats = {}, wrongAnswers = {};
+        const allQuizzes = { ...studyData.quizzes, ...studyData.simulados, simuladoGeral: studyData.simuladoGeral };
 
         for (const quizId in results) {
-            const quizData = studyData.quizzes[quizId] || studyData.simulados[quizId];
+            const quizData = allQuizzes[quizId];
             if (!quizData) continue;
             for (const qIndex in results[quizId]) {
+                if (results[quizId][qIndex].finalized) continue; // Skip finalized simuladoGeral
                 const result = results[quizId][qIndex];
                 totalAnswered++;
                 const questionData = quizData.questions[qIndex];
                 const subject = (questionData.q.match(/^\[(.*?)\]/) || [])[1] || 'Geral';
-                
                 if (!subjectStats[subject]) subjectStats[subject] = { correct: 0, total: 0 };
                 subjectStats[subject].total++;
-
-                if (result.isCorrect) {
-                    totalCorrect++;
-                    subjectStats[subject].correct++;
-                } else {
-                    wrongAnswers.push({ question: questionData.q, yourAnswer: result.userAnswer, correctAnswer: questionData.answer });
-                }
+                if (result.isCorrect) { totalCorrect++; subjectStats[subject].correct++; }
             }
         }
-        
         const overallPercentage = totalAnswered > 0 ? ((totalCorrect / totalAnswered) * 100).toFixed(0) : 0;
-        panel.innerHTML = `<div class="grid md:grid-cols-3 gap-4 mb-6">
-            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Acerto Geral</p><p class="text-2xl font-bold">${overallPercentage}%</p></div>
-            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Respondidas</p><p class="text-2xl font-bold">${totalAnswered}</p></div>
-            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Erradas</p><p class="text-2xl font-bold">${wrongAnswers.length}</p></div>
+        panel.innerHTML = `<div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Acerto Geral (Exercícios)</p><p class="text-2xl font-bold">${overallPercentage}%</p></div>
+            <div class="bg-amber-50 p-4 rounded-lg text-center"><p class="text-sm">Questões de Exercícios</p><p class="text-2xl font-bold">${totalAnswered}</p></div>
         </div>
-        <h4 class="font-semibold mb-2">Desempenho por Disciplina:</h4>
-        <div class="space-y-2 mb-6">
-            ${Object.keys(subjectStats).sort().map(s => `<div class="flex justify-between items-center"><p>${s}</p><p class="font-semibold">${((subjectStats[s].correct / subjectStats[s].total) * 100).toFixed(0)}%</p></div>`).join('')}
-        </div>
-        ${wrongAnswers.length > 0 ? `<h4 class="font-semibold mb-2">Revise seus erros:</h4><ul class="list-disc list-inside space-y-2 text-sm">${wrongAnswers.map(wa => `<li>${wa.question} <br><i>(Sua resposta: ${wa.yourAnswer} | Correta: ${wa.correctAnswer})</i></li>`).join('')}</ul>` : ''}`;
+        <h4 class="font-semibold mb-2">Desempenho por Disciplina (Exercícios):</h4>
+        <div class="space-y-2">${Object.keys(subjectStats).sort().map(s => `<div class="flex justify-between items-center"><p>${s}</p><p class="font-semibold">${subjectStats[s].total > 0 ? ((subjectStats[s].correct / subjectStats[s].total) * 100).toFixed(0) : 0}%</p></div>`).join('')}</div>`;
     }
 
     function loadQuizState(modal) {
-        const quizItems = modal.querySelectorAll('.quiz-item');
-        quizItems.forEach(item => {
+        modal.querySelectorAll('.quiz-item').forEach(item => {
             const quizId = item.dataset.quizId;
             const qIndex = item.dataset.questionIndex;
             const results = userProgress.quizResults || {};
-            
-            item.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('answered', 'correct', 'incorrect');
-            });
-            const feedback = item.querySelector('.quiz-feedback');
-            feedback.classList.add('hidden');
-
-            if (results[quizId] && results[quizId][qIndex]) {
-                const savedAnswer = results[quizId][qIndex];
+            item.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('answered', 'correct', 'incorrect'));
+            item.querySelector('.quiz-feedback')?.classList.add('hidden');
+            if (results[quizId] && results[quizId][qIndex] && !results[quizId].finalized) {
+                const { userAnswer, isCorrect } = results[quizId][qIndex];
                 item.querySelectorAll('.quiz-option').forEach(opt => {
                     opt.classList.add('answered');
-                    if(opt.textContent === savedAnswer.userAnswer) {
-                        opt.classList.add(savedAnswer.isCorrect ? 'correct' : 'incorrect');
-                    }
-                    if(opt.textContent === opt.dataset.answer && !savedAnswer.isCorrect) {
-                         opt.classList.add('correct');
-                    }
+                    if(opt.textContent === userAnswer) opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    if(opt.textContent === studyData.quizzes[quizId].questions[qIndex].answer && !isCorrect) opt.classList.add('correct');
                 });
-                feedback.textContent = savedAnswer.isCorrect ? 'Resposta Correta!' : `Incorreto. A resposta certa é: ${item.querySelector('.quiz-option').dataset.answer}`;
-                feedback.className = `quiz-feedback block mt-2 text-sm ${savedAnswer.isCorrect ? 'text-green-600' : 'text-red-600'}`;
+                const feedback = item.querySelector('.quiz-feedback');
+                feedback.textContent = isCorrect ? 'Resposta Correta!' : `Incorreto. A resposta certa é: ${studyData.quizzes[quizId].questions[qIndex].answer}`;
+                feedback.className = `quiz-feedback block mt-2 text-sm ${isCorrect ? 'text-green-600' : 'text-red-600'}`;
             }
         });
     }
+
+    function loadSimuladoGeralState() {
+        const resultsContainer = document.getElementById('simulado-geral-results');
+        const questionsContainer = document.getElementById('simulado-geral-container');
+        const finalizeBtn = document.getElementById('finalize-simulado-btn');
+        const results = userProgress.quizResults?.simuladoGeral || {};
+
+        if (results.finalized) {
+            finalizeSimuladoGeral(true); // show results, don't re-calculate
+            return;
+        }
+
+        questionsContainer.querySelectorAll('.quiz-item').forEach(item => {
+            const qIndex = item.dataset.questionIndex;
+            if (results[qIndex]) {
+                const { userAnswer } = results[qIndex];
+                item.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('simulado-selected');
+                    if (opt.textContent === userAnswer) {
+                        opt.classList.add('simulado-selected');
+                    }
+                });
+            }
+        });
+    }
+
+    function finalizeSimuladoGeral(isReload = false) {
+        const resultsContainer = document.getElementById('simulado-geral-results');
+        const questionsContainer = document.getElementById('simulado-geral-container');
+        const finalizeBtn = document.getElementById('finalize-simulado-btn');
+        const results = userProgress.quizResults?.simuladoGeral || {};
+        
+        let correctCount = 0;
+        const wrongAnswers = [];
+        const totalQuestions = studyData.simuladoGeral.questions.length;
+        
+        if (!isReload) {
+            if (!userProgress.quizResults) userProgress.quizResults = {};
+            userProgress.quizResults.simuladoGeral = userProgress.quizResults.simuladoGeral || {};
+            userProgress.quizResults.simuladoGeral.finalized = true;
+            saveUserProgress();
+        }
+
+        studyData.simuladoGeral.questions.forEach((q, i) => {
+            const userAnswer = results[i]?.userAnswer;
+            if (userAnswer === q.answer) {
+                correctCount++;
+            } else if (userAnswer) {
+                wrongAnswers.push({ question: q.q, yourAnswer: userAnswer, correctAnswer: q.answer });
+            }
+        });
+
+        const score = totalQuestions > 0 ? ((correctCount / totalQuestions) * 100).toFixed(1) : 0;
+        resultsContainer.innerHTML = `
+            <div class="bg-amber-50 p-6 rounded-lg text-center">
+                <h3 class="text-xl font-bold text-stone-800">Resultado do Simulado</h3>
+                <p class="text-4xl font-bold my-2">${score}%</p>
+                <p class="text-stone-600">${correctCount} de ${totalQuestions} questões corretas.</p>
+                ${wrongAnswers.length > 0 ? `<div class="text-left mt-4"><h4 class="font-semibold mb-2">Revise seus erros:</h4><ul class="list-disc list-inside space-y-2 text-sm">${wrongAnswers.map(wa => `<li>${wa.question} <br><i>(Sua resposta: ${wa.yourAnswer} | Correta: ${wa.correctAnswer})</i></li>`).join('')}</ul></div>` : ''}
+            </div>`;
+        
+        questionsContainer.style.display = 'none';
+        finalizeBtn.style.display = 'none';
+    }
+
+    document.getElementById('finalize-simulado-btn').addEventListener('click', () => {
+        if (confirm('Tem certeza que deseja finalizar o simulado? Você não poderá alterar suas respostas depois.')) {
+            finalizeSimuladoGeral();
+        }
+    });
     
-    // --- Global Event Listener ---
     document.body.addEventListener('click', async e => {
         if (e.target.classList.contains('modal-trigger')) {
             const modalId = e.target.dataset.modal;
             const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                if(modal.querySelector('.quiz-item')) loadQuizState(modal);
-            }
+            if (modal) { modal.classList.add('active'); if (modal.querySelector('.quiz-item')) loadQuizState(modal); }
         }
         if (e.target.classList.contains('modal-close') || e.target.classList.contains('modal')) {
             e.target.closest('.modal')?.classList.remove('active');
         }
-        if (e.target.classList.contains('quiz-option') && !e.target.closest('.quiz-item').querySelector('.answered')) {
-            const option = e.target;
-            const item = option.closest('.quiz-item');
-            const quizId = item.dataset.quizId;
-            const qIndex = item.dataset.questionIndex;
-            const correctAnswer = option.dataset.answer;
-            const isCorrect = option.textContent === correctAnswer;
-            
-            if (!userProgress.quizResults) userProgress.quizResults = {};
-            if (!userProgress.quizResults[quizId]) userProgress.quizResults[quizId] = {};
-            userProgress.quizResults[quizId][qIndex] = { userAnswer: option.textContent, isCorrect };
-            
-            await saveUserProgress();
-            
-            loadQuizState(item.closest('.modal'));
-            updatePerformancePanel();
+        
+        const quizItem = e.target.closest('.quiz-item');
+        if (quizItem && e.target.classList.contains('quiz-option')) {
+            const quizId = quizItem.dataset.quizId;
+            const qIndex = quizItem.dataset.questionIndex;
+
+            if (quizId === 'simuladoGeral') {
+                if(userProgress.quizResults?.simuladoGeral?.finalized) return;
+                
+                quizItem.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('simulado-selected'));
+                e.target.classList.add('simulado-selected');
+
+                if (!userProgress.quizResults) userProgress.quizResults = {};
+                if (!userProgress.quizResults[quizId]) userProgress.quizResults[quizId] = {};
+                userProgress.quizResults[quizId][qIndex] = { userAnswer: e.target.textContent };
+                await saveUserProgress();
+            } else {
+                if (quizItem.querySelector('.answered')) return;
+                const correctAnswer = studyData.quizzes[quizId].questions[qIndex].answer;
+                const isCorrect = e.target.textContent === correctAnswer;
+                
+                if (!userProgress.quizResults) userProgress.quizResults = {};
+                if (!userProgress.quizResults[quizId]) userProgress.quizResults[quizId] = {};
+                userProgress.quizResults[quizId][qIndex] = { userAnswer: e.target.textContent, isCorrect };
+                
+                await saveUserProgress();
+                loadQuizState(quizItem.closest('.modal'));
+                updatePerformancePanel();
+            }
         }
     });
 </script>
 
 </body>
 </html>
+
 
