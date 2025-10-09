@@ -280,24 +280,679 @@
     const db = firebase.firestore();
     // --- FIM DA CONFIGURAÇÃO DO FIREBASE ---
 
-    const studyData = {
-        videoLessons: {
-            especificos: { title: "Conhecimentos Específicos", topics: [
-                { name: "Tópico 1: Redação Oficial", videos: [ { title: "1 - Princípios da Redação Oficial", url: "https://drive.google.com/open?id=1j8ANhi7UXZC_hpzr9PGyQw-4pJBxFOmV&usp=drive_copy" }, { title: "2 - Princípios da Redação Oficial II", url: "https://drive.google.com/open?id=1CJOKASQabA_5q5Xc616Ya1EfYbnoymtf&usp=drive_copy" }, { title: "3 - Emprego do Vocativo e do Pronome de Tratamento", url: "https://drive.google.com/open?id=1a-sul6TYC6yJzTtCIsqgtxK3X1s94yVb&usp=drive_copy" }, { title: "4 - emprego do Vocativo e do Pronome de Tratamento II", url: "https://drive.google.com/open?id=14vfOLGv4pZEO28BAHSl2qx7ljzsI3Bdo&usp=drive_copy" }, { title: "5 - Uso dos Fechos", url: "https://drive.google.com/open?id=1B3CsRlviaLHw8fXuYL2xqHoFIavbS2BC&usp=drive_copy" }, { title: "6 - Padrão Ofício", url: "https://drive.google.com/file/d/1B1VaIeKIPuxMjLa165cql8Q02wfBj_AM/view?usp=drive_link" }, { title: "7 - E.M., Mensagem, E - mail", url: "https://drive.google.com/open?id=16Qm0sGkkCc33tuJ6gI-nMVOKVUZgaFEB&usp=drive_copy" }, { title: "8 - Outros Atos Oficiais", url: "https://drive.google.com/open?id=1PyNam1TtiwNAOaMjS4HYLT-aJ6LOLuCs&usp=drive_copy" } ] },
-                { name: "Tópico 2: Arquivologia - Conceitos e Classificação", videos: [ { title: "1 - Conceitos Fundamentais de Arquivologia", url: "https://drive.google.com/open?id=1m4jpfNMz3wtOA-yZrABhls7I3RC1ZNyC&usp=drive_copy" }, { title: "2 - Diferenças Básicas Entre Arquivo e Biblioteca", url: "https://drive.google.com/open?id=17z5N6bs7JzQwrcQLhgq6u3pE6DyV8Nv-&usp=drive_copy" }, { title: "3 - Classificação dos Arquivos", url: "https://drive.google.com/open?id=12mZomIzSbEy_zJxbfwCXl1TDIkJKEHsa&usp=drive_copy" }, { title: "4 - Classificação dos Documentos - Gênero", url: "https://drive.google.com/open?id=12sxjLvOZCpUYnWCbvXr9an_H7tqkKT90&usp=drive_copy" }, { title: "5 - Classificação dos Documentos - Técnica de Registro Espécie Tipologia", url: "https://drive.google.com/open?id=1Sd4ks5VZ2bzZGbifE2D6wGONQxRd2g68&usp=drive_copy" }, { title: "6 - Classificação dos Documentos - Forma, Formato e Natureza do Assunto", url: "https://drive.google.com/open?id=1gEdzmyBv7M4rKpxYDqOni8zfXjtdpvFC&usp=drive_copy" } ] },
-                { name: "Tópico 3: Ciclo Vital dos Documentos", videos: [ { title: "1 - Ciclo Vital dos Documentos e Valor dos Documentos", url: "https://drive.google.com/open?id=1zVEuwwB14UMo9-ruKO74RKpaYNU38D4b&usp=drive_copy" }, { title: "2 - Idades Corrente Intermediária e Permanente", url: "https://drive.google.com/open?id=1F8W8--yeU04zDlmnu8KLazGGjN7e50Pz&usp=drive_copy" } ] },
-                { name: "Tópico 4: Acondicionamento e Métodos de Arquivamento", videos: [ { title: "1 - Acondicionamento e Armazenamento de Documentos", url: "https://drive.google.com/open?id=1cJH3R4bZHesEuzWw-1hXlHTyKCeWBBl4&usp=drive_copy" }, { title: "2 - Acondicionamento e Armazenamento de Documentos II", url: "https://drive.google.com/open?id=1aYtzyNUPYLiDFd1udWehSOTaQvz4JHKy&usp=drive_copy" } /* ... */ ] },
-                { name: "Tópico 5: Avaliação e Destinação de Documentos", videos: [ { title: "1 - Avaliação Tabela de Temporalidade e Plano de Destinação", url: "https://drive.google.com/open?id=1eUq5n1DNYkWtpL9EHNGJTN7ozyrtCvWd&usp=drive_copy" } ] },
-                { name: "Tópico 6: Transferência e Recolhimento", videos: [ { title: "1 - Cumprimento do Ciclo Vital - Transferência e Recolhimento", url: "https://drive.google.com/open?id=1qBnzrqgVyIHfuA8Rl31KQ9gX6GLiAsb3&usp=drive_copy" } ] },
-                { name: "Tópico 7: Terminologia Arquivística", videos: [ { title: "1 - Terminologia Arquivística", url: "https://drive.google.com/open?id=1xcRO-9DynKdq4LBaBqH3i2KtJyPws_5e&usp=drive_copy" } /* ... */ ] },
-                { name: "Tópico 8: Protocolo e Procedimentos Administrativos", videos: [ { title: "1 - Protocolo", url: "https://drive.google.com/open?id=1WWy5qzvVW1QwCc255jTDwDJB9gScsrKb&usp=drive_copy" } /* ... */ ] },
-                { name: "Tópico 9: Administração de Recursos Materiais", videos: [ { title: "1 - Introdução", url: "https://drive.google.com/open?id=1qmGBketKnBf4mHOkNsdciUIMWAgclGnx&usp=drive_copy" } /* ... */ ] },
-                { name: "Tópico 10: Processo Administrativo", videos: [ { title: "1 - Processo Administrativo", url: "https://drive.google.com/open?id=1sxiBZmfeM0iagEq-SWi9dZ43-KCDHtqg&usp=drive_copy" } /* ... */ ] }
-            ]},
-            etica: { title: "Ética", topics: [/* ... */] },
-            informatica: { title: "Informática", topics: [/* ... */] },
-            portugues: { title: "Português", topics: [/* ... */] }
+const studyData = {
+    videoLessons: {
+        especificos: {
+            title: "Conhecimentos Específicos",
+            topics: [
+                {
+                    name: "Tópico 1: Redação Oficial",
+                    videos: [
+                        { title: "1 - Princípios da Redação Oficial (CÓDIGO 493762).mp4", url: "https://drive.google.com/open?id=1j8ANhi7UXZC_hpzr9PGyQw-4pJBxFOmV&usp=drive_copy" },
+                        { title: "2 - Princípios da Redação Oficial II (CÓDIGO 493802).mp4", url: "https://drive.google.com/open?id=1CJOKASQabA_5q5Xc616Ya1EfYbnoymtf&usp=drive_copy" },
+                        { title: "3 - Emprego do Vocativo e do Pronome de Tratamento (CÓDIGO 493953).mp4", url: "https://drive.google.com/open?id=1a-sul6TYC6yJzTtCIsqgtxK3X1s94yVb&usp=drive_copy" },
+                        { title: "4 - emprego do Vocativo e do Pronome de Tratamento II (CÓDIGO 493955).mp4", url: "https://drive.google.com/open?id=14vfOLGv4pZEO28BAHSl2qx7ljzsI3Bdo&usp=drive_copy" },
+                        { title: "5 - Uso dos Fechos (CÓDIGO 496025).mp4", url: "https://drive.google.com/open?id=1B3CsRlviaLHw8fXuYL2xqHoFIavbS2BC&usp=drive_copy" },
+                        { title: "6 - Padrão Ofício (CÓDIGO 496027).mp4", url: "https://drive.google.com/file/d/1B1VaIeKIPuxMjLa165cql8Q02wfBj_AM/view?usp=drive_link" },
+                        { title: "7 - E.M., Mensagem, E - mail (CÓDIGO 499595).mp4", url: "https://drive.google.com/open?id=16Qm0sGkkCc33tuJ6gI-nMVOKVUZgaFEB&usp=drive_copy" },
+                        { title: "8 - Outros Atos Oficiais (CÓDIGO 499596).mp4", url: "https://drive.google.com/open?id=1PyNam1TtiwNAOaMjS4HYLT-aJ6LOLuCs&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 2: Arquivologia - Conceitos e Classificação",
+                    videos: [
+                        { title: "1 - Conceitos Fundamentais de Arquivologia (CÓDIGO 453456).mp4", url: "https://drive.google.com/open?id=1m4jpfNMz3wtOA-yZrABhls7I3RC1ZNyC&usp=drive_copy" },
+                        { title: "2 - Diferenças Básicas Entre Arquivo e Biblioteca (CÓDIGO 453458).mp4", url: "https://drive.google.com/open?id=17z5N6bs7JzQwrcQLhgq6u3pE6DyV8Nv-&usp=drive_copy" },
+                        { title: "3 - Classificação dos Arquivos (CÓDIGO 453920).mp4", url: "https://drive.google.com/open?id=12mZomIzSbEy_zJxbfwCXl1TDIkJKEHsa&usp=drive_copy" },
+                        { title: "4 - Classificação dos Documentos - Gênero (CÓDIGO 453921).mp4", url: "https://drive.google.com/open?id=12sxjLvOZCpUYnWCbvXr9an_H7tqkKT90&usp=drive_copy" },
+                        { title: "5 - Classificação dos Documentos - Técnica de Registro Espécie Tipologia (CÓDIGO 453922).mp4", url: "https://drive.google.com/open?id=1Sd4ks5VZ2bzZGbifE2D6wGONQxRd2g68&usp=drive_copy" },
+                        { title: "6 - Classificação dos Documentos - Forma, Formato e Natureza do Assunto (CÓDIGO 454271).mp4", url: "https://drive.google.com/open?id=1gEdzmyBv7M4rKpxYDqOni8zfXjtdpvFC&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 3: Ciclo Vital dos Documentos",
+                    videos: [
+                        { title: "1 - Ciclo Vital dos Documentos e Valor dos Documentos (CÓDIGO 454272).mp4", url: "https://drive.google.com/open?id=1zVEuwwB14UMo9-ruKO74RKpaYNU38D4b&usp=drive_copy" },
+                        { title: "2 - Idades Corrente Intermediária e Permanente (CÓDIGO 454275).mp4", url: "https://drive.google.com/open?id=1F8W8--yeU04zDlmnu8KLazGGjN7e50Pz&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 4: Acondicionamento e Métodos de Arquivamento",
+                    videos: [
+                        { title: "1 - Acondicionamento e Armazenamento de Documentos (CÓDIGO 456030).mp4", url: "https://drive.google.com/open?id=1cJH3R4bZHesEuzWw-1hXlHTyKCeWBBl4&usp=drive_copy" },
+                        { title: "2 - Acondicionamento e Armazenamento de Documentos II (CÓDIGO 456229).mp4", url: "https://drive.google.com/open?id=1aYtzyNUPYLiDFd1udWehSOTaQvz4JHKy&usp=drive_copy" },
+                        { title: "3 - Métodos de Arquivamento - Método Alfabético (CÓDIGO 456231).mp4", url: "https://drive.google.com/open?id=1a0bl2WcpGfQaS1EMEhaI-CRp8P2PFq7E&usp=drive_copy" },
+                        { title: "4 - Métodos de Arquivamento - Método Alfabético II (CÓDIGO 456233).mp4", url: "https://drive.google.com/open?id=1IAnKpLKFxojZ4vLZhVguxilFVOKyXiz5&usp=drive_copy" },
+                        { title: "5 - Métodos de Arquivamento - Método Alfabético III (CÓDIGO 456235).mp4", url: "https://drive.google.com/open?id=1WO_DaNnv0R0x940V8B4rxMbhXitH2hk4&usp=drive_copy" },
+                        { title: "6 - Métodos de Arquivamento - Método Geográfico (CÓDIGO 456786).mp4", url: "https://drive.google.com/open?id=1jnH43q5Ldo3j4O-oW6-kHroUWg5ApWEF&usp=drive_copy" },
+                        { title: "7 - Métodos de Arquivamento - Método Numérico (CÓDIGO 456787).mp4", url: "https://drive.google.com/open?id=1IwgO2lWYKJGr8hoL46y31mDcBcFhUlHG&usp=drive_copy" },
+                        { title: "8 - Métodos de Arquivamento - Método Ideográfico (CÓDIGO 456791).mp4", url: "https://drive.google.com/open?id=1d19MBbD4h17qAd07Id3nM7hxGeRCqs7a&usp=drive_copy" },
+                        { title: "9 - Métodos de Arquivamento - Método Ideográfico Numérico (CÓDIGO 456792).mp4", url: "https://drive.google.com/open?id=1EfqVv4PW6ZLzQ2MXmKNVYryPT_mCYVR_&usp=drive_copy" },
+                        { title: "10 - Métodos de Arquivamento - Método Unitermo ou Indexação Coordenada (CÓDIGO 456992).mp4", url: "https://drive.google.com/open?id=1BRB2fb87rgiDsbZ35ALWvIHxumg0kkAj&usp=drive_copy" },
+                        { title: "11 - Métodos de Arquivamento - Métodos Variadex e Alfanumérico (CÓDIGO 456994).mp4", url: "https://drive.google.com/open?id=1LWG2-p0wkFGO5nty5dorva6HdbLforU4&usp=drive_copy" },
+                        { title: "12 - Etapas do Arquivamento (CÓDIGO 456995).mp4", url: "https://drive.google.com/open?id=16DEEbgP1uWb40lMXIbEu8RoLmLeQC-Qb&usp=drive_copy" },
+                        { title: "13 - Empréstimo e Consulta (CÓDIGO 457574).mp4", url: "https://drive.google.com/open?id=1nC3vBIV9A2zblU2opmtb5qrS3HgPRL4E&usp=drive_copy" },
+                        { title: "14 - Sistemas de Arquivamento e Escolha dos Métodos de Arquivamento (CÓDIGO 457575).mp4", url: "https://drive.google.com/open?id=1dNcA2Ly89OjSiDXjsz10VKIqoddJx-by&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 5: Avaliação e Destinação de Documentos",
+                    videos: [
+                        { title: "1 - Avaliação Tabela de Temporalidade e Plano de Destinação (CÓDIGO 454276).mp4", url: "https://drive.google.com/open?id=1eUq5n1DNYkWtpL9EHNGJTN7ozyrtCvWd&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 6: Transferência e Recolhimento",
+                    videos: [
+                        { title: "1 - Cumprimento do Ciclo Vital - Transferência e Recolhimento (CÓDIGO 454562).mp4", url: "https://drive.google.com/open?id=1qBnzrqgVyIHfuA8Rl31KQ9gX6GLiAsb3&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 7: Terminologia Arquivística",
+                    videos: [
+                        { title: "1 - Terminologia Arquivística (CÓDIGO 463070).mp4", url: "https://drive.google.com/open?id=1xcRO-9DynKdq4LBaBqH3i2KtJyPws_5e&usp=drive_copy" },
+                        { title: "2 - Terminologia Arquivística II (CÓDIGO 463225).mp4", url: "https://drive.google.com/open?id=18IPLR39Itd_xlY55bnQ2Lh1u8l6Mlqh0&usp=drive_copy" },
+                        { title: "3 - Terminologia Arquivística III (CÓDIGO 463227).mp4", url: "https://drive.google.com/open?id=18xKFuvCiA9daaVF0QMxxl1mRRw2SM8qD&usp=drive_copy" },
+                        { title: "4 - Terminologia Arquivística IV (CÓDIGO 463228).mp4", url: "https://drive.google.com/open?id=1F2HrYlKbQyacWfFVrB9pQ-1gkN8veIvJ&usp=drive_copy" },
+                        { title: "5 - Terminologia Arquivística V (CÓDIGO 463584).mp4", url: "https://drive.google.com/open?id=1Ys8pP9fSLslWjqPCtGnoBO-tEfLxgpvF&usp=drive_copy" },
+                        { title: "6 - Terminologia Arquivística VI (CÓDIGO 463585).mp4", url: "https://drive.google.com/open?id=1JcRY9mXXK2vu61Sm7_p0Tw7ZjnsvNSXf&usp=drive_copy" },
+                        { title: "7 - Terminologia Arquivística VII (CÓDIGO 463586).mp4", url: "https://drive.google.com/open?id=1ZBeTjwRB6bsPDAAfchvmQfkmAQTc1NDu&usp=drive_copy" },
+                        { title: "8 - Terminologia Arquivística VIII (CÓDIGO 464113).mp4", url: "https://drive.google.com/open?id=1Y_EViGUeLIih17oxkOU4ARykfZdCj96O&usp=drive_copy" },
+                        { title: "9 - Terminologia Arquivística IX (CÓDIGO 464114).mp4", url: "https://drive.google.com/open?id=129C44MjIc9Jt7SHEfeouvHAxS-wFQG53&usp=drive_copy" },
+                        { title: "10 - Terminologia Arquivística X (CÓDIGO 464115).mp4", url: "https://drive.google.com/open?id=1AmtAfHER3H9flusW9uf52w9kO-w5hYm3&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 8: Protocolo e Procedimentos Administrativos",
+                    videos: [
+                        { title: "1 - Protocolo (CÓDIGO 454565).mp4", url: "https://drive.google.com/open?id=1WWy5qzvVW1QwCc255jTDwDJB9gScsrKb&usp=drive_copy" },
+                        { title: "2 - Protocolo II (CÓDIGO 454722).mp4", url: "https://drive.google.com/open?id=1_91ezlgoDhQ46KQsIq0N-qr2oBRm9amk&usp=drive_copy" },
+                        { title: "3 - Procedimentos Administrativos - Correspondências (CÓDIGO 454723).mp4", url: "https://drive.google.com/open?id=1QBhZ_l8opSvqcBKUHsSedYnKXS6FhNWs&usp=drive_copy" },
+                        { title: "4 - Procedimentos Administrativos - Processos (CÓDIGO 454724).mp4", url: "https://drive.google.com/open?id=1I2zbnbh-46T0rquWNxAS5J6lF78uL-4Z&usp=drive_copy" },
+                        { title: "5 - Procedimentos Administrativos - Processos II (CÓDIGO 454884).mp4", url: "https://drive.google.com/open?id=1EXHDpw41QX9Rqn3JKhY1MZHzpBLqA0qh&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 9: Administração de Recursos Materiais",
+                    videos: [
+                        { title: "1 - Introdução (CÓDIGO 485510).mp4", url: "https://drive.google.com/open?id=1qmGBketKnBf4mHOkNsdciUIMWAgclGnx&usp=drive_copy" },
+                        { title: "2 - Introdução II (CÓDIGO 485511).mp4", url: "https://drive.google.com/open?id=1P9gxT5jBTUvmqHB1W3GZovn-vSmG0AHW&usp=drive_copy" },
+                        { title: "3 - Classificação e Codificação de Materiais (CÓDIGO 485512).mp4", url: "https://drive.google.com/open?id=1sNmXgRJPSl2rD0O3rJHkSn3Izwq9yEA5&usp=drive_copy" },
+                        { title: "4 - Classificação e Codificação de Materiais II (CÓDIGO 485513).mp4", url: "https://drive.google.com/open?id=1YEqzyIkxb71dHHZl2Bvf1YePUtXsosB5&usp=drive_copy" },
+                        { title: "5 - Classificação e Codificação de Materiais III (CÓDIGO 485514).mp4", url: "https://drive.google.com/open?id=1KRZdqgCC8F9xUFhrIoVKbHT5oRK3JxrK&usp=drive_copy" },
+                        { title: "6 - Classificação e Codificação de Materiais IV (CÓDIGO 485523).mp4", url: "https://drive.google.com/open?id=1f-IyvP1aSI-wTj473--1ktOxReoZTDB4&usp=drive_copy" },
+                        { title: "7 - Curva ABC (CÓDIGO 485855).mp4", url: "https://drive.google.com/open?id=1JDOOay0336VwXnK20ffeWTZibn0NRpDC&usp=drive_copy" },
+                        { title: "8 - Curva ABC II (CÓDIGO 485856).mp4", url: "https://drive.google.com/open?id=1htKJYjSolnm9jRirtq8ajQEkL2V1Cd37&usp=drive_copy" },
+                        { title: "9 - Avaliação de Estoques (CÓDIGO 485857).mp4", url: "https://drive.google.com/open?id=1G0ZXqSQCPR8xY1BB1U0x0LiDpJyQuF0P&usp=drive_copy" },
+                        { title: "10 - Avaliação de Estoques II (CÓDIGO 485858).mp4", url: "https://drive.google.com/open?id=1ILg3V-QZeSkUCWsel3Qesz9igg4-YQv1&usp=drive_copy" },
+                        { title: "11 - Custos (CÓDIGO 487407).mp4", url: "https://drive.google.com/open?id=16dQwsY_XPjuvTDXT_s6gaJXu5hpQA4CM&usp=drive_copy" },
+                        { title: "12 - Custos II (CÓDIGO 487408).mp4", url: "https://drive.google.com/open?id=1xMCtYZQ7BBNIFwAHIFuLyNgcMugrDoTm&usp=drive_copy" },
+                        { title: "13 - Custos III (CÓDIGO 487409).mp4", url: "https://drive.google.com/open?id=1qg7RV_cD_bkIpHcE5Mwo36IvOiGmmbm7&usp=drive_copy" },
+                        { title: "14 - Custos IV (CÓDIGO 487410).mp4", url: "https://drive.google.com/open?id=10JLPP_P3IY3VJCDRfA3QsXmcjOwBUcV-&usp=drive_copy" },
+                        { title: "15 - Indicadores de Materiais (CÓDIGO 487411).mp4", url: "https://drive.google.com/open?id=1MbPKi2xnCc0Uum5H_BUqW0Dwrj5qOi4W&usp=drive_copy" },
+                        { title: "16 - Indicadores de Materiais II (CÓDIGO 487879).mp4", url: "https://drive.google.com/open?id=1tN_OQ7OXmArEv41eRlQUaxTLD9E6PeKV&usp=drive_copy" },
+                        { title: "17 - Sistema da Reposição de Estoque (CÓDIGO 487880).mp4", url: "https://drive.google.com/open?id=14Kta83VswETCWA_hPkjPGF_lRb9JsYpQ&usp=drive_copy" },
+                        { title: "18 - Sistema da Reposição de Estoque II (CÓDIGO 487881).mp4", url: "https://drive.google.com/open?id=14ASq7V56sF7VNc1UmKiWcgj0QR66-JhS&usp=drive_copy" },
+                        { title: "19 - Previsão da Demanda (CÓDIGO 487882).mp4", url: "https://drive.google.com/open?id=1MoDEE-PNZYL0cw9nd9QAKrwgVeSORAyq&usp=drive_copy" },
+                        { title: "20 - Previsão da Demanda II (CÓDIGO 487884).mp4", url: "https://drive.google.com/open?id=1jKMR8JRYFnIixgBgVbq3JsaGVKg87uGC&usp=drive_copy" },
+                        { title: "21 - Previsão da Demanda III (CÓDIGO 487885).mp4", url: "https://drive.google.com/open?id=1qD_CtHsAj9xLP4JwMZgtR5gj9rBYT7sc&usp=drive_copy" },
+                        { title: "22 - Lote de Compras (CÓDIGO 489218).mp4", url: "https://drive.google.com/open?id=1OlsYejkNpk0tZ87fSSOiFSEsI-jJpjkJ&usp=drive_copy" },
+                        { title: "23 - Lote de Compras II (CÓDIGO 489219).mp4", url: "https://drive.google.com/open?id=1A0op9MumyqT9vUIbuguxoTONGJdoAlgo&usp=drive_copy" },
+                        { title: "24 - Lote de Compras III (CÓDIGO 489220).mp4", url: "https://drive.google.com/open?id=1Y6ZysAYbciP13dUYC500udrqNt3c3MT5&usp=drive_copy" },
+                        { title: "25 - Ponto de Pedido e Estoque Mínimo (CÓDIGO 489221).mp4", url: "https://drive.google.com/open?id=1l7uJCqYfOvj5K-zC7pvlOZPA6HtOLg-t&usp=drive_copy" },
+                        { title: "26 - Ponto de Pedido e Estoque Mínimo II (CÓDIGO 489222).mp4", url: "https://drive.google.com/open?id=1VbvkX32GN0DqaeVGYS8Qg5DsQ7_0mzoM&usp=drive_copy" },
+                        { title: "27 - MRP, MRP II e ERP (CÓDIGO 493117).mp4", url: "https://drive.google.com/open?id=1Xk7HJxU5qAoZwLFYryl_WpSr6EXUO_6H&usp=drive_copy" },
+                        { title: "28 - MRP, MRP II e ERP II (CÓDIGO 493118).mp4", url: "https://drive.google.com/open?id=1jPx48RN8Fkvx-rJUWlije3vp6TEEbQqR&usp=drive_copy" },
+                        { title: "29 - Introdução a Função de Compras (CÓDIGO 493119).mp4", url: "https://drive.google.com/open?id=100gYcMu2qmbCh31vBsoURKWuWE1OC5Z6&usp=drive_copy" },
+                        { title: "30 - Planejamento de Compras (CÓDIGO 493120).mp4", url: "https://drive.google.com/open?id=1NsEE5XctOYD6zGVhWsK2ABxtwe7fN00g&usp=drive_copy" },
+                        { title: "31 - Seleção e Gestão de Fornecedores (CÓDIGO 493122).mp4", url: "https://drive.google.com/open?id=1trqaAV_j2ZA5VklQ6Uxqg8upr7BqfuYx&usp=drive_copy" },
+                        { title: "32 - Modalidades e Processos de Compras (CÓDIGO 493478).mp4", url: "https://drive.google.com/open?id=10af-vtdssK5yQMmI7G0rw4pQimeell0N&usp=drive_copy" },
+                        { title: "33 - Aspectos Organizacionais e Éticos em Compras (CÓDIGO 493480).mp4", url: "https://drive.google.com/open?id=1IDg6-Z67hvZSNuhSYKA72V7rU1clQ55A&usp=drive_copy" },
+                        { title: "34 - Negociação e Gestão de Contratos (CÓDIGO 493483).mp4", url: "https://drive.google.com/open?id=17D9WeFXPdH-kaBykVJf0NGqqXRnPF2Kx&usp=drive_copy" },
+                        { title: "35 - Avaliação e Melhoria Contínua na Função de Compras (CÓDIGO 493485).mp4", url: "https://drive.google.com/open?id=1zrJTyYhyy8bplEdGHwM5U7CHybQE7pA-&usp=drive_copy" },
+                        { title: "36 - Introdução à Administração de Recursos de Materiais na Administração Pública (CÓDIGO 494059).mp4", url: "https://drive.google.com/open?id=1-X4rZjQzVPIlvyNaGfKNeY4EpzHEa6Ti&usp=drive_copy" },
+                        { title: "37 - Princípios e Modalidades Licitatórias (CÓDIGO 494060).mp4", url: "https://drive.google.com/open?id=1v-_tlUEyYjJCxhGXHLMsfiWQaFTd9ZOn&usp=drive_copy" },
+                        { title: "38 - Processo Licitatório, Critérios de Julgamento e Habilitação (CÓDIGO 494061).mp4", url: "https://drive.google.com/open?id=1all2FYDENC3jFVCeiYkLGBp-Kg-9RILV&usp=drive_copy" },
+                        { title: "39 - Dispensa e Inexigibilidade de Licitação (CÓDIGO 494062).mp4", url: "https://drive.google.com/open?id=15s_XoHzB4W5IhesC05nfQpPO1bF8zzJu&usp=drive_copy" },
+                        { title: "40 - Procedimentos Auxiliares e Registro Cadastral (CÓDIGO 494063).mp4", url: "https://drive.google.com/open?id=1697reNSUDZe_jMP3poy0SdMabJ4WtdF_&usp=drive_copy" },
+                        { title: "41 - Regimes de Contratação e Contratos (CÓDIGO 495125).mp4", url: "https://drive.google.com/open?id=1eugEQafkLQC9CikzEfMQ2vvlJBQtiyAj&usp=drive_copy" },
+                        { title: "42 - Gestão e Fiscalização de Contratos e Sanções Administrativas (CÓDIGO 495127).mp4", url: "https://drive.google.com/open?id=1VFOZ_jbK6LTbg2bXDetsUrO9OdxOAgKZ&usp=drive_copy" },
+                        { title: "43 - Controle e Ética nas Licitações e Contratos (CÓDIGO 495137).mp4", url: "https://drive.google.com/open?id=1xRjYo7VTXDN0Wh8BE5iNoyFDIF1vr-Z8&usp=drive_copy" },
+                        { title: "44 - Almoxarifado (CÓDIGO 495141).mp4", url: "https://drive.google.com/open?id=1OmbUVwUGpZybifUUFEGSkBAUqlnEat-i&usp=drive_copy" },
+                        { title: "45 - LayoutArranjo Físico (CÓDIGO 495157).mp4", url: "https://drive.google.com/open?id=1M4VRu4HjwUdJKAcJqmdvJlXuwePtCmgp&usp=drive_copy" },
+                        { title: "46 - LayoutArranjo Físico II (CÓDIGO 495158).mp4", url: "https://drive.google.com/open?id=1RYA1YPsnC2Ol0nmqUxhd_cj7MGyCSlc8&usp=drive_copy" },
+                        { title: "47 - Equipamentos de Movimentação (CÓDIGO 495159).mp4", url: "https://drive.google.com/open?id=1pvH2YhcElqegPKUZ4rMybT0AxedOJV0v&usp=drive_copy" },
+                        { title: "48 - Recebimento de Materiais (CÓDIGO 495160).mp4", url: "https://drive.google.com/open?id=17_NIRhAOI0WcR4FAibh3VRXGPJKDDcD8&usp=drive_copy" },
+                        { title: "49 - Recebimento de Materiais II (CÓDIGO 495369).mp4", url: "https://drive.google.com/open?id=1xUrZqGtVhebUpQ3nQ7hhipt0O3UQaa6N&usp=drive_copy" },
+                        { title: "50 - Armazenagem (Princípios, Funções e Objetivos) (CÓDIGO 495370).mp4", url: "https://drive.google.com/open?id=1aRXJO7w0IiRi1GXILn2xDX5nRyW7ZZ2-&usp=drive_copy" },
+                        { title: "51 - Armazenagem (Tipos de Armazenagem) (CÓDIGO 495371).mp4", url: "https://drive.google.com/open?id=1oxIpTXn1dm693waJ1ngLIMlyoL8zS0dY&usp=drive_copy" },
+                        { title: "52 - Armazenagem (Critérios e Localização) (CÓDIGO 495372).mp4", url: "https://drive.google.com/open?id=18y9lXxJc2oYZomtJwF54GJ6EhfVFEDMM&usp=drive_copy" },
+                        { title: "53 - Equipamentos de Armazenagem (CÓDIGO 496384).mp4", url: "https://drive.google.com/open?id=1oDgeh1Tu9r2LYl1x3hkUmlvQsWYeHrL4&usp=drive_copy" },
+                        { title: "54 - Equipamentos de Armazenagem II (CÓDIGO 496385).mp4", url: "https://drive.google.com/open?id=1xo-NmzRDmn5ZzrckAzEQ7N9yvgVyBHR8&usp=drive_copy" },
+                        { title: "55 - Registro de Materiais (CÓDIGO 496386).mp4", url: "https://drive.google.com/open?id=1tkQ-qMb8tLPtmGMv-neEsCxqekIyVDVU&usp=drive_copy" },
+                        { title: "56 - Registro de Materiais II (CÓDIGO 496387).mp4", url: "https://drive.google.com/open?id=1bYUTMgKLvIYCLUq8drJ2ry_crjETlyH5&usp=drive_copy" },
+                        { title: "57 - Documentos de Controle de Materiais (CÓDIGO 496576).mp4", url: "https://drive.google.com/open?id=1ylQdQvL6gxMwdEOlP1x9hhVCannsuj1m&usp=drive_copy" },
+                        { title: "58 - Inventário de Estoque (CÓDIGO 496577).mp4", url: "https://drive.google.com/open?id=1QxZN0hXR05zDiB_9txq39zKNJp0Cbrmi&usp=drive_copy" },
+                        { title: "59 - Inventário de Estoque II (CÓDIGO 496578).mp4", url: "https://drive.google.com/open?id=10CUZCCzhue5-BU4sYkskxyxcC1DG1o-_&usp=drive_copy" },
+                        { title: "60 - Segurança de material (CÓDIGO 496714).mp4", url: "https://drive.google.com/open?id=1_Mzc-a8lQH95gm2WJDP378FLkdJO8Blb&usp=drive_copy" },
+                        { title: "61 - Segurança de material II (CÓDIGO 496715).mp4", url: "https://drive.google.com/open?id=1eATvq-9IJrU5Tzx0SOadvbGXtm-Xtlqc&usp=drive_copy" },
+                        { title: "62 - Segurança de material III (CÓDIGO 496716).mp4", url: "https://drive.google.com/open?id=1Ml4747OounG9-mZTxPwnquob0EMfU0qE&usp=drive_copy" },
+                        { title: "63 - Distribuição Externa de Materiais (CÓDIGO 496579).mp4", url: "https://drive.google.com/open?id=1kVUm0Dr48KoZfcmIwKyiY9dq_ZhMk_g7&usp=drive_copy" },
+                        { title: "64 - Distribuição Externa de Materiais II (CÓDIGO 496580).mp4", url: "https://drive.google.com/open?id=1gf-_7pBZyiY6Wf8Bh03Br0qPWNQBtY_h&usp=drive_copy" },
+                        { title: "65 - Distribuição Externa de Materiais III (CÓDIGO 496581).mp4", url: "https://drive.google.com/open?id=1xKvFD_2FjH_LS8M8dt5YuifS288Y5yvk&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 10: Processo Administrativo",
+                    videos: [
+                        { title: "1 - Processo Administrativo (CÓDIGO 499358).mp4", url: "https://drive.google.com/open?id=1sxiBZmfeM0iagEq-SWi9dZ43-KCDHtqg&usp=drive_copy" },
+                        { title: "2 - Processo Administrativo II (CÓDIGO 499359).mp4", url: "https://drive.google.com/open?id=1TKLJqv07vI7_EuhmE9PV1dmzX-mNclKV&usp=drive_copy" },
+                        { title: "3 - Processo Administrativo III (CÓDIGO 499360).mp4", url: "https://drive.google.com/open?id=1jrJ0_Qc8_IziSIU7hlJMpdHGQXHoS233&usp=drive_copy" },
+                        { title: "4 - Processo Administrativo IV (CÓDIGO 499361).mp4", url: "https://drive.google.com/open?id=12b0IAsOaqzuX_j7ApAplLap41ZBPrT3r&usp=drive_copy" },
+                        { title: "5 - Processo Administrativo V (CÓDIGO 499362).mp4", url: "https://drive.google.com/open?id=1F2lPXTfbtsWbLgKRorCvzk0KkaO21PBN&usp=drive_copy" }
+                    ]
+                }
+            ]
         },
+        etica: {
+            title: "Ética",
+            topics: [
+                {
+                    name: "Tópico 1: Conceitos Fundamentais",
+                    videos: [
+                        { title: "1 - Ética e Moral (CÓDIGO 516183).mp4", url: "https://drive.google.com/open?id=1a89EyB1OrO-vDXViDIwm-fDKAD8HDxta&usp=drive_copy" },
+                        { title: "2 - Teorias Éticas (CÓDIGO 516200).mp4", url: "https://drive.google.com/open?id=1vQRWCvNxWl7Cwk1rFJiwJZPk54uaL5N-&usp=drive_copy" },
+                        { title: "3 - Teorias Éticas II (CÓDIGO 516201).mp4", url: "https://drive.google.com/open?id=1HDemBn4M2PBJTAFFMnvuPhjP1lNhEFsx&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 2: Ética Profissional",
+                    videos: [
+                        { title: "1 - Ética Profissional (CÓDIGO 516189).mp4", url: "https://drive.google.com/open?id=1WxAjXZinJX7pEhFpg3euIx81ALDGOOnZ&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 3: Constituição Federal e Direitos",
+                    videos: [
+                        { title: "1 - Preâmbulo e Princípios Fundamentais (CÓDIGO 513012).mp4", url: "https://drive.google.com/open?id=1G3XegKmvmhMucRA_ldAAHx_6fuO91bqu&usp=drive_copy" },
+                        { title: "2 - Preâmbulo e Princípios Fundamentais II (CÓDIGO 518838).mp4", url: "https://drive.google.com/open?id=1-MVENLTqvDqHoz8jbWFmyb8iO-x8obuH&usp=drive_copy" },
+                        { title: "3 - Preâmbulo e Princípios Fundamentais III (CÓDIGO 520025).mp4", url: "https://drive.google.com/open?id=14aQJi1OOX6vi4MOkzx6vVpmQpe1Ui6lF&usp=drive_copy" },
+                        { title: "4 - Preâmbulo e Princípios Fundamentais IV (CÓDIGO 520026).mp4", url: "https://drive.google.com/open?id=1BoznGSAVZ8MGa3feVjdcVgb8yLbeLs9Z&usp=drive_copy" },
+                        { title: "5 - Direitos e Deveres Individuais e Coletivos (CÓDIGO 520916).mp4", url: "https://drive.google.com/open?id=1rat4OOKz_5X8e6jwPAu3-AFbLVaaz1MO&usp=drive_copy" },
+                        { title: "6 - Direitos e Deveres Individuais e Coletivos II (CÓDIGO 520917).mp4", url: "https://drive.google.com/open?id=1HmAkjK3BFqNeawxejAql45O-8pso9fdi&usp=drive_copy" },
+                        { title: "7 - Direitos e Deveres Individuais e Coletivos III (CÓDIGO 520918).mp4", url: "https://drive.google.com/open?id=1lxPWucJLt5B8QsFNReIywbmgn_ULxCBu&usp=drive_copy" },
+                        { title: "8 - Direitos e Deveres Individuais e Coletivos IV (CÓDIGO 521706).mp4", url: "https://drive.google.com/open?id=1NGQRcfubPU2QxYrnh1k1h4FN8r8F8U5o&usp=drive_copy" },
+                        { title: "9 - Direitos e Deveres Individuais e Coletivos V (CÓDIGO 521707).mp4", url: "https://drive.google.com/open?id=1hQn3SMPQrF3b51z-6WTt0BVeROGfEAnp&usp=drive_copy" },
+                        { title: "10 - Direitos e Deveres Individuais e Coletivos VI (CÓDIGO 522307).mp4", url: "https://drive.google.com/open?id=1iMxiHwPE6ZFq0GD29ddgZSxbR5LV1QQF&usp=drive_copy" },
+                        { title: "11 - Direitos e Deveres Individuais e Coletivos VII (CÓDIGO 522309).mp4", url: "https://drive.google.com/open?id=16EkfLzat8nt6QO2SkilwiR9adiCw2Dco&usp=drive_copy" },
+                        { title: "12 - Direitos e Deveres Individuais e Coletivos VIII (CÓDIGO 522311).mp4", url: "https://drive.google.com/open?id=1MJf0BZbhJHt-NrGwdodmRENGvB07Dpcm&usp=drive_copy" },
+                        { title: "13 - Direitos e Deveres Individuais e Coletivos IX (CÓDIGO 523462).mp4", url: "https://drive.google.com/open?id=1FU7dlWRoTThUxRqAl3cYIUf0Mi7lZv3z&usp=drive_copy" },
+                        { title: "14 - Direitos e Deveres Individuais e Coletivos X (CÓDIGO 523463).mp4", url: "https://drive.google.com/open?id=1FKySXMh3gNmZyeeowRZb6ajNRUFsgBiE&usp=drive_copy" },
+                        { title: "15 - Direitos e Deveres Individuais e Coletivos XI (CÓDIGO 524929).mp4", url: "https://drive.google.com/open?id=1exvAH3FkoR0ocbXnmKfPxp0emqMTfYHq&usp=drive_copy" },
+                        { title: "16 - Direitos e Deveres Individuais e Coletivos XII (CÓDIGO 524930).mp4", url: "https://drive.google.com/open?id=10ijw1dJbm45NuSqKl5KQPjgxC0zQj3e9&usp=drive_copy" },
+                        { title: "17 - Remédios Constitucionais (CÓDIGO 526139).mp4", url: "https://drive.google.com/open?id=1--eQeEPtpy4jl88HcZY-a834VVJTdZ32&usp=drive_copy" },
+                        { title: "18 - Remédios Constitucionais II (CÓDIGO 526141).mp4", url: "https://drive.google.com/open?id=1K7O2YxaS7x04vGT5VRTgp9wkTNEVI6Sj&usp=drive_copy" },
+                        { title: "19 - Remédios Constitucionais III (CÓDIGO 526143).mp4", url: "https://drive.google.com/open?id=1ELi1sWMXhKEHcqXPyvdCEBCX95LQJ2vE&usp=drive_copy" },
+                        { title: "20 - Direitos Sociais (CÓDIGO 527550).mp4", url: "https://drive.google.com/open?id=124-Y5-tqt3KyWpSaIV2aocdo0jaBPkbI&usp=drive_copy" },
+                        { title: "21 - Direitos Sociais II (CÓDIGO 527551).mp4", url: "https://drive.google.com/open?id=1yR0SA23ODmpLlMYkA2BR8pA-QRrvSlH0&usp=drive_copy" },
+                        { title: "22 - Direitos Sociais III (CÓDIGO 529831).mp4", url: "https://drive.google.com/open?id=1XTvZY3QX9yj6etc0XDNuH5thiPfrArYz&usp=drive_copy" },
+                        { title: "23 - Direitos Sociais IV (CÓDIGO 529832).mp4", url: "https://drive.google.com/open?id=1xiCF-yqTDSVTTiuIsmHlSj0nzzGWV7Ab&usp=drive_copy" },
+                        { title: "24 - Nacionalidade (CÓDIGO 530746).mp4", url: "https://drive.google.com/open?id=1xnf_9ZEUsm55ncx-0lXahtlw7f2n8lu9&usp=drive_copy" },
+                        { title: "25 - Nacionalidade II (CÓDIGO 530748).mp4", url: "https://drive.google.com/open?id=1LzrGWhYokmPyGam1trzWqbL_cfP9YNS7&usp=drive_copy" },
+                        { title: "26 - Direitos Políticos e Partidos Políticos (CÓDIGO 530751).mp4", url: "https://drive.google.com/open?id=1860wnj6rmw5PnBqWlQxmm5_ppjRguHxN&usp=drive_copy" },
+                        { title: "27 - Direitos Políticos e Partidos Políticos II (CÓDIGO 532967).mp4", url: "https://drive.google.com/open?id=1FkyTNjo_9rmZh2XuhP9_75mW2_rtNagK&usp=drive_copy" },
+                        { title: "28 - Direitos Políticos e Partidos Políticos III (CÓDIGO 532968).mp4", url: "https://drive.google.com/open?id=1sAR3xXMjvlrffCJCHUKtoswV7IQ7EUdv&usp=drive_copy" },
+                        { title: "29 - Direitos Políticos e Partidos Políticos IV (CÓDIGO 532970).mp4", url: "https://drive.google.com/open?id=10UrpZuNx7EOwuGNPAZzkahOaBlUUal9x&usp=drive_copy" },
+                        { title: "30 - Direitos Políticos e Partidos Políticos V (CÓDIGO 532971).mp4", url: "https://drive.google.com/open?id=13yvT36B6xgBzak4suYyDuRR7vOLCMxWk&usp=drive_copy" },
+                        { title: "31 - Organização Político - Administrativa do Estado (CÓDIGO 534392).mp4", url: "https://drive.google.com/open?id=1AArZ-s5AemT3F2kijGrwcidWLTM5w2xR&usp=drive_copy" },
+                        { title: "32 - Organização Político - Administrativa do Estado II (CÓDIGO 534393).mp4", url: "https://drive.google.com/open?id=1OteEghI3MBPSAUrGXeCb-J9AqgKKsa6s&usp=drive_copy" },
+                        { title: "33 - Organização Político - Administrativa do Estado III (CÓDIGO 534394).mp4", url: "https://drive.google.com/open?id=1DQbqNacsLdMyCMH7AoOGhADVIK_CudM3&usp=drive_copy" },
+                        { title: "34 - Organização Político - Administrativa do Estado IV (CÓDIGO 534399).mp4", url: "https://drive.google.com/open?id=1TpLGaz8_cDh2Lf-vscKqLPLS6XZ7LNmS&usp=drive_copy" },
+                        { title: "35 - Organização Político - Administrativa do Estado V (CÓDIGO 534927).mp4", url: "https://drive.google.com/open?id=1e8t7n4raTM5o4kSMrjIQaoMk3PNog1wo&usp=drive_copy" },
+                        { title: "36 - Organização Político - Administrativa do Estado VI (CÓDIGO 534929).mp4", url: "https://drive.google.com/open?id=1Jm6OQJWTr1AsIiG_UTEXQ7ULta3F9Hxl&usp=drive_copy" },
+                        { title: "37 - Organização Político - Administrativa do Estado VII (CÓDIGO 534932).mp4", url: "https://drive.google.com/open?id=16klpHZb-iV5kFo0rmsxKVn1CN5AcCS5C&usp=drive_copy" },
+                        { title: "38 - Organização Político - Administrativa do Estado VIII (CÓDIGO 535887).mp4", url: "https://drive.google.com/open?id=1hUH48ou0O9K2U3QJnBpCqXTJVZIRcPIb&usp=drive_copy" },
+                        { title: "39 - Organização Político - Administrativa do Estado IX (CÓDIGO 535888).mp4", url: "https://drive.google.com/open?id=1KL5lnECmQA4YUV2dMHYprjCA2UOXSt4a&usp=drive_copy" },
+                        { title: "40 - Repartição de Competências (CÓDIGO 536619).mp4", url: "https://drive.google.com/open?id=10x4pp3-Cw2uV5xvWDvcX4M33-GEvs639&usp=drive_copy" },
+                        { title: "41 - Repartição de Competências II (CÓDIGO 536620).mp4", url: "https://drive.google.com/open?id=1BWKFRkZArdQXjYJTPETp5CkHdWZuHlhr&usp=drive_copy" },
+                        { title: "42 - Repartição de Competências III (CÓDIGO 538407).mp4", url: "https://drive.google.com/open?id=1mWwkjE27BN_1rRmbLQ8qwxxiXY05cO1V&usp=drive_copy" },
+                        { title: "43 - Repartição de Competências IV (CÓDIGO 538410).mp4", url: "https://drive.google.com/open?id=1qth7_tHRHWi82nNBUD46o70gbOoB5DHs&usp=drive_copy" },
+                        { title: "44 - Administração Pública (CÓDIGO 539023).mp4", url: "https://drive.google.com/open?id=1gJvFYw0qurvDV9xfUC6G5YoiFOSG39Bv&usp=drive_copy" },
+                        { title: "45 - Administração Pública II (CÓDIGO 539026).mp4", url: "https://drive.google.com/open?id=17_HQrnOBjFkcNTbfuNDsQCGN7MkU2u_G&usp=drive_copy" },
+                        { title: "46 - Administração Pública III (CÓDIGO 539589).mp4", url: "https://drive.google.com/open?id=1Zrddp6KN_n6eRhk8eYmQD47V-J1290zg&usp=drive_copy" },
+                        { title: "47 - Administração Pública IV (CÓDIGO 539590).mp4", url: "https://drive.google.com/open?id=13vVuRs4MjQpoTacGFYObPhPmHzt9h61Q&usp=drive_copy" },
+                        { title: "48 - Administração Pública V (CÓDIGO 539591).mp4", url: "https://drive.google.com/open?id=1Mz_6KV-m_gluLGL-JxvLwudLR26dejPz&usp=drive_copy" },
+                        { title: "49 - Administração Pública VI (CÓDIGO 540334).mp4", url: "https://drive.google.com/open?id=1c3yhEIeUtaFhF4T4A6MNv4j_SKGviNWd&usp=drive_copy" },
+                        { title: "50 - Administração Pública VII (CÓDIGO 540335).mp4", url: "https://drive.google.com/open?id=1ft3320nFI0BDDcyz4eoaDuuQu9E8rTVI&usp=drive_copy" },
+                        { title: "51 - Administração Pública VIII (CÓDIGO 540336).mp4", url: "https://drive.google.com/open?id=1mc678qHpijX9MZEqfQrVWOICbbWw34uH&usp=drive_copy" },
+                        { title: "52 - Administração Pública IX (CÓDIGO 540633).mp4", url: "https://drive.google.com/open?id=1C4CrncRNi557oF4uTbx2lpcECdlnQxp-&usp=drive_copy" },
+                        { title: "53 - Administração Pública X (CÓDIGO 540634).mp4", url: "https://drive.google.com/open?id=1DMa1B8U4V1FU-E85FVZA2eb6z22N0HSN&usp=drive_copy" },
+                        { title: "54 - Poder Legislativo (CÓDIGO 541464).mp4", url: "https://drive.google.com/open?id=1m0SqBAoQPjMcU6dC0K7UQgJr1zokugQO&usp=drive_copy" },
+                        { title: "55 - Poder Legislativo II (CÓDIGO 541537).mp4", url: "https://drive.google.com/open?id=1e-aQjEfKBayNaPa6MuBMdTlNL60uitf6&usp=drive_copy" },
+                        { title: "56 - Poder Legislativo III (CÓDIGO 541539).mp4", url: "https://drive.google.com/open?id=1aVw9qLI3QyJomyJSOFwVEI8H8Y23byUz&usp=drive_copy" },
+                        { title: "57 - Poder Legislativo IV (CÓDIGO 542643).mp4", url: "https://drive.google.com/open?id=1RTK3LHpBQFZVM239M0inYQRe0PZpZP7e&usp=drive_copy" },
+                        { title: "58 - Poder Legislativo V (CÓDIGO 542644).mp4", url: "https://drive.google.com/open?id=176YgCIrOa11yKeJJ1fUERFkTSSc9CrNQ&usp=drive_copy" },
+                        { title: "59 - Poder Legislativo VI (CÓDIGO 542645).mp4", url: "https://drive.google.com/open?id=1UUBHydQdro6mHnHJI84rzLNDHPHwNJuv&usp=drive_copy" },
+                        { title: "60 - Poder Legislativo VII (CÓDIGO 543093).mp4", url: "https://drive.google.com/open?id=1Kdf-VSWMEX_qzc1cvmRUt2mMjcvW52AE&usp=drive_copy" },
+                        { title: "61 - Poder Legislativo VIII (CÓDIGO 543094).mp4", url: "https://drive.google.com/open?id=14Wq3GgxlEMV200JzGY96I72yEWmRmsTs&usp=drive_copy" },
+                        { title: "62 - Processo Legislativo Constitucional (CÓDIGO 544902).mp4", url: "https://drive.google.com/open?id=1DZ_0lf1GrFO4X38rf31aEWPpVVggpr3r&usp=drive_copy" },
+                        { title: "63 - Processo Legislativo Constitucional II (CÓDIGO 544904).mp4", url: "https://drive.google.com/open?id=16Z5NV87auoJfuaGCJ1l5smHgUfqyIhUK&usp=drive_copy" },
+                        { title: "64 - Processo Legislativo Constitucional III (CÓDIGO 544915).mp4", url: "https://drive.google.com/open?id=1xzInueVhXkQIKv3T9H7WhRl77ffBFybq&usp=drive_copy" },
+                        { title: "65 - Processo Legislativo Constitucional IV (CÓDIGO 546468).mp4", url: "https://drive.google.com/open?id=1u4hBVkcL5H7oBCUkeGgRFex77ffHSogi&usp=drive_copy" },
+                        { title: "66 - Processo Legislativo Constitucional V (CÓDIGO 546470).mp4", url: "https://drive.google.com/open?id=1Im8KoEWu_kz2LquQH2yH7xrSulhcuKnk&usp=drive_copy" },
+                        { title: "67 - Processo Legislativo Constitucional VI (CÓDIGO 546472).mp4", url: "https://drive.google.com/open?id=1ZA9yGproy92QfnrY4hgPPDq6hGN96ctt&usp=drive_copy" },
+                        { title: "68 - Fiscalização Contábil, Financeira e Orçamentária (CÓDIGO 548732).mp4", url: "https://drive.google.com/open?id=1STHa6Apk8DPdk_BrpNHuq7vWDNva7uUd&usp=drive_copy" },
+                        { title: "69 - Fiscalização Contábil, Financeira e Orçamentária II (CÓDIGO 548733).mp4", url: "https://drive.google.com/open?id=1U74kKtTLobCVr7V3hDtz4uRBLIplaF4S&usp=drive_copy" },
+                        { title: "70 - Fiscalização Contábil, Financeira e Orçamentária III (CÓDIGO 548734).mp4", url: "https://drive.google.com/open?id=1wzQWS2KqAb-OrrZrNEEI7CloKqTHlVte&usp=drive_copy" },
+                        { title: "71 - Fiscalização Contábil, Financeira e Orçamentária IV (CÓDIGO 548735).mp4", url: "https://drive.google.com/open?id=1UX6fG1bELz01ETI-NICCY7mnU3ZrJjCP&usp=drive_copy" },
+                        { title: "72 - Poder Executivo (CÓDIGO 549897).mp4", url: "https://drive.google.com/open?id=1yH9leKG6TdBgXLA6yh6wVdWEAkNB9FKo&usp=drive_copy" },
+                        { title: "73 - Poder Executivo II (CÓDIGO 549898).mp4", url: "https://drive.google.com/open?id=1V1tCtIJKV7qjiGPBif6BinOXlkQJnw3V&usp=drive_copy" },
+                        { title: "74 - Poder Executivo III (CÓDIGO 550189).mp4", url: "https://drive.google.com/open?id=1H7zdsePR9ggDEQjO3lidijBDn26DRNaI&usp=drive_copy" },
+                        { title: "75 - Poder Executivo IV (CÓDIGO 550190).mp4", url: "https://drive.google.com/open?id=1XXcYG1icKuk1P-oBaTHF8_BxmjVVjmBO&usp=drive_copy" },
+                        { title: "76 - Poder Judiciário (CÓDIGO 551369).mp4", url: "https://drive.google.com/open?id=1j2zdSY9N8bESuimnRyczocf_VMZPKDQX&usp=drive_copy" },
+                        { title: "77 - Poder Judiciário II (CÓDIGO 551379).mp4", url: "https://drive.google.com/open?id=1u0XnIyCIRsLG142mz2GgpM1iLkPWL7K9&usp=drive_copy" },
+                        { title: "78 - Poder Judiciário III (CÓDIGO 551380).mp4", url: "https://drive.google.com/open?id=1kYM8sXzvIR4gVmaX7uhtt2hEHmqN9j5T&usp=drive_copy" },
+                        { title: "79 - Poder Judiciário IV (CÓDIGO 551389).mp4", url: "https://drive.google.com/open?id=1HywwLsYodZ-WD6LvRuzb7PkWPWeJgtgU&usp=drive_copy" },
+                        { title: "80 - Poder Judiciário V (CÓDIGO 552123).mp4", url: "https://drive.google.com/open?id=1dj5QaHsGZKwnzTlbe38zeHV5qt7XPkLt&usp=drive_copy" },
+                        { title: "81 - Poder Judiciário VI (CÓDIGO 552124).mp4", url: "https://drive.google.com/open?id=1wH3_cS346yMSqG-eqXxMJQ616b1koDlD&usp=drive_copy" },
+                        { title: "82 - Poder Judiciário VII (CÓDIGO 552405).mp4", url: "https://drive.google.com/open?id=13q1cvSJ0EbogGN7LUZ_trH-1i55v8HPL&usp=drive_copy" },
+                        { title: "83 - Poder Judiciário VIII (CÓDIGO 552406).mp4", url: "https://drive.google.com/open?id=1vehYRnjzirfKblfbHelMMqWbaj2mPWLN&usp=drive_copy" },
+                        { title: "84 - Poder Judiciário IX (CÓDIGO 552407).mp4", url: "https://drive.google.com/open?id=1MEaml1ncQp-7v4A3hbhpOylpfWclliLG&usp=drive_copy" },
+                        { title: "85 - Poder Judiciário X (CÓDIGO 553072).mp4", url: "https://drive.google.com/open?id=1phAm6JDa1GFFmaikNtNywM07lJILX8MC&usp=drive_copy" },
+                        { title: "86 - Poder Judiciário XI (CÓDIGO 553074).mp4", url: "https://drive.google.com/open?id=1tQKaFl5YYeLPJDJfOYl1r-GRvULS6JgF&usp=drive_copy" },
+                        { title: "87 - Poder Judiciário XII (CÓDIGO 553077).mp4", url: "https://drive.google.com/open?id=14S2_vgd51vQU1dnD8TUXOutpNc1KdZee&usp=drive_copy" },
+                        { title: "88 - Poder Judiciário XIII (CÓDIGO 553532).mp4", url: "https://drive.google.com/open?id=1bY5OBH6s7tF3E9MmEDqMcDtSRYH2j0WY&usp=drive_copy" },
+                        { title: "89 - Poder Judiciário XIV (CÓDIGO 553533).mp4", url: "https://drive.google.com/open?id=1EhH9k7y1LJ8GpGJfu1wp1i-8j1xgZFYi&usp=drive_copy" },
+                        { title: "90 - Poder Judiciário XV (CÓDIGO 553534).mp4", url: "https://drive.google.com/open?id=15d7ULfgQu9pNJIeJwppr5zA3CBbWj_89&usp=drive_copy" },
+                        { title: "91 - Funções Essenciais à Justiça (CÓDIGO 554470).mp4", url: "https://drive.google.com/open?id=1fkFloadgUqMZgTN5xR3shdtuRGiWHjYG&usp=drive_copy" },
+                        { title: "92 - Funções Essenciais à Justiça II (CÓDIGO 554472).mp4", url: "https://drive.google.com/open?id=11vORrtT0Nu0-rIenfcvzx5Jg95z6nFwe&usp=drive_copy" },
+                        { title: "93 - Funções Essenciais à Justiça III (CÓDIGO 554476).mp4", url: "https://drive.google.com/open?id=1rmQ1pW-4fEJJgTOtU9FQtda28e0Gwqt5&usp=drive_copy" },
+                        { title: "94 - Funções Essenciais à Justiça IV (CÓDIGO 555193).mp4", url: "https://drive.google.com/open?id=1Ye04o-AtSKKu1D_ZiW5sLjdKFalliJ-T&usp=drive_copy" },
+                        { title: "95 - Estado de Defesa e Estado de Sítio (CÓDIGO 556290).mp4", url: "https://drive.google.com/open?id=1BbIO-ZdUw4YU-miPj4KcS3xyddZ4zGW6&usp=drive_copy" },
+                        { title: "96 - Estado de Defesa e Estado de Sítio II (CÓDIGO 556291).mp4", url: "https://drive.google.com/open?id=1d0fAcPLVbUWX6XQf2Jl-mJimLqU43pI3&usp=drive_copy" },
+                        { title: "97 - Forças Armadas (CÓDIGO 556648).mp4", url: "https://drive.google.com/open?id=1D7qH1-B_8N6p8LVlVgg8VKNrSDP3zVbb&usp=drive_copy" },
+                        { title: "98 - Forças Armadas II (CÓDIGO 556650).mp4", url: "https://drive.google.com/open?id=1cHcO89_FyYKCaFIhDK8WaFSZ76Xj-8nK&usp=drive_copy" },
+                        { title: "99 - Segurança Pública (CÓDIGO 556651).mp4", url: "https://drive.google.com/open?id=1yYGLNjf_uOoPeS7dcmHzI97Up_LQp_12&usp=drive_copy" },
+                        { title: "100 - Ordem Econômica e Financeira (CÓDIGO 557265).mp4", url: "https://drive.google.com/open?id=1nUG2P240CtHFE2f75q_G8m8VNYxG_heU&usp=drive_copy" },
+                        { title: "101 - Ordem Econômica e Financeira II (CÓDIGO 557266).mp4", url: "https://drive.google.com/open?id=1S0qSXwaNx8FNZMlDjGvyFk9QqyjZlFNH&usp=drive_copy" },
+                        { title: "102 - Ordem Econômica e Financeira III (CÓDIGO 557267).mp4", url: "https://drive.google.com/open?id=1YnWlR51xA0VkSD8_K0PHiGqGTuIpXDLg&usp=drive_copy" },
+                        { title: "103 - Ordem Social - Disposições Gerais e Seguridade Social (CÓDIGO 557672).mp4", url: "https://drive.google.com/open?id=18gXzvcilKKp53lhuJbKYjvWNW3splEvi&usp=drive_copy" },
+                        { title: "104 - Ordem Social - Disposições Gerais e Seguridade Social II (CÓDIGO 558223).mp4", url: "https://drive.google.com/open?id=1jJ0SPNMRZ_PungHfCD5_jzSPsKkyJGe1&usp=drive_copy" },
+                        { title: "105 - Ordem Social - Disposições Gerais e Seguridade Social III (CÓDIGO 558224).mp4", url: "https://drive.google.com/open?id=1iOgnX94XN05Gu9sqGoYC3qMIpxXNlD06&usp=drive_copy" },
+                        { title: "106 - Ordem Social - Educação (CÓDIGO 558225).mp4", url: "https://drive.google.com/open?id=1Crke9w4-XAyt39ACtHRjP2t1vUe2sD0I&usp=drive_copy" },
+                        { title: "107 - Ordem Social - Cultura e Desporto (CÓDIGO 559745).mp4", url: "https://drive.google.com/open?id=1ZeCvdCpQHAg7i9g6TkQFlO8bWC_fyLin&usp=drive_copy" },
+                        { title: "108 - Ordem Social - Ciência, Tecnologia e Inovação e Comunicação Social (CÓDIGO 559746).mp4", url: "https://drive.google.com/open?id=1qNKuoKe7fFxgXXoBmRecoTh8sE8_U5dm&usp=drive_copy" },
+                        { title: "109 - Ordem Social - (CÓDIGO 560734).mp4", url: "https://drive.google.com/open?id=1CS17jAA9jBJFnyrLAPx1KxrzMwYfBOG0&usp=drive_copy" },
+                        { title: "110 - Ordem Social - Família, Criança, Adolescente, Jovem e Idoso e Índios (CÓDIGO 560735).mp4", url: "https://drive.google.com/open?id=10SJhNkDScKekkECn67ai0_9ewRBaoCkK&usp=drive_copy" },
+                        { title: "111 - Teoria Geral dos Direitos e Garantias Fundamentais (CÓDIGO 561841).mp4", url: "https://drive.google.com/open?id=1fkq2Jaa25GgD3zQKqCn_W5RLsnRYbeEl&usp=drive_copy" },
+                        { title: "112 - Teoria Geral dos Direitos e Garantias Fundamentais II (CÓDIGO 562635).mp4", url: "https://drive.google.com/open?id=1skKQngxBH7DXMa677aeFpSo19937UqwX&usp=drive_copy" },
+                        { title: "113 - Conceito e Sentidos de Constituição (CÓDIGO 562672).mp4", url: "https://drive.google.com/open?id=1-in4ar5kOe2CrwwDmSdcKXFe7jLw5VB2&usp=drive_copy" },
+                        { title: "114 - Conceito e Sentidos de Constituição II (CÓDIGO 562713).mp4", url: "https://drive.google.com/open?id=13PFzzphvFH4EbBuAoE9YpS5gvTaP3Mxf&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 4: Lei de Acesso à Informação",
+                    videos: [
+                        { title: "1 - Lei nº 12.52711 - Lei de Acesso à Informação (CÓDIGO 434763).mp4", url: "https://drive.google.com/open?id=1hwXrBJY5_QLdmhRFcDoclPWhF-x2xeWM&usp=drive_copy" },
+                        { title: "2 - Lei nº 12.52711 - Lei de Acesso à Informação II (CÓDIGO 435126).mp4", url: "https://drive.google.com/open?id=12d3WhwKgSdk91ejDOqf1kL5FfvMOnaDb&usp=drive_copy" },
+                        { title: "3 - Lei nº 12.52711 - Lei de Acesso à Informação III (CÓDIGO 435127).mp4", url: "https://drive.google.com/open?id=1AqqgFG8pmmqockahDm_UR1wZknO9x45u&usp=drive_copy" },
+                        { title: "4 - Lei nº 12.52711 - Lei de Acesso à Informação IV (CÓDIGO 435398).mp4", url: "https://drive.google.com/open?id=13yl79gYWc6hDv86GXPlz2ma_o0s69tUo&usp=drive_copy" },
+                        { title: "5 - Lei nº 12.52711 - Lei de Acesso à Informação V (CÓDIGO 435399).mp4", url: "https://drive.google.com/open?id=1edvD6fVWKhcJmqjZh_ICUL8KLRPNG7Mt&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 5: Parâmetros Curriculares Nacionais",
+                    videos: [
+                        { title: "1 - Parâmetros Curriculares Nacionais (CÓDIGO 497652).mp4", url: "https://drive.google.com/open?id=1fVjaxvPBKUmbgUcI7Fr1zX18VY2eD8do&usp=drive_copy" },
+                        { title: "2 - Parâmetros Curriculares Nacionais II (CÓDIGO 497653).mp4", url: "https://drive.google.com/open?id=1HGPmU_qxhRCvHcc5_SblFbh3suJQIrSm&usp=drive_copy" },
+                        { title: "3 - Parâmetros Curriculares Nacionais III (CÓDIGO 497654).mp4", url: "https://drive.google.com/open?id=12ZsGWiTmrSEElJsGlCMC4S6zHh_IJowt&usp=drive_copy" },
+                        { title: "4 - Parâmetros Curriculares Nacionais IV (CÓDIGO 497655).mp4", url: "https://drive.google.com/open?id=1c3_rvHbvgA0OjPwnHsBSz2fXgAtTxIhW&usp=drive_copy" },
+                        { title: "5 - Parâmetros Curriculares Nacionais V (CÓDIGO 497656).mp4", url: "https://drive.google.com/open?id=1RkxbTZqUwunAoOD5kqNshkc_2OV5-OOA&usp=drive_copy" },
+                        { title: "6 - Parâmetros Curriculares Nacionais VI (CÓDIGO 497657).mp4", url: "https://drive.google.com/open?id=1RHiApVRjG_dx4_MTolXn2AIumi6PBnDg&usp=drive_copy" }
+                    ]
+                }
+            ]
+        },
+        informatica: {
+            title: "Informática",
+            topics: [
+                {
+                    name: "Tópico 1: Hardware e Conceitos Básicos",
+                    videos: [
+                        { title: "1 - Hardware (CÓDIGO 379707).mp4", url: "https://drive.google.com/open?id=150a-LZWASO-q6fIA1n37FfYd3P6HW4_I&usp=drive_copy" },
+                        { title: "2 - Hardware II (CÓDIGO 379709).mp4", url: "https://drive.google.com/open?id=17KLrED-fehn4gRaid_n3QLMKESDWBDwD&usp=drive_copy" },
+                        { title: "3 - Hardware III (CÓDIGO 379710).mp4", url: "https://drive.google.com/open?id=1r334a2N4UnTGluBR6LJ5OJhOtefKNo6J&usp=drive_copy" },
+                        { title: "4 - Hardware IV (CÓDIGO 380110).mp4", url: "https://drive.google.com/open?id=1cK2Ad8gNpgi50Xf_1c1komQ07CxW54fs&usp=drive_copy" },
+                        { title: "5 - Hardware V (CÓDIGO 380113).mp4", url: "https://drive.google.com/open?id=1b2oaQ2jE2jouCeXyu8IRfz4Bbla6RWDy&usp=drive_copy" },
+                        { title: "6 - Hardware VI (CÓDIGO 380114).mp4", url: "https://drive.google.com/open?id=1RVH3dbfSJfFhxYYQh8LUAeM7AMmzNypm&usp=drive_copy" },
+                        { title: "7 - Hardware VII (CÓDIGO 380342).mp4", url: "https://drive.google.com/open?id=1q1nmikMFwJ82uT8DeAO_B97MxNtb8bIE&usp=drive_copy" },
+                        { title: "8 - Modalidades de Processamento (CÓDIGO 520888).mp4", url: "https://drive.google.com/open?id=1jl2MYUfCWPZnK3kwzH9rHXB5FaZpncWG&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 2: Sistemas Operacionais",
+                    videos: [
+                        { title: "1 - Windows 11 (CÓDIGO 467325).mp4", url: "https://drive.google.com/open?id=1dT5qEdtW-Ik__jt9rujI7P3BO_JlQfUz&usp=drive_copy" },
+                        { title: "2 - Windows 11 II (CÓDIGO 467326).mp4", url: "https://drive.google.com/open?id=1Ei8tXz9kiT1Mv7ens6630xVaaAIFqhuO&usp=drive_copy" },
+                        { title: "3 - Windows 11 III (CÓDIGO 467327).mp4", url: "https://drive.google.com/open?id=1UR7CDwklYBzEXUZ5o7uqmGfdW3FiynZ2&usp=drive_copy" },
+                        { title: "4 - Windows 11 IV (CÓDIGO 467817).mp4", url: "https://drive.google.com/open?id=1Dn7UtMW5uL1Gf_GPyuPHAlHOJ8Jicy-T&usp=drive_copy" },
+                        { title: "5 - Windows 11 V (CÓDIGO 467820).mp4", url: "https://drive.google.com/open?id=1lmwMaLM2gXNfYbNeAz3E8zkwNCt8dCUN&usp=drive_copy" },
+                        { title: "6 - Windows 11 VI (CÓDIGO 467821).mp4", url: "https://drive.google.com/open?id=1FTTwZVRtHYCTgP_p-E5T2a2iRLs3M-sd&usp=drive_copy" },
+                        { title: "7 - Linux (CÓDIGO 441570).mp4", url: "https://drive.google.com/open?id=130XM6Ul7-IWNUkkr0-gvtliNFVOAEqAW&usp=drive_copy" },
+                        { title: "8 - Linux II (CÓDIGO 441572).mp4", url: "https://drive.google.com/open?id=16EJkDZt5mvIkqtKkAFR5KE50tBUVxbhi&usp=drive_copy" },
+                        { title: "9 - Linux III (CÓDIGO 441573).mp4", url: "https://drive.google.com/open?id=1QTWh2BMemeq3oKjiZyCWibbUCkET_hyW&usp=drive_copy" },
+                        { title: "10 - Linux IV (CÓDIGO 441726).mp4", url: "https://drive.google.com/open?id=1PIGNZ8vb1_-hJ_HZgbijnmdvYBHsposw&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 3: Redes, Internet e Navegadores",
+                    videos: [
+                        { title: "1 - Conceitos Internet, Intranet, Extranet e Redes (CÓDIGO 384053).mp4", url: "https://drive.google.com/open?id=1QD2T_rTkFDFDttZtCxyMUBOWIPXHkkOd&usp=drive_copy" },
+                        { title: "2 - Conceitos Internet, Intranet, Extranet e Redes II (CÓDIGO 384066).mp4", url: "https://drive.google.com/open?id=1TCz-wlLbu82nXmQBIz3JwRd9rUpcdKR7&usp=drive_copy" },
+                        { title: "3 - Conceitos Internet, Intranet, Extranet e Redes III (CÓDIGO 384067).mp4", url: "https://drive.google.com/open?id=1jw8EdXat62MHE3pKW1Uk1HLDsE6oubC4&usp=drive_copy" },
+                        { title: "4 - Conceitos Internet, Intranet, Extranet e Redes IV (CÓDIGO 384069).mp4", url: "https://drive.google.com/open?id=1utqxN486jHgaAZbRbUW_juOqMwUYEuTg&usp=drive_copy" },
+                        { title: "5 - Conceitos Internet, Intranet, Extranet e Redes V (CÓDIGO 384288).mp4", url: "https://drive.google.com/open?id=1toXg5rTg8OTVEGdDiTfrk7WmCqvlg2Al&usp=drive_copy" },
+                        { title: "6 - Conceitos Internet, Intranet, Extranet e Redes VI (CÓDIGO 384290).mp4", url: "https://drive.google.com/open?id=1mDbr1v_VYXkRXDt3VvNKLAhsNr5VZi2g&usp=drive_copy" },
+                        { title: "7 - Conceitos Internet, Intranet, Extranet e Redes VII (CÓDIGO 384385) .mp4", url: "https://drive.google.com/open?id=1rjajdi4FsLRM5kfFQ3YdLfUxILwUNxN6&usp=drive_copy" },
+                        { title: "8 - Conceitos Internet, Intranet, Extranet e Redes VIII (CÓDIGO 384386).mp4", url: "https://drive.google.com/open?id=1GuoqjONQ_XbL99NtHwFkyQdB3dmrQlVq&usp=drive_copy" },
+                        { title: "9 - Conceitos Internet, Intranet, Extranet e Redes IX (CÓDIGO 384387).mp4", url: "https://drive.google.com/open?id=1nPagaKo89aD0MkT7Yjrfdx717a8fSZ2I&usp=drive_copy" },
+                        { title: "10 - Conceitos Internet, Intranet, Extranet e Redes X (CÓDIGO 384388).mp4", url: "https://drive.google.com/open?id=1Ai5PBH2VbJ8DXRqZojKbjYV84jPogZm3&usp=drive_copy" },
+                        { title: "11 - Máscara de redesub - rede (CÓDIGO 505527).mp4", url: "https://drive.google.com/open?id=16F7h51-kxTIfzZQheZREj-VmWukT9fjH&usp=drive_copy" },
+                        { title: "12 - Máscara de redesub - rede II (CÓDIGO 512293).mp4", url: "https://drive.google.com/open?id=1tqFKApck38WOhXScwi4s4PSiFCvY5JOY&usp=drive_copy" },
+                        { title: "13 - Mozilla Firefox (CÓDIGO 418374).mp4", url: "https://drive.google.com/open?id=1z4eQDJAbMdTyNri5_O40b0HF_r-ra2oZ&usp=drive_copy" },
+                        { title: "14 - Mozilla Firefox II (CÓDIGO 420943).mp4", url: "https://drive.google.com/open?id=1nHTO7gtuKjDMrb4wDzZ2vHSiS6NcMYfY&usp=drive_copy" },
+                        { title: "15 - Mozilla Firefox III (CÓDIGO 420944).mp4", url: "https://drive.google.com/open?id=1OtbyLXT70C1h7m44jlXw2E3Z4M4nhnrG&usp=drive_copy" },
+                        { title: "16 - Mozilla Firefox IV (CÓDIGO 420946).mp4", url: "https://drive.google.com/open?id=1l3hpzkd80XQqYkKXEosA-0abm4EAbb7p&usp=drive_copy" },
+                        { title: "17 - Navegador Google Chrome (CÓDIGO 496000).mp4", url: "https://drive.google.com/open?id=1HhO7PyTzlIs6FDDuZujcPIsFFoqcHFqq&usp=drive_copy" },
+                        { title: "18 - Navegador Google Chrome II (CÓDIGO 496001).mp4", url: "https://drive.google.com/open?id=10JmOMLvK_-nOKMokfNjivePH6y-6S3Fo&usp=drive_copy" },
+                        { title: "19 - Microsoft Edge (CÓDIGO 442313).mp4", url: "https://drive.google.com/open?id=1kU-lXq5UAumsTn23LZClzPWZiIImdtQe&usp=drive_copy" },
+                        { title: "20 - Microsoft Edge II (CÓDIGO 442314).mp4", url: "https://drive.google.com/open?id=1B6HANcMjYqLXEb68mKKeFScYODkZgdn6&usp=drive_copy" },
+                        { title: "21 - Microsoft Edge III (CÓDIGO 442315).mp4", url: "https://drive.google.com/open?id=1vN3zhXODZDEksd15LiuW7Qf3XPA3MzpT&usp=drive_copy" },
+                        { title: "22 - E - mail - MS - Outlook (CÓDIGO 395229).mp4", url: "https://drive.google.com/open?id=1opSV0D-QMVFAIxFtqmlYbPRzN-3mKPuC&usp=drive_copy" },
+                        { title: "23 - E - mail - MS - Outlook II (CÓDIGO 395232).mp4", url: "https://drive.google.com/open?id=1AOxqADuUkgCDqWLExIjQKocM_4ZklG5Y&usp=drive_copy" },
+                        { title: "24 - E - mail - MS - Outlook III (CÓDIGO 395234).mp4", url: "https://drive.google.com/open?id=1hYwJiqS-m2i_-O5qsIVqEJWI3ZmYr_aa&usp=drive_copy" },
+                        { title: "25 - Thunderbird (CÓDIGO 442287).mp4", url: "https://drive.google.com/open?id=10qG4OX0gOmd7Nv34ctBrFJhJhVkkOELG&usp=drive_copy" },
+                        { title: "26 - Thunderbird II (CÓDIGO 442289).mp4", url: "https://drive.google.com/open?id=1zgnhz3odXlCVhP9j1lYlu-mlNsxl1uAz&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 4: Segurança da Informação",
+                    videos: [
+                        { title: "1 - Segurança da Informação (CÓDIGO 479384).mp4", url: "https://drive.google.com/open?id=1rulAwXNjm9JJ2XKmdKZwTYCcROfjUk2W&usp=drive_copy" },
+                        { title: "2 - Segurança da Informação II (CÓDIGO 479391).mp4", url: "https://drive.google.com/open?id=1PWgBcabni4zb1_vljKtfFx8gs74jEEa-&usp=drive_copy" },
+                        { title: "3 - Segurança da Informação III (CÓDIGO 479394).mp4", url: "https://drive.google.com/open?id=1V6cNPMEGoY7cbLYk8O-PHHvZSqslU2PD&usp=drive_copy" },
+                        { title: "4 - Segurança da Informação IV (CÓDIGO 479954).mp4", url: "https://drive.google.com/open?id=1-pXHcegqHMK7oEo4YFX6l9-Mii1kR85Y&usp=drive_copy" },
+                        { title: "5 - Segurança da Informação V (CÓDIGO 479955).mp4", url: "https://drive.google.com/open?id=1I6HDFG3WBJHv2W_lFRpPo2CddIzInJ1U&usp=drive_copy" },
+                        { title: "6 - Segurança da Informação VI (CÓDIGO 479956).mp4", url: "https://drive.google.com/open?id=1JGXhyJSWsrzuBrolh8fDzVhNPliTrla2&usp=drive_copy" },
+                        { title: "7 - Segurança da Informação VII (CÓDIGO 480253).mp4", url: "https://drive.google.com/open?id=1jsJ2bCn8g-cfoY9wxVC4hwTcb3mfu-VZ&usp=drive_copy" },
+                        { title: "8 - Aula Backup (CÓDIGO 386929).mp4", url: "https://drive.google.com/open?id=1NgJj-_7brBcq2vbj81QPNn67-dJmB9aJ&usp=drive_copy" },
+                        { title: "9 - Aula Backup Aula Backup II (CÓDIGO 386930).mp4", url: "https://drive.google.com/open?id=1VzlTK_JiX6xWZm6D3g0NfUmL811UCc2V&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 5: Pacotes de Escritório (Microsoft e LibreOffice)",
+                    videos: [
+                        { title: "1 - Word 365 (CÓDIGO 517226).mp4", url: "https://drive.google.com/open?id=1wXQs615n7k7jEn9KjLKhUraQacm43rT9&usp=drive_copy" },
+                        { title: "2 - Word 365 II (CÓDIGO 517228).mp4", url: "https://drive.google.com/open?id=1hclylYh7LVykc1WCTriyaeLI8eJwzhD-&usp=drive_copy" },
+                        { title: "3 - Word 365 III (CÓDIGO 517229).mp4", url: "https://drive.google.com/open?id=1BjEBphlfZqIQuuuht_ss4c0lMB__-kMI&usp=drive_copy" },
+                        { title: "4 - Word 365 IV (CÓDIGO 517668).mp4", url: "https://drive.google.com/open?id=1fAfAtScN3Sw658svo87J0OttAwpsqW2Q&usp=drive_copy" },
+                        { title: "5 - Word 365 V (CÓDIGO 517669).mp4", url: "https://drive.google.com/open?id=1HVWRpr7WLbBov3B-__FJIp3Uxk5khDZW&usp=drive_copy" },
+                        { title: "6 - Excel 365 (CÓDIGO 518610).mp4", url: "https://drive.google.com/open?id=1CLvsdXyoK1tX-MTOjhoCSpH0r0sJfy4K&usp=drive_copy" },
+                        { title: "7 - Excel 365 II (CÓDIGO 518617).mp4", url: "https://drive.google.com/open?id=12RT-d-mb72nUpefCei-P7sZixovb8PHn&usp=drive_copy" },
+                        { title: "8 - Excel 365 III (CÓDIGO 518618).mp4", url: "https://drive.google.com/open?id=10zRynvbFmf0PeJsBw9axCOZbxremxzKt&usp=drive_copy" },
+                        { title: "9 - Excel 365 IV (CÓDIGO 518619).mp4", url: "https://drive.google.com/open?id=1GBnPwBldCb7PaqNAep0oCpM8MGfvLLJz&usp=drive_copy" },
+                        { title: "10 - Excel 365 V (CÓDIGO 518620).mp4", url: "https://drive.google.com/open?id=1rzVnPIsjER8DFoAu5R0YEPm2UqCjGw3-&usp=drive_copy" },
+                        { title: "11 - Excel 365 VI (CÓDIGO 518621).mp4", url: "https://drive.google.com/open?id=1ji5aTcbslg7Yy7ZjoYF6l_oIN0h7wp26&usp=drive_copy" },
+                        { title: "12 - Excel 365 VII (CÓDIGO 518622).mp4", url: "https://drive.google.com/open?id=197v8ouwK_BGzghn_d4J_siU_to5aXHh0&usp=drive_copy" },
+                        { title: "13 - Excel 365 VIII (CÓDIGO 518623).mp4", url: "https://drive.google.com/open?id=1iOCK2LbGefbdA6ccpcQKMzozNsdmls68&usp=drive_copy" },
+                        { title: "14 - PowerPoint 365 (CÓDIGO 518834).mp4", url: "https://drive.google.com/open?id=12HO_KnsxC_ylbetrozCkN3JjAUhRclmf&usp=drive_copy" },
+                        { title: "15 - PowerPoint 365 II (CÓDIGO 518835).mp4", url: "https://drive.google.com/open?id=14LGW88JuKgmHceu-aYzcr6MkUIQno5nV&usp=drive_copy" },
+                        { title: "16 - PowerPoint 365 III (CÓDIGO 518836).mp4", url: "https://drive.google.com/open?id=1gMJYnqYcqpmgQDRM9tOXzIaN0VhYc--m&usp=drive_copy" },
+                        { title: "17 - Access (CÓDIGO 444137).mp4", url: "https://drive.google.com/open?id=1eoOssfrQtMYwUgdGhREf3OW7zZcAOjmn&usp=drive_copy" },
+                        { title: "18 - Access II (CÓDIGO 444138).mp4", url: "https://drive.google.com/open?id=1-nwsWx8PfKGG7i3IXr5DnjXtF-vG71IK&usp=drive_copy" },
+                        { title: "19 - Libre Office Writer 7 (CÓDIGO 525004).mp4", url: "https://drive.google.com/open?id=1WF9tShJHtHdENE4Yz_LJ-QNAU3JEOJt3&usp=drive_copy" },
+                        { title: "20 - Libre Office Writer 7 II (CÓDIGO 525005).mp4", url: "https://drive.google.com/open?id=1QyFVmiBJLxPAf6CqyvCU-QX7qr4fWRtE&usp=drive_copy" },
+                        { title: "21 - Libre Office Writer 7 III (CÓDIGO 525008).mp4", url: "https://drive.google.com/open?id=1LogntFjwRgYOct4_7fM4uNowccGKhkAz&usp=drive_copy" },
+                        { title: "22 - Libre Office Writer 7 IV (CÓDIGO 525621).mp4", url: "https://drive.google.com/open?id=1Cc207y-bFmByGLY--Mbt_GSPE9TKfj5L&usp=drive_copy" },
+                        { title: "23 - Libre Office Writer 7 (CÓDIGO 368597).mp4", url: "https://drive.google.com/open?id=1C3VUK6LirXE0QUpgP9sMIXdDnI_Qcf-U&usp=drive_copy" },
+                        { title: "24 - Libre Office Calc 7 (CÓDIGO 525622).mp4", url: "https://drive.google.com/open?id=1BJp5TIUiDqT7oIbXs9FQy-xQvWaK5aUl&usp=drive_copy" },
+                        { title: "25 - Libre Office Calc 7 II (CÓDIGO 525623).mp4", url: "https://drive.google.com/open?id=1taGx7ZK611rF6y92ztzeHCRqgnvHVwdH&usp=drive_copy" },
+                        { title: "26 - Libre Office Calc 7 III (CÓDIGO 525624).mp4", url: "https://drive.google.com/open?id=18Z1gxjA3-KouvSVUnUqztmr0mjVQcxZl&usp=drive_copy" },
+                        { title: "27 - Libre Office Calc 7 IV (CÓDIGO 525625).mp4", url: "https://drive.google.com/open?id=17H27RwbKKoc1S4IJp_vb0_vlxM_Qz8SS&usp=drive_copy" },
+                        { title: "28 - Libre Office Calc 7 V (CÓDIGO 525626).mp4", url: "https://drive.google.com/open?id=1a07vAtl0icEmoKjgl5oazqqwCMuOS047&usp=drive_copy" },
+                        { title: "29 - Libre Office Calc 7 VI (CÓDIGO 525627).mp4", url: "https://drive.google.com/open?id=1kdbqg5U6q-LCCTJGfeVxFPFMbY27iY1J&usp=drive_copy" },
+                        { title: "30 - Libre Office Calc 7 VII (CÓDIGO 526088).mp4", url: "https://drive.google.com/open?id=1RB-vw2DXd-VIAIex2avT5QVWOF9n68b8&usp=drive_copy" },
+                        { title: "31 - Libre Office Calc 7 VIII (CÓDIGO 526089).mp4", url: "https://drive.google.com/open?id=1qF4AwsyjrIwjYGvpV-2Z0-YetodL24zr&usp=drive_copy" },
+                        { title: "32 - Libre Office Impress 7 (CÓDIGO 526090).mp4", url: "https://drive.google.com/open?id=1nf1_u-wUr-MPByZTWJJAfezOfx4nqPjh&usp=drive_copy" },
+                        { title: "33 - Libre Office Impress 7 II (CÓDIGO 526091).mp4", url: "https://drive.google.com/open?id=167NY49Qzo1baSD694CKo0DP3DxxMJKo2&usp=drive_copy" },
+                        { title: "34 - Libre Office Base (CÓDIGO 505528).mp4", url: "https://drive.google.com/open?id=1qc0ty4KYZDX5PrPNWWFe1d7nue0OK0m_&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 6: Ferramentas Google e Colaborativas",
+                    videos: [
+                        { title: "1 - Aula Google Documentos (CÓDIGO 523159).mp4", url: "https://drive.google.com/open?id=1ENFEKmAnze0_af5SUjajSOj5sA3M8Ltc&usp=drive_copy" },
+                        { title: "2 - Aula Google Documentos II (CÓDIGO 523161).mp4", url: "https://drive.google.com/open?id=1YFn2RXsbqQzBwc0oYJDLVtzxBxy8QMlQ&usp=drive_copy" },
+                        { title: "3 - Aula Google Documentos III (CÓDIGO 523162).mp4", url: "https://drive.google.com/open?id=1fTKD9R5RG3r5lBV1WHu9-6sjiucqDTGb&usp=drive_copy" },
+                        { title: "4 - Google Planilhas – Parte I (CÓDIGO 368553).mp4", url: "https://drive.google.com/open?id=1sM6uAb5FowCF7qot29U11z14vDV2kyOY&usp=drive_copy" },
+                        { title: "5 - Google Planilhas – Parte II (CÓDIGO 368555).mp4", url: "https://drive.google.com/open?id=1Q7HfXtkMppenhWM2vLp2vD-tuEV8Q9-q&usp=drive_copy" },
+                        { title: "6 - Google Planilhas – Parte III (CÓDIGO 368560).mp4", url: "https://drive.google.com/open?id=1bF6A3gUKzUxGb01Fwt6BWmbNeEUIEwIM&usp=drive_copy" },
+                        { title: "7 - Google Apresentações (CÓDIGO 524572).mp4", url: "https://drive.google.com/open?id=1S8vR_LjSMpOipY7tOL9AIJPiRDhtL2-K&usp=drive_copy" },
+                        { title: "8 - Google Apresentações II (CÓDIGO 525003).mp4", url: "https://drive.google.com/open?id=1ny9qk5wOH0C3BnoTUQFE2PBAtJBJfZjM&usp=drive_copy" },
+                        { title: "9 - Google Drive (CÓDIGO 504780).mp4", url: "https://drive.google.com/open?id=118qeGd4ItS7KZ5O_i8kCdNtW2mNJ9cKS&usp=drive_copy" },
+                        { title: "10 - Google Drive II (CÓDIGO 504781).mp4", url: "https://drive.google.com/open?id=118tdsdPy5TLrRXtpkNNuDkn5MIUcvC_M&usp=drive_copy" },
+                        { title: "11 - Google Meet (CÓDIGO 504782).mp4", url: "https://drive.google.com/open?id=1JjlEtsNwMGbtohaw436cnLH2W9f5ri-M&usp=drive_copy" },
+                        { title: "12 - Google Agenda (CÓDIGO 504783).mp4", url: "https://drive.google.com/open?id=139IGPyQwnf04LoLpsI5mXP9R-z_cdTkR&usp=drive_copy" },
+                        { title: "13 - Gmail (CÓDIGO 396162).mp4", url: "https://drive.google.com/open?id=1tfoOh4cavtELsnZ45VBe4Vmv64xh9fYv&usp=drive_copy" },
+                        { title: "14 - Gmail II (CÓDIGO 396164).mp4", url: "https://drive.google.com/open?id=1Qe0lAC8V4Doyanx9Q9JPREzyQ0EAubB1&usp=drive_copy" },
+                        { title: "15 - Microsoft Teams - Exercícios (CÓDIGO 403581).mp4", url: "https://drive.google.com/open?id=1VQdcb5zE_OQTCEsJx57kBL37wFjlXwH6&usp=drive_copy" },
+                        { title: "16 - Microsoft Teams - Exercícios II (CÓDIGO 403587).mp4", url: "https://drive.google.com/open?id=1dXMhFlU4s4T3Va4M53mCNPVgQp_HxAft&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 7: Lei Geral de Proteção de Dados (LGPD)",
+                    videos: [
+                        { title: "1 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD (CÓDIGO 523096).mp4", url: "https://drive.google.com/open?id=1hu0aplCI-P-FPmqbV_lx9AWvifJ8ap1L&usp=drive_copy" },
+                        { title: "2 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD II (CÓDIGO 542917).mp4", url: "https://drive.google.com/open?id=16OEMHGlssCBHLKhBmaY6mPXZLdR6G_xQ&usp=drive_copy" },
+                        { title: "3 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD III (CÓDIGO 542918).mp4", url: "https://drive.google.com/open?id=1vlv9laVQ31tZbWZTs6VVUg7qS7dAQmNZ&usp=drive_copy" },
+                        { title: "4 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD IV (CÓDIGO 542919).mp4", url: "https://drive.google.com/open?id=1zMN1xhf1WN3wwC7BlcLFvV3cHl_rVkWS&usp=drive_copy" },
+                        { title: "5 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD V (CÓDIGO 542920).mp4", url: "https://drive.google.com/open?id=1b8RCHTSvo0U_x7W5yDtE4baupo_-XAWW&usp=drive_copy" },
+                        { title: "6 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD VI (CÓDIGO 542921).mp4", url: "https://drive.google.com/open?id=1-pffeLeyQRD8QujQnMG9CUcWnt1UWu1t&usp=drive_copy" },
+                        { title: "7 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD VII (CÓDIGO 542922).mp4", url: "https://drive.google.com/open?id=1O64p6oe2c6VMUHpeUPswDUXnPIlVlcCd&usp=drive_copy" },
+                        { title: "8 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD VIII (CÓDIGO 542923).mp4", url: "https://drive.google.com/open?id=1DVJF6zw4UkPjmC5i93DV3jB-FE5iDj2p&usp=drive_copy" },
+                        { title: "9 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD IX (CÓDIGO 542924).mp4", url: "https://drive.google.com/open?id=18HDCifWcoopU_nXNc_pE6OEeUik0lZYb&usp=drive_copy" },
+                        { title: "10 - Lei nº 13.7092018 - Lei Geral de Proteção de Dados Pessoais - LGPD X (CÓDIGO 542925).mp4", url: "https://drive.google.com/open?id=1rDkaC1njDFSOqIUBx3aRtToSXaUkdjOt&usp=drive_copy" }
+                    ]
+                }
+            ]
+        },
+        portugues: {
+            title: "Português",
+            topics: [
+                {
+                    name: "Tópico 1: Compreensão e Interpretação de Textos",
+                    videos: [
+                        { title: "1 - Compreensão e Interpretação de Textos - Noções Iniciais (CÓDIGO 492371).mp4", url: "https://drive.google.com/open?id=1QnOyHmZnHEEQJKpj1tiqVVoq-8yqRcXS&usp=drive_copy" },
+                        { title: "2 - Compreensão e Interpretação de Textos - Informações Explícitas e Informações Implícitas Pressupostos e Subentendidos (CÓDIGO 492372).mp4", url: "https://drive.google.com/open?id=10-SgF4GeZRCO7QOzYPC380wJeUdIQrxj&usp=drive_copy" },
+                        { title: "3 - Compreensão e Interpretação de Textos - Erros Clássicos de Interpretação de Texto (CÓDIGO 492707).mp4", url: "https://drive.google.com/open?id=1WQ05LaNhN9is17cZR1h-Wew2txx3Kpx7&usp=drive_copy" },
+                        { title: "4 - Compreensão e Interpretação de Textos - Linguagem Verbal e Não Verbal (CÓDIGO 493347).mp4", url: "https://drive.google.com/open?id=1XJgHfhObQXB5R5evclWE7vO98QBOAlC3&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 2: Tipologia e Gêneros Textuais",
+                    videos: [
+                        { title: "1 - Tipologia Textual - Visão Geral Descrição (CÓDIGO 494356).mp4", url: "https://drive.google.com/open?id=1UKUVzzRJzgXRuC0cK3DWl2gHjWJ3-DJb&usp=drive_copy" },
+                        { title: "2 - Tipologia Textual - Narração (CÓDIGO 494358).mp4", url: "https://drive.google.com/open?id=14kLoVcsDLRD9tRrKgwz_qYItLm7NkCJE&usp=drive_copy" },
+                        { title: "3 - Tipologia Textual - Dissertação (CÓDIGO 494359).mp4", url: "https://drive.google.com/open?id=1Et0eiI7XP33Vbrawix2aHOEcBQSAiqhP&usp=drive_copy" },
+                        { title: "4 - Tipologia Textual - Exercícios (CÓDIGO 497745).mp4", url: "https://drive.google.com/open?id=1COFULwrAsHD36wVKthn57Uwk0fhJf_Oe&usp=drive_copy" },
+                        { title: "5 - Gêneros Textuais (CÓDIGO 498367).mp4", url: "https://drive.google.com/open?id=17rdC952QtcfUz_j7fNYviTXmaVKEvq4I&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 3: Coesão e Coerência",
+                    videos: [
+                        { title: "1 - Coesão e Coerência (CÓDIGO 498492).mp4", url: "https://drive.google.com/open?id=1ovSFVaG9bjz7r0diOu037Vh767umTAsL&usp=drive_copy" },
+                        { title: "2 - Coesão Referencial (CÓDIGO 498493).mp4", url: "https://drive.google.com/open?id=1iFvDkHs6kvt_VtQrSQdx5cCBwGWw3fU7&usp=drive_copy" },
+                        { title: "3 - Coesão Referencial - Pronomes Demonstrativos (CÓDIGO 498494).mp4", url: "https://drive.google.com/open?id=16zdmZXJpwyMJSwaDUpVS9R3fKEcaHWbn&usp=drive_copy" },
+                        { title: "4 - Coesão Referencial - Pronomes Demonstrativos - Exercícios (CÓDIGO 499520).mp4", url: "https://drive.google.com/open?id=14nHsleb0Ey0Uo6-Yitbd-1MVHmV2KFFq&usp=drive_copy" },
+                        { title: "5 - Coesão Referencial - Pronomes Relativos (CÓDIGO 499521).mp4", url: "https://drive.google.com/open?id=1t_8Em31Giu5ATTyECN32Ca7gv--mA4xF&usp=drive_copy" },
+                        { title: "6 - Coesão Referencial - Pronomes Relativos - Exercícios (CÓDIGO 499563).mp4", url: "https://drive.google.com/open?id=1mQ5GD_Gy6-hNqU0jVN4BEhID261W2uQJ&usp=drive_copy" },
+                        { title: "7 - Coesão Sequencial - Conjunções Coordenativas (CÓDIGO 499568).mp4", url: "https://drive.google.com/open?id=191pAT8BEe6YTmQwDqxjKaaAo6uc9tCM9&usp=drive_copy" },
+                        { title: "8 - Coesão Sequencial - Conjunções Subordinativas Adverbiais - Finais, Proporcionais, Temporais (CÓDIGO 499569).mp4", url: "https://drive.google.com/open?id=1FGTBI1QZX8wBo7WdEbMl_wFrH_cE2E6M&usp=drive_copy" },
+                        { title: "9 - Coesão Sequencial - Conjunções Subordinativas Adverbiais - Causais e Consecutivas (CÓDIGO 514358).mp4", url: "https://drive.google.com/open?id=1DB9hScCX0bPP4JhwbCxDqG4IMexVc8fh&usp=drive_copy" },
+                        { title: "10 - Coesão Sequencial - Conjunções Subordinativas Adverbiais - Conformativas, Comparativas, Condicionais (CÓDIGO 514359).mp4", url: "https://drive.google.com/open?id=1SkbRK4-KP3XWvtUh_ygZyL-2aUXjLL5f&usp=drive_copy" },
+                        { title: "11 - Coesão Sequencial - Conjunções Subordinativas Adverbiais - Concessivas Estruturas com Infinitivo (CÓDIGO 514610).mp4", url: "https://drive.google.com/open?id=1gtQ2Zf8lyF0rV8ibJ7swCke_r_hVkBf0&usp=drive_copy" },
+                        { title: "12 - Coesão Sequencial - Exercícios (CÓDIGO 514611).mp4", url: "https://drive.google.com/open?id=120Em7leekpviw7fC0MdNXtIisJ3i2A-t&usp=drive_copy" },
+                        { title: "13 - Parágrafo, Tópico Frasal, Informações Principais e Secundárias, Fato e opinião (CÓDIGO 523834).mp4", url: "https://drive.google.com/open?id=1Ex9w2o2COL2qnbyTbnq08c8tZOZNuiYt&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 4: Figuras de Linguagem",
+                    videos: [
+                        { title: "1 - Figuras de Linguagem 01 (Figuras de Palavras) (CÓDIGO 516331).mp4", url: "https://drive.google.com/open?id=1MCzMuvW1uCsDPSerCj5Ut2XfkWRurhet&usp=drive_copy" },
+                        { title: "2 - Figuras de Linguagem 02 (Figuras de Pensamento) (CÓDIGO 516334).mp4", url: "https://drive.google.com/open?id=1vHNmKAABvI84dyV6XwWw-USbn7tC0vSS&usp=drive_copy" },
+                        { title: "3 - Figuras de Linguagem 03 (Figuras de Pensamentode Sintaxe) (CÓDIGO 516336).mp4", url: "https://drive.google.com/open?id=1rmZLQP-Rcxk_XpbXcr1hoxAzuE2l1Cts&usp=drive_copy" },
+                        { title: "4 - Figuras de Linguagem 04 (Figuras de Sintaxede Som) (CÓDIGO 516360).mp4", url: "https://drive.google.com/open?id=1LGUnA5F0UQ3uZkaTmCAK7qlktCWJ0F56&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 5: Funções da Linguagem",
+                    videos: [
+                        { title: "1 - Funções da Linguagem (CÓDIGO 516620).mp4", url: "https://drive.google.com/open?id=1HYCJ6G4db1WfEfpDjOsauzo-JmOwsJRZ&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 6: Semântica",
+                    videos: [
+                        { title: "1 - Semântica - Sinônimos, Antônimos, Homônimos, Parônimos, Polissemia (CÓDIGO 493349).mp4", url: "https://drive.google.com/open?id=1o4cqHpq8c3JZ_cGMMt1t6MNNTcyuUi9o&usp=drive_copy" }
+                    ]
+                },
+                {
+                    name: "Tópico 7: Morfossintaxe e Normas Ortográficas",
+                    videos: [
+                        { title: "1 - Classificação e Emprego das Palavras (CÓDIGO 471632).mp4", url: "https://drive.google.com/open?id=1geQk6pcRCsbJ6JZMfmYAx_uMJ4tfWm8t&usp=drive_copy1" },
+                        { title: "2 - Classificação e Emprego das Palavras II (CÓDIGO 475024).mp4", url: "https://drive.google.com/open?id=1tu2EubKETz7zeisyACebrRQNM-VfZG--&usp=drive_copy2" },
+                        { title: "3 - Classificação e Emprego das Palavras III (CÓDIGO 475061).mp4", url: "https://drive.google.com/open?id=15FJBxQBaEwnXyFWqvjS9jqEzAm9EPA8i&usp=drive_copy3" },
+                        { title: "4 - Classificação e Emprego das Palavras IV (CÓDIGO 475062).mp4", url: "https://drive.google.com/open?id=1Xawq32ySWNQgUAR5IWmB_gXyFdZYUThq&usp=drive_copy4" },
+                        { title: "5 - Classificação e Emprego das Palavras V (CÓDIGO 475063).mp4", url: "https://drive.google.com/open?id=1B-LoGvngjJ_WHRS74z2Xlq-FYs2HQEsZ&usp=drive_copy5" },
+                        { title: "6 - Classificação e Emprego das Palavras VI (CÓDIGO 475710).mp4", url: "https://drive.google.com/open?id=1gS2AIKIZsLiXCtywgOeMS3MI3DKseWqG&usp=drive_copy6" },
+                        { title: "7 - Classificação e Emprego das Palavras VII (CÓDIGO 475711).mp4", url: "https://drive.google.com/open?id=1bta58x4x-CbOuQIeup2blfJV2qxnBQtz&usp=drive_copy7" },
+                        { title: "8 - Classificação e Emprego das Palavras VIII (CÓDIGO 475712).mp4", url: "https://drive.google.com/open?id=1GPvy1ZeUl6M5FOhR0x26r0i5AfxCP8ZK&usp=drive_copy8" },
+                        { title: "9 - Classificação e Emprego das Palavras IX (CÓDIGO 476033).mp4", url: "https://drive.google.com/open?id=1GLpOdHtYwSSGj03BU2zussXDDgMsdO2E&usp=drive_copy9" },
+                        { title: "10 - Classificação e Emprego das Palavras X (CÓDIGO 476034).mp4", url: "https://drive.google.com/open?id=1zxkG2fbVA_3KWlTfvXIvtdSPtyFFNFfk&usp=drive_copy10" },
+                        { title: "11 - Classificação e Emprego das Palavras XI (CÓDIGO 476035).mp4", url: "https://drive.google.com/open?id=1pIgV6Qrm7XJt5H4xdYqL5ROSmiBaWuto&usp=drive_copy11" },
+                        { title: "12 - Classificação e Emprego das Palavras XII (CÓDIGO 476036).mp4", url: "https://drive.google.com/open?id=1CwKWtsFc3ypSHrGHJ1PIRK31Z9QFII0F&usp=drive_copy12" },
+                        { title: "13 - Classificação e Emprego das Palavras - Verbos (CÓDIGO 476037).mp4", url: "https://drive.google.com/open?id=1sDcaHw_gaLdm3jXVPFu7awP9ZMl1faCe&usp=drive_copy13" },
+                        { title: "14 - Classificação e Emprego das Palavras - Verbos II (CÓDIGO 476038).mp4", url: "https://drive.google.com/open?id=15WV1vjPr85_r-na2VaRWQ2EhOeSLxmmI&usp=drive_copy14" },
+                        { title: "15 - Classificação e Emprego das Palavras - Verbos III (CÓDIGO 476412).mp4", url: "https://drive.google.com/open?id=1BsFSaZPDlWsfVvJk0e2VPUHZOXDAyrnK&usp=drive_copy15" },
+                        { title: "16 - Classificação e Emprego das Palavras - Verbos IV (CÓDIGO 476413).mp4", url: "https://drive.google.com/open?id=1pNilcq0qJOaezsa0Bqe9CRQlwqXBbWyD&usp=drive_copy16" },
+                        { title: "17 - Classificação e Emprego das Palavras - Verbos V (CÓDIGO 476414).mp4", url: "https://drive.google.com/open?id=1-0tjiI13pZHoM_mMJBfbZPssb3ytunE2&usp=drive_copy17" },
+                        { title: "18 - Classificação e Emprego das Palavras - Verbos VI (CÓDIGO 476415).mp4", url: "https://drive.google.com/open?id=1uoCBepgo4955Aut9DvmQZapz_MeoXiGS&usp=drive_copy18" },
+                        { title: "19 - Classificação e Emprego das Palavras - Verbos VII (CÓDIGO 476416).mp4", url: "https://drive.google.com/open?id=1jDuWk0emnrBQgO7eUG1-tBD3_eRQh9ku&usp=drive_copy19" },
+                        { title: "20 - Classificação e Emprego das Palavras (CÓDIGO 478432).mp4", url: "https://drive.google.com/open?id=1dh9R6K5L65ox9fxQAFqWjbrM5xRJ_W5p&usp=drive_copy20" },
+                        { title: "21 - Classificação e Emprego das Palavras II (CÓDIGO 478433).mp4", url: "https://drive.google.com/open?id=1jEgBJV-BRdScYWP4Y7dZiPQlIleN9xh5&usp=drive_copy21" },
+                        { title: "22 - Classificação e Emprego das Palavras III (CÓDIGO 478434).mp4", url: "https://drive.google.com/open?id=1s5xe_zHw803x-tIFfj_-bV8cltd6esYG&usp=drive_copy22" },
+                        { title: "23 - Classificação e Emprego das Palavras IV (CÓDIGO 478435).mp4", url: "https://drive.google.com/open?id=1poIKepl9pTbsO2AL8r-Ev7Y9lwQDNsEA&usp=drive_copy23" },
+                        { title: "24 - Classificação e Emprego das Palavras V (CÓDIGO 478436).mp4", url: "https://drive.google.com/open?id=1VyDDWHKaMf5WY-sMN5xW7OkPDCz_ccZE&usp=drive_copy24" },
+                        { title: "25 - Sintaxe Básica da Frase (CÓDIGO 479158).mp4", url: "https://drive.google.com/open?id=1iTtFXZG4qH4nnLx1NTFNIvZYvzC4Zs1q&usp=drive_copy25" },
+                        { title: "26 - Sintaxe Básica da Frase II (CÓDIGO 479161).mp4", url: "https://drive.google.com/open?id=12CtATkpfj8SsELTzdn6DXAZBq3ttl9Ty&usp=drive_copy26" },
+                        { title: "27 - Sintaxe Básica da Frase III (CÓDIGO 479162).mp4", url: "https://drive.google.com/open?id=1wYlbEhMdTXna5OC6NFv7oy-uQhlqHixS&usp=drive_copy27" },
+                        { title: "28 - Sintaxe Básica da Frase IV (CÓDIGO 479163).mp4", url: "https://drive.google.com/open?id=1umUOfn1RHwiK6W16V_BqoSkkfrGH-cC0&usp=drive_copy28" },
+                        { title: "29 - Vozes Verbais (CÓDIGO 479299).mp4", url: "https://drive.google.com/open?id=1Ff5QeQTWjKV45Ckh7mql2P9bW8seecSx&usp=drive_copy29" },
+                        { title: "30 - Vozes Verbais II (CÓDIGO 479301).mp4", url: "https://drive.google.com/open?id=1Dh6eaGMrQOIKKEpbK4KEU95wMYkVYNPU&usp=drive_copy30" },
+                        { title: "31 - Vozes Verbais III (CÓDIGO 479302).mp4", url: "https://drive.google.com/open?id=1lYi0GGcxHrDnSENIJJwptpsYAtCoWOYl&usp=drive_copy31" },
+                        { title: "32 - Vozes Verbais IV (CÓDIGO 479303).mp4", url: "https://drive.google.com/open?id=1aVy6sNB4MVvXeXzDCI81moHkylMU3vVG&usp=drive_copy32" },
+                        { title: "33 - Pronome SE (CÓDIGO 479903).mp4", url: "https://drive.google.com/open?id=1PoayQJztoHphGSL3B5fuxzSo_6MUJAYG&usp=drive_copy33" },
+                        { title: "34 - Pronome SE II (CÓDIGO 479904).mp4", url: "https://drive.google.com/open?id=1j01lDeOfl2LvY0uswqLAQVyzY4fOddbr&usp=drive_copy34" },
+                        { title: "35 - Pronome SE III (CÓDIGO 479905).mp4", url: "https://drive.google.com/open?id=1bmcVT9u2gsITFI_zHUCismXMuzH_DFHK&usp=drive_copy35" },
+                        { title: "36 - Pontuação na Oração (CÓDIGO 479906).mp4", url: "https://drive.google.com/open?id=17WgXo8DBWP0cfShf36orwpyhQXk-zMQJ&usp=drive_copy36" },
+                        { title: "37 - Pontuação na Oração II (CÓDIGO 479907).mp4", url: "https://drive.google.com/open?id=1PP10R_6qRn5HYFb2fC5YoYY5s4VnnoTK&usp=drive_copy37" },
+                        { title: "38 - Pontuação na Oração III (CÓDIGO 479908).mp4", url: "https://drive.google.com/open?id=1NVrEAyzlUw7kTztUnLA8iDSF1HivDolC&usp=drive_copy38" },
+                        { title: "39 - Pontuação na Oração IV (CÓDIGO 479909).mp4", url: "https://drive.google.com/open?id=1IwZ_zf61JcuJGrv7deB0bRu5HKWJltXW&usp=drive_copy39" },
+                        { title: "40 - Pontuação na Oração V (CÓDIGO 479910).mp4", url: "https://drive.google.com/open?id=1NSPx_r94PwzQtz4sRgN16WIWAKxbL8IE&usp=drive_copy40" },
+                        { title: "41 - Pontuação na Oração VI (CÓDIGO 479911).mp4", url: "https://drive.google.com/open?id=1IOk4js6-lK-XkFAmUwmz1Tm5qHLeJtIW&usp=drive_copy41" },
+                        { title: "42 - Análise Sintática Resumo e Apontamentos (CÓDIGO 480274).mp4", url: "https://drive.google.com/open?id=1dWD6c2tgnfpDiaQEcS22t6Io3n5TI8Wv&usp=drive_copy42" },
+                        { title: "43 - Análise Sintática Resumo e Apontamentos II (CÓDIGO 480275).mp4", url: "https://drive.google.com/open?id=1GUM3EVtcSZPp7vaIH60yVnTrzuS6EWTI&usp=drive_copy43" },
+                        { title: "44 - Análise Sintática Resumo e Apontamentos III (CÓDIGO 480814).mp4", url: "https://drive.google.com/open?id=18rV66qQuqOMJgU6sAUSPGt4ZzQpPoyap&usp=drive_copy44" },
+                        { title: "45 - Análise Sintática Resumo e Apontamentos IV (CÓDIGO 480815).mp4", url: "https://drive.google.com/open?id=1jJFMGem3RGkKKtGYWtgQLSdPY9sCo6Em&usp=drive_copy45" },
+                        { title: "46 - Período Composto e Pontuação (CÓDIGO 480816).mp4", url: "https://drive.google.com/open?id=1rgE7tzSsGoBMT5WEAmjddJvaxbtL-2wh&usp=drive_copy46" },
+                        { title: "47 - Período Composto e Pontuação II (CÓDIGO 480832).mp4", url: "https://drive.google.com/open?id=1SvCUI22BK25ebtwSZyj3ld43Y2T3i38T&usp=drive_copy47" },
+                        { title: "48 - Período Composto e Pontuação III (CÓDIGO 480833).mp4", url: "https://drive.google.com/open?id=1DSjPQ_Bo0aaULNJAbXoPkDbmjsb8H4V7&usp=drive_copy48" },
+                        { title: "49 - Período Composto e Pontuação IV (CÓDIGO 480834).mp4", url: "https://drive.google.com/open?id=1cO7kN3R5lwg-xYAdth7tRk9dHplyqLOH&usp=drive_copy49" },
+                        { title: "50 - Período Composto e Pontuação V (CÓDIGO 480835).mp4", url: "https://drive.google.com/open?id=1JJASKTjq-pHbSDeox9BQUdEcdj8wLmia&usp=drive_copy50" },
+                        { title: "51 - Período Composto e Pontuação VI (CÓDIGO 480836).mp4", url: "https://drive.google.com/open?id=14aW5BdyEQWnDnoToxZ-IMyOIK_eprguV&usp=drive_copy51" },
+                        { title: "52 - Pontuação no Período Orações Subordinadas Substantivas (CÓDIGO 481120).mp4", url: "https://drive.google.com/open?id=1Xiw5v4YzTRYj7NKBAc-l9w29Gjoa25Fx&usp=drive_copy52" },
+                        { title: "53 - Pontuação no Período Orações Subordinadas Substantivas II (CÓDIGO 481121).mp4", url: "https://drive.google.com/open?id=1E6May7Mku0tWYqaV5Pgo8sKz8e-msXkn&usp=drive_copy53" },
+                        { title: "54 - Pontuação no Período Orações Subordinadas Substantivas III (CÓDIGO 481125).mp4", url: "https://drive.google.com/open?id=1BdMyeRNzX2xmtjj3FX_jxlSdDx6vNGnx&usp=drive_copy54" },
+                        { title: "55 - Pontuação no Período Orações Subordinadas Substantivas IV (CÓDIGO 481126).mp4", url: "https://drive.google.com/open?id=1jj1GSdPI8M0MgvgV8dFYmrJD2TZQ92eR&usp=drive_copy55" },
+                        { title: "56 - Pontuação no Período_orações Subordinadas Adverbiais (CÓDIGO 481130).mp4", url: "https://drive.google.com/open?id=1HOYWtoLsjuI3m1gJi5X0IKYE62yiU3cu&usp=drive_copy56" },
+                        { title: "57 - Pontuação no Período Orações Subordinadas Adverbiais II (CÓDIGO 481193).mp4", url: "https://drive.google.com/open?id=1N5obwrKounBKCQHkhZPvqsluo3XokeqS&usp=drive_copy57" },
+                        { title: "58 - Pontuação no Período Orações Subordinadas Adverbiais III (CÓDIGO 481194).mp4", url: "https://drive.google.com/open?id=1QqfOYi96h3W_P9aIIG_nAGPp1gzNHk1s&usp=drive_copy58" },
+                        { title: "59 - Pontuação no Período Orações Subordinadas Adverbiais IV (CÓDIGO 481195).mp4", url: "https://drive.google.com/open?id=1tch2R8Hk_2deWRrvknK8t2JT0nkUpEbJ&usp=drive_copy59" },
+                        { title: "60 - Pontuação no Período Orações Subordinadas Adverbiais V (CÓDIGO 481197).mp4", url: "https://drive.google.com/open?id=1rxAlDgf6F7ecNKG9CdmyALiG-Mzkjlyz&usp=drive_copy60" },
+                        { title: "61 - Pontuação no Período Orações Subordinadas Adjetivas (CÓDIGO 481198).mp4", url: "https://drive.google.com/open?id=1fgSGz4Rqg_pAmqaK26VZXYqwiiyJaYQX&usp=drive_copy61" },
+                        { title: "62 - Pontuação no Período Orações Subordinadas Adjetivas II (CÓDIGO 481199).mp4", url: "https://drive.google.com/open?id=1IXgUaHNICj3XwX3rS-HyZv-L4x-pJ0-E&usp=drive_copy62" },
+                        { title: "63 - Pontuação no Período Orações Subordinadas Adjetivas III (CÓDIGO 482227).mp4", url: "https://drive.google.com/open?id=1IvtbCViSyhDNOVNAQqJKjktlOnmL8bvk&usp=drive_copy63" },
+                        { title: "64 - Pontuação no Período Orações Subordinadas Adjetivas IV (CÓDIGO 482228) .mp4", url: "https://drive.google.com/open?id=1_NhLf5CiagDSNbNxU4HTDPFFx2_aX8cK&usp=drive_copy64" },
+                        { title: "65 - Pontuação no Período Orações Subordinadas Adjetivas V (CÓDIGO 482229).mp4", url: "https://drive.google.com/open?id=1pGX387tFDWJePLZyhq-0Qqkzk7J8fG0s&usp=drive_copy65" },
+                        { title: "66 - Pontuação no Período Orações Subordinadas Adjetivas VI (CÓDIGO 482230).mp4", url: "https://drive.google.com/open?id=1Mef7KJB_dixtnLtNQnLYdgme9dhp2jbO&usp=drive_copy66" },
+                        { title: "67 - Pontuação no Período Orações Subordinadas Adjetivas VII (CÓDIGO 483678).mp4", url: "https://drive.google.com/open?id=1YJmIpsvHeoo9Ky4v5ZqtWIpMrpZE18d6&usp=drive_copy67" },
+                        { title: "68 - Pontuação no Período Orações Subordinadas Adjetivas VIII (CÓDIGO 483679).mp4", url: "https://drive.google.com/open?id=10uK-wAFuH6d8EzSzwzf5eLOaZCozdFMB&usp=drive_copy68" },
+                        { title: "69 - Pontuação no Período Orações Subordinadas Adjetivas IX (CÓDIGO 483680).mp4", url: "https://drive.google.com/open?id=1dmSUfZI8oweXWlNZhUTogevEzAx5T86k&usp=drive_copy69" },
+                        { title: "70 - Colocação Pronominal (CÓDIGO 483681).mp4", url: "https://drive.google.com/open?id=1RHB9EsRHRkyvzqG_AVZdZvGg4T96-W62&usp=drive_copy70" },
+                        { title: "71 - Colocação Pronominal II (CÓDIGO 484315).mp4", url: "https://drive.google.com/open?id=1YXDjveW0eufvumVcg15Mt3gDzZveTzo2&usp=drive_copy71" },
+                        { title: "72 - Colocação Pronominal III (CÓDIGO 484316).mp4", url: "https://drive.google.com/open?id=1r0ZS-v94zJPb0ZRMFg9g8rOHmXY1VoFR&usp=drive_copy72" },
+                        { title: "73 - Colocação Pronominal IV (CÓDIGO 484317).mp4", url: "https://drive.google.com/open?id=1sfV_cpJJ8JWbwPn4cNnTcLXqAITn1qRx&usp=drive_copy73" },
+                        { title: "74 - Colocação Pronominal V (CÓDIGO 484318).mp4", url: "https://drive.google.com/open?id=1D1i5xl8F3DhF_8IBlnlkkncYDuAx1-YC&usp=drive_copy74" },
+                        { title: "75 - Concordância Verbal (CÓDIGO 484740).mp4", url: "https://drive.google.com/open?id=1IYA-w_nJVsQW3VZMDp6gc9w5LOa8LCFZ&usp=drive_copy75" },
+                        { title: "76 - Concordância Verbal II (CÓDIGO 484741).mp4", url: "https://drive.google.com/open?id=13O76K33qQOi3Mahh84PCVCe0djIKdDLQ&usp=drive_copy76" },
+                        { title: "77 - Concordância Verbal III (CÓDIGO 484742).mp4", url: "https://drive.google.com/open?id=1UI-ggwSMZdCjsze_5_R7M3kbMOioLu0t&usp=drive_copy77" },
+                        { title: "78 - Concordância Verbal IV (CÓDIGO 484743).mp4", url: "https://drive.google.com/open?id=13rpchSidaU1kYfapQ7NirTCOWJSDInS3&usp=drive_copy78" },
+                        { title: "79 - Concordância Verbal V (CÓDIGO 485110).mp4", url: "https://drive.google.com/open?id=1uptOublszicgPdpCujaQk6wp5SJjENdR&usp=drive_copy79" },
+                        { title: "80 - Concordância Verbal VI (CÓDIGO 485111).mp4", url: "https://drive.google.com/open?id=1kRzWns70Dpt6ps56RrCbWBMY_vxjhoGZ&usp=drive_copy80" },
+                        { title: "81 - Concordância Verbal VII (CÓDIGO 485112).mp4", url: "https://drive.google.com/open?id=1iMijbuMmT6Nuul8DSVpGpn1DFjmzXods&usp=drive_copy81" },
+                        { title: "82 - Concordância Verbal VIII (CÓDIGO 485113).mp4", url: "https://drive.google.com/open?id=1V_Ki9hHmRYcVD9Rtk6ekXATZddHrdJvG&usp=drive_copy82" },
+                        { title: "83 - Concordância Verbal IX (CÓDIGO 485352).mp4", url: "https://drive.google.com/open?id=15i5j0RJEwvg4vL8FMOmzRNXQAUHQ6GMN&usp=drive_copy83" },
+                        { title: "84 - Concordância Verbal X (CÓDIGO 485353).mp4", url: "https://drive.google.com/open?id=1t_p85Am9FtXnbAMOd3YoPJLxfQEsKu7f&usp=drive_copy84" },
+                        { title: "85 - Concordância Nominal (CÓDIGO 485354).mp4", url: "https://drive.google.com/open?id=1rxS0yGjgT4iXxLPkbzFLBuBbrfd2NpB8&usp=drive_copy85" },
+                        { title: "86 - Concordância Nominal II (CÓDIGO 485737).mp4", url: "https://drive.google.com/open?id=19Nc0u6HNNm9sSu9WeQSZg950GB9McC7H&usp=drive_copy86" },
+                        { title: "87 - Concordância Nominal III (CÓDIGO 485738).mp4", url: "https://drive.google.com/open?id=1x_lYEJR7_8zVm0SSWp788en6e9GA9UX1&usp=drive_copy87" },
+                        { title: "88 - Concordância Nominal IV (CÓDIGO 485739).mp4", url: "https://drive.google.com/open?id=1R1olvdokAlF9dCvMZYw86rs105cn5K64&usp=drive_copy88" },
+                        { title: "89 - Concordância Nominal V (CÓDIGO 486220).mp4", url: "https://drive.google.com/open?id=1sxQnWrelfYqYFWJeHYWEXH-jrfGNFfql&usp=drive_copy89" },
+                        { title: "90 - Concordância Nominal VI (CÓDIGO 486221).mp4", url: "https://drive.google.com/open?id=1bAnZW72EPMu870f46tQnjuERvled4-J7&usp=drive_copy90" },
+                        { title: "91 - Crase (CÓDIGO 486222).mp4", url: "https://drive.google.com/open?id=1iCL3uq20duk_AxfI3lnbf8TQZ0NLig_1&usp=drive_copy91" },
+                        { title: "92 - Crase II (CÓDIGO 486223).mp4", url: "https://drive.google.com/open?id=1Ggpw8I2cXN5CcwNuFgS2jKBTam0KkBf3&usp=drive_copy92" },
+                        { title: "93 - Crase III (CÓDIGO 486733).mp4", url: "https://drive.google.com/open?id=15y9-QecjXDlRznTmDySBxSvqZxffNRB0&usp=drive_copy93" },
+                        { title: "94 - Crase IV (CÓDIGO 486734).mp4", url: "https://drive.google.com/open?id=1cBcRnsZRGjN4wZHkhwby4QD0j-5wp8en&usp=drive_copy94" },
+                        { title: "95 - Crase V (CÓDIGO 486735).mp4", url: "https://drive.google.com/open?id=1OgfDXcgFQmMKB3MtP8XZz5rRuTrS0s1Z&usp=drive_copy95" },
+                        { title: "96 - Crase VI (CÓDIGO 486736).mp4", url: "https://drive.google.com/open?id=1W4mmbN8GJTHl3J1bCPUSpD-nujCZ0Ogl&usp=drive_copy96" },
+                        { title: "97 - Crase VII (CÓDIGO 487400).mp4", url: "https://drive.google.com/open?id=1zRGqIABaBkcLtm_RNwY8sQpv7WLLYWgu&usp=drive_copy97" },
+                        { title: "98 - Crase VIII (CÓDIGO 487401).mp4", url: "https://drive.google.com/open?id=1uNlSwocM39IDhV5NjuAyz2fqD11t3diy&usp=drive_copy98" },
+                        { title: "99 - Acentuação Gráfica (CÓDIGO 487943).mp4", url: "https://drive.google.com/open?id=1j3LZU6hF6SjQngtLiY1EAqkI2HJlIKdJ&usp=drive_copy99" },
+                        { title: "100 - Acentuação Gráfica II (CÓDIGO 487944).mp4", url: "https://drive.google.com/open?id=1vQWTwNvopkhf96QYPQaPC0N16mNKGwCF&usp=drive_copy100" },
+                        { title: "101 - Acentuação Gráfica III (CÓDIGO 487945).mp4", url: "https://drive.google.com/open?id=1PyrW0VPYQEoOCBvNzUXcgM4JLoFl-xFf&usp=drive_copy101" },
+                        { title: "102 - Acentuação Gráfica IV (CÓDIGO 487946).mp4", url: "https://drive.google.com/open?id=1paF7lUADF5D25Qh98RkJf9OCbRnHaOle&usp=drive_copy102" },
+                        { title: "103 - Uso dos Porquês (CÓDIGO 488805).mp4", url: "https://drive.google.com/open?id=1gVQL9ifvkr-GxG6IhPDvKswodUNYGQIL&usp=drive_copy103" },
+                        { title: "104 - Uso dos Porquês II (CÓDIGO 488806).mp4", url: "https://drive.google.com/open?id=1zijj4qMTIOA-hab_UZhp93ZulpO5Efot&usp=drive_copy104" },
+                        { title: "105 - Formação de Palavras (CÓDIGO 488807).mp4", url: "https://drive.google.com/open?id=1LqGrLcIg2ubHHyMcFuK6STs_UuKMZMQe&usp=drive_copy105" },
+                        { title: "106 - Formação de Palavras II (CÓDIGO 488808).mp4", url: "https://drive.google.com/open?id=1w1jH1X1tzDrqiskCVWJQyczmUY0WPuiw&usp=drive_copy106" },
+                        { title: "107 - Formação de Palavras III (CÓDIGO 488809).mp4", url: "https://drive.google.com/open?id=1lDXYN2Y_OgZVGR5-IpDw7UQo-JOmD-F6&usp=drive_copy107" },
+                        { title: "108 - Uso do Hífen (CÓDIGO 489258).mp4", url: "https://drive.google.com/open?id=1v3_x77eOFczXHdxtxaXDWRYUeianhBwv&usp=drive_copy108" },
+                        { title: "109 - Uso do Hífen II (CÓDIGO 489259).mp4", url: "https://drive.google.com/open?id=1ZC_3pGHq_bkFmMRX0kBCpXiohlQ321gk&usp=drive_copy109" },
+                        { title: "110 - Uso do Hífen III (CÓDIGO 489260).mp4", url: "https://drive.google.com/open?id=1Kxs9DJyd91RGmBtkD7p-6XpArCiOoeCI&usp=drive_copy110" },
+                        { title: "111 - Uso do Hífen IV (CÓDIGO 489261).mp4", url: "https://drive.google.com/open?id=1L7KxMvWYT0ddyRGpC7prgzgkgtEELtve&usp=drive_copy111" },
+                        { title: "112 - Ortografia (CÓDIGO 489864).mp4", url: "https://drive.google.com/open?id=1vKLuRh5yzxPx7SkdK9L8EFe0ukTGA-uD&usp=drive_copy112" },
+                        { title: "113 - Ortografia II (CÓDIGO 489865).mp4", url: "https://drive.google.com/open?id=1FlBQd4Scl-mccJWagS0aCpVu_PMh8jz_&usp=drive_copy113" },
+                        { title: "114 - Regência Verbal e Regência Nominal (CÓDIGO 523838).mp4", url: "https://drive.google.com/open?id=1doOJOTTzYdIPbiBDfh_zRwba9Gr9CqE_&usp=drive_copy114" },
+                        { title: "115 - Regência Verbal e Regência Nominal II (CÓDIGO 523839).mp4", url: "https://drive.google.com/open?id=105UAMOEJ9W2BwjlWa9iXd127jekgD3UT&usp=drive_copy115" },
+                        { title: "116 - Regência Verbal e Regência Nominal III (CÓDIGO 524663).mp4", url: "https://drive.google.com/open?id=1y-dcP9h2QhPxaWAkebh66Sx6YDX99jXd&usp=drive_copy116" },
+                        { title: "117 - Regência Verbal e Regência Nominal IV (CÓDIGO 524682).mp4", url: "https://drive.google.com/open?id=1saoqYugk_yNRIuccDZT7vT8rJq_w0j8b&usp=drive_copy117" }
+                    ]
+                }
+            ]
+        }
+    }
+};
         simuladosPorMateria: {
             especificos: { title: 'Simulado de Conhecimentos Específicos', questions: [
                 { q: "[Específicos] Qual ato administrativo de efeito interno serve para expedir ordens e determinações a subordinados?", options: ["Decreto", "Portaria", "Ofício", "Circular"], answer: "Portaria" },
