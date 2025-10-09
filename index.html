@@ -945,4 +945,345 @@ const studyData = {
                         { title: "112 - Ortografia (CÓDIGO 489864).mp4", url: "https://drive.google.com/open?id=1vKLuRh5yzxPx7SkdK9L8EFe0ukTGA-uD&usp=drive_copy112" },
                         { title: "113 - Ortografia II (CÓDIGO 489865).mp4", url: "https://drive.google.com/open?id=1FlBQd4Scl-mccJWagS0aCpVu_PMh8jz_&usp=drive_copy113" },
                         { title: "114 - Regência Verbal e Regência Nominal (CÓDIGO 523838).mp4", url: "https://drive.google.com/open?id=1doOJOTTzYdIPbiBDfh_zRwba9Gr9CqE_&usp=drive_copy114" },
-                        { title: "115 - Regência Verbal e Regência Nominal II (CÓDIGO 523839).mp4", url: "
+                        { title: "115 - Regência Verbal e Regência Nominal II (CÓDIGO 523839).mp4", url: "https://drive.google.com/open?id=105UAMOEJ9W2BwjlWa9iXd127jekgD3UT&usp=drive_copy115" },
+                        { title: "116 - Regência Verbal e Regência Nominal III (CÓDIGO 524663).mp4", url: "https://drive.google.com/open?id=1y-dcP9h2QhPxaWAkebh66Sx6YDX99jXd&usp=drive_copy116" },
+                        { title: "117 - Regência Verbal e Regência Nominal IV (CÓDIGO 524682).mp4", url: "https://drive.google.com/open?id=1saoqYugk_yNRIuccDZT7vT8rJq_w0j8b&usp=drive_copy117" }
+                    ]
+                }
+            ]
+        }
+    }
+};
+        simuladosPorMateria: {
+            especificos: { title: 'Simulado de Conhecimentos Específicos', questions: [
+                { q: "[Específicos] Qual ato administrativo de efeito interno serve para expedir ordens e determinações a subordinados?", options: ["Decreto", "Portaria", "Ofício", "Circular"], answer: "Portaria" },
+                { q: "[Específicos] A fase do ciclo de vida dos documentos onde eles são frequentemente consultados é a fase:", options: ["Corrente", "Intermediária", "Permanente", "Histórica"], answer: "Corrente" },
+                { q: "[Específicos] O ato de juntar um processo a outro, de forma definitiva, por terem o mesmo interessado ou assunto, chama-se:", options: ["Apensação", "Anexação", "Desmembramento", "Autuação"], answer: "Anexação" },
+                { q: "[Específicos] O método de controle de estoque que visa manter a quantidade mínima de um item para evitar faltas é o:", options: ["Estoque Máximo", "Estoque de Segurança", "Ponto de Pedido", "Lote Econômico"], answer: "Estoque de Segurança" },
+                { q: "[Específicos] Segundo a Lei Orgânica de Arapiraca, o Poder Legislativo é exercido pela:", options: ["Prefeitura Municipal", "Câmara Municipal", "Secretaria de Educação", "Assembleia Legislativa"], answer: "Câmara Municipal" },
+                { q: "[Específicos] A formalização de um processo, com capa e numeração de páginas, é chamada de:", options: ["Protocolo", "Tramitação", "Arquivamento", "Autuação"], answer: "Autuação" },
+                { q: "[Específicos] Qual princípio da administração pública NÃO está expresso no art. 37 da Constituição (LIMPE)?", options: ["Legalidade", "Razoabilidade", "Moralidade", "Eficiência"], answer: "Razoabilidade" },
+                { q: "[Específicos] A comunicação oficial entre órgãos da mesma esfera de poder é feita, preferencialmente, por:", options: ["Carta", "Memorando", "Ofício", "E-mail"], answer: "Ofício" },
+                { q: "[Específicos] O que é a Tabela de Temporalidade de Documentos?", options: ["Um calendário de feriados", "Uma lista de preços de materiais", "Um instrumento que define por quanto tempo os documentos devem ser guardados", "Um organograma da prefeitura"], answer: "Um instrumento que define por quanto tempo os documentos devem ser guardados" },
+                { q: "[Específicos] O atendimento ao público com cortesia, presteza e urbanidade é um dever do servidor que se relaciona com qual princípio?", options: ["Legalidade", "Eficiência", "Moralidade", "Publicidade"], answer: "Eficiência" },
+                ...Array.from({ length: 90 }, (_, i) => ({ q: `[Específicos] Questão Inédita ${i + 11}`, options: ["Opção A", "Opção B", "Resposta Correta", "Opção D"], answer: "Resposta Correta" }))
+            ]},
+            portugues: { title: 'Simulado de Português', questions: Array.from({ length: 100 }, (_, i) => ({ q: `[Português] Nova Questão ${i + 1}: Assinale a alternativa em que a crase foi empregada corretamente.`, options: ["Fui à uma festa ontem.", "Ele chegou à tempo.", "Refiro-me àquilo que disseste.", "Vou a pé."], answer: "Refiro-me àquilo que disseste." })) },
+            informatica: { title: 'Simulado de Informática', questions: Array.from({ length: 100 }, (_, i) => ({ q: `[Informática] Nova Questão ${i + 1}: Qual atalho é usado para copiar um arquivo ou texto?`, options: ["Ctrl + X", "Ctrl + C", "Ctrl + V", "Ctrl + Z"], answer: "Ctrl + C" })) },
+            etica: { title: 'Simulado de Ética', questions: Array.from({ length: 100 }, (_, i) => ({ q: `[Ética] Nova Questão ${i + 1}: O princípio que veda a promoção pessoal de agentes públicos com publicidade de atos governamentais é o da:`, options: ["Legalidade", "Moralidade", "Impessoalidade", "Eficiência"], answer: "Impessoalidade" })) },
+            gerais: { title: 'Simulado de Conhecimentos Gerais', questions: Array.from({ length: 100 }, (_, i) => ({ q: `[Gerais] Nova Questão ${i + 1}: Arapiraca é conhecida como a capital do:`, options: ["Fumo", "Algodão", "Café", "Cana-de-açúcar"], answer: "Fumo" })) }
+        },
+        summaries: {}, 
+        quizzes: {'q1':{questions:[]}, 'q2':{questions:[]}, 'q3':{questions:[]}, 'sp1':{questions:[]}, 'sp2':{questions:[]}}, 
+        simulados: {
+            'simulado1': { title: 'Simulado da Reta Final 1', questions: [ { q: "[Específicos] O poder da administração de anular seus próprios atos ilegais é chamado de:", options: ["Autotutela", "Poder de polícia", "Poder hierárquico", "Poder disciplinar"], answer: "Autotutela" }, { q: "[Português] Qual a forma verbal correta para '___ cinco anos que não o vejo.'?", options: ["Faz", "Fazem", "Fez", "Farão"], answer: "Faz" }, { q: "[Informática] O que é um 'cookie' de internet?", options: ["Um tipo de vírus", "Um pequeno arquivo de texto que sites armazenam no seu computador para lembrar informações sobre você", "Um programa de antivírus", "Um hardware do computador"], answer: "Um pequeno arquivo de texto que sites armazenam no seu computador para lembrar informações sobre você" }, { q: "[Ética] A Lei de Acesso à Informação (LAI) se aplica a:", options: ["Apenas ao Poder Executivo Federal", "Apenas a empresas privadas", "Aos três Poderes (Executivo, Legislativo e Judiciário) em todos os níveis da federação", "Apenas a ONGs"], answer: "Aos três Poderes (Executivo, Legislativo e Judiciário) em todos os níveis da federação" }, { q: "[Gerais] A emancipação política de Arapiraca ocorreu em que ano?", options: ["1924", "1953", "1892", "1901"], answer: "1924" }, { q: "[Específicos] O que significa a sigla PEPS em gestão de estoques?", options: ["Primeiro que Entra, Primeiro que Sai", "Preço Estimado Ponderado de Saída", "Pedido Especial para Suprimentos", "Ponto de Encomenda Padrão de Segurança"], answer: "Primeiro que Entra, Primeiro que Sai" }, { q: "[Português] Assinale a frase com erro de crase.", options: ["Fui à Bahia nas férias.", "Ele se referiu àquilo que vimos.", "O texto foi escrito à lápis.", "Chegaremos às 19h."], answer: "O texto foi escrito à lápis." }, { q: "[Informática] Qual o principal objetivo de um software de antivírus?", options: ["Limpar arquivos desnecessários", "Detectar e remover softwares maliciosos", "Acelerar a velocidade da internet", "Organizar suas fotos e vídeos"], answer: "Detectar e remover softwares maliciosos" }, { q: "[Ética] Ser probo, no serviço público, significa ser:", options: ["Eficiente", "Pontual", "Íntegro e honesto", "Comunicativo"], answer: "Íntegro e honesto" }, { q: "[Gerais] Qual poder é responsável por julgar e aplicar as leis no município?", options: ["Poder Executivo", "Poder Legislativo", "O município não possui Poder Judiciário próprio", "Conselho Tutelar"], answer: "O município não possui Poder Judiciário próprio" } ] },
+            'simulado2': { title: 'Simulado da Reta Final 2', questions: [ { q: "[Específicos] A comunicação oficial entre um Secretário Municipal e o Prefeito é feita, geralmente, por meio de:", options: ["Memorando", "Ofício", "Exposição de Motivos", "Carta"], answer: "Exposição de Motivos" }, { q: "[Português] Em 'Estudou muito, logo foi aprovado.', a conjunção 'logo' expressa uma ideia de:", options: ["Oposição", "Conclusão", "Explicação", "Alternância"], answer: "Conclusão" }, { q: "[Informática] Qual dos seguintes é um navegador de internet?", options: ["Windows Explorer", "Google Drive", "Mozilla Firefox", "WinRAR"], answer: "Mozilla Firefox" }, { q: "[Ética] A Lei de Improbidade Administrativa pune atos que causem:", options: ["Apenas enriquecimento ilícito", "Enriquecimento ilícito, prejuízo ao erário e que atentam contra os princípios da administração", "Apenas prejuízo ao erário", "Apenas desobediência hierárquica"], answer: "Enriquecimento ilícito, prejuízo ao erário e que atentam contra os princípios da administração" }, { q: "[Gerais] O hino de Arapiraca exalta principalmente:", options: ["A força da indústria", "O pioneirismo e o trabalho do seu povo", "As belezas naturais da costa", "A cultura do café"], answer: "O pioneirismo e o trabalho do seu povo" }, { q: "[Específicos] A fase do ciclo de vida dos documentos em que eles perdem o valor administrativo e ganham valor histórico é a:", options: ["Corrente", "Intermediária", "Permanente", "Inativa"], answer: "Permanente" }, { q: "[Português] Qual palavra está com a grafia INCORRETA?", options: ["Exceção", "Piscina", "Conciência", "Adolescente"], answer: "Conciência" }, { q: "[Informática] O que é 'Hardware'?", options: ["A parte lógica do computador (programas)", "O sistema operacional", "A parte física do computador (peças e equipamentos)", "A conexão com a internet"], answer: "A parte física do computador (peças e equipamentos)" }, { q: "[Ética] Um servidor que utiliza informações privilegiadas para obter vantagem pessoal comete ato de:", options: ["Improbidade administrativa", "Mera infração disciplinar", "Conduta permitida", "Eficiência administrativa"], answer: "Improbidade administrativa" }, { q: "[Gerais] Arapiraca está localizada em qual mesorregião de Alagoas?", options: ["Leste Alagoano", "Sertão Alagoano", "Agreste Alagoano", "Mata Alagoana"], answer: "Agreste Alagoano" } ] }
+        }, 
+        weeklyPlan: [{ week: 1, goal: "Construir a base.", schedule: [], materials: [], quiz: "q1" },{ week: 2, goal: "Avançar em Gestão de Documentos.", schedule: [], materials: [], quiz: "q2" },{ week: 3, goal: "Foco em Arquivamento e Leis.", schedule: [], materials: [], quiz: "q3" },{ week: 4, goal: "Revisão do primeiro mês.", schedule: [], materials: [], quiz: "sp1" },{ week: 5, goal: "Iniciar Gestão de Materiais.", schedule: [], materials: [], quiz: "" },{ week: 6, goal: "Aprofundar na Lei Orgânica.", schedule: [], materials: [], quiz: "" },{ week: 7, goal: "Foco em Redes de Computadores.", schedule: [], materials: [], quiz: "" },{ week: 8, goal: "Revisão do segundo mês.", schedule: [], materials: [], quiz: "sp2" },{ week: 9, goal: "Cobrir últimos tópicos.", schedule: [], materials: [], quiz: "" },{ week: 10, goal: "Revisão geral final.", schedule: [], materials: [], quiz: "" },]
+    };
+    const syllabusData = {'Conhecimentos Específicos':['Informações gerais','Lei Orgânica','Plano de cargos','Atos administrativos','Documentação e Arquivo','Protocolo','Gestão de materiais','Processos administrativos'],'Português':['Interpretação','Gêneros','Coesão','Conectivos','Morfologia','Sintaxe','Crase','Ortografia'],'Informática':['Hardware/Software','Windows/Linux','Office/LibreOffice','Segurança','Redes','Internet','Cloud','Ferramentas Google'],'Ética':['Conceitos','Vida Pública','Conduta','Deveres','Legislação','Cidadania','Estatutos'],'Conhecimentos Gerais':['História','Geografia','Cultura','Estrutura da Prefeitura','Símbolos']};
+    
+    let currentUser = null;
+    let userProgress = {};
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const authContainer = document.getElementById('auth-container');
+        const appContainer = document.getElementById('app-container');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const resetForm = document.getElementById('reset-form');
+        const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+        const toggleAuthModeBtn = document.getElementById('toggle-auth-mode');
+        const authError = document.getElementById('auth-error');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        auth.onAuthStateChanged(async user => {
+            loadingSpinner.style.display = 'flex';
+            if (user) {
+                currentUser = user;
+                await loadUserProgress();
+                initializeAppUI();
+                authContainer.style.display = 'none';
+                appContainer.style.display = 'block';
+            } else {
+                currentUser = null;
+                authContainer.style.display = 'flex';
+                appContainer.style.display = 'none';
+            }
+            loadingSpinner.style.display = 'none';
+        });
+        
+        async function loadUserProgress() {
+            if (!currentUser) return;
+            const docRef = db.collection('users').doc(currentUser.uid);
+            const doc = await docRef.get();
+            userProgress = doc.exists ? doc.data() : { checklist: {}, quizResults: {} };
+        }
+        
+        async function saveUserProgress() {
+            if (!currentUser) return;
+            if (window.saveTimeout) clearTimeout(window.saveTimeout);
+            window.saveTimeout = setTimeout(() => { db.collection('users').doc(currentUser.uid).set(userProgress); }, 1000);
+        }
+        
+        function getFirebaseErrorMessage(c){return{'auth/wrong-password':'Senha incorreta.','auth/user-not-found':'E-mail não cadastrado.','auth/invalid-credential':'E-mail ou senha incorretos.','auth/invalid-email':'Formato do e-mail é inválido.','auth/email-already-in-use':'Este e-mail já está cadastrado.','auth/weak-password':'A senha precisa ter no mínimo 6 caracteres.'}[c]||'Ocorreu um erro. Tente novamente.'}
+        loginForm.addEventListener('submit', e => { e.preventDefault(); authError.textContent = ''; auth.signInWithEmailAndPassword(loginForm['login-email'].value, loginForm['login-password'].value).catch(error => { authError.textContent = getFirebaseErrorMessage(error.code); }); });
+        registerForm.addEventListener('submit', e => { e.preventDefault(); authError.textContent = ''; auth.createUserWithEmailAndPassword(registerForm['register-email'].value, registerForm['register-password'].value).catch(error => { authError.textContent = getFirebaseErrorMessage(error.code); }); });
+        resetForm.addEventListener('submit', e => { e.preventDefault(); authError.textContent = ''; auth.sendPasswordResetEmail(resetForm['reset-email'].value).then(() => { authError.textContent = 'Link enviado! Verifique sua caixa de entrada e spam.'; authError.classList.replace('text-red-500','text-green-600'); }).catch(error => { authError.textContent = getFirebaseErrorMessage(error.code); authError.classList.replace('text-green-600','text-red-500'); }); });
+        logoutBtn.addEventListener('click', () => { auth.signOut(); });
+
+        forgotPasswordBtn.addEventListener('click', () => {
+            loginForm.classList.add('hidden');
+            registerForm.classList.add('hidden');
+            resetForm.classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Redefinir Senha';
+            document.getElementById('toggle-text').textContent = '';
+            toggleAuthModeBtn.textContent = 'Voltar para o Login';
+            authError.textContent = '';
+        });
+        toggleAuthModeBtn.addEventListener('click', () => {
+            const isResetActive = !resetForm.classList.contains('hidden');
+            authError.textContent = ''; authError.classList.replace('text-green-600','text-red-500');
+            if (isResetActive) {
+                resetForm.classList.add('hidden'); loginForm.classList.remove('hidden');
+                document.getElementById('auth-title').textContent = 'Bem-vindo(a)!';
+                document.getElementById('toggle-text').textContent = 'Não tem uma conta?';
+                toggleAuthModeBtn.textContent = 'Cadastre-se';
+            } else {
+                const isLoginActive = !loginForm.classList.contains('hidden');
+                loginForm.classList.toggle('hidden'); registerForm.classList.toggle('hidden');
+                document.getElementById('auth-title').textContent = isLoginActive ? 'Crie sua Conta' : 'Bem-vindo(a)!';
+                document.getElementById('toggle-text').textContent = isLoginActive ? 'Já tem uma conta?' : 'Não tem uma conta?';
+                toggleAuthModeBtn.textContent = isLoginActive ? 'Entrar' : 'Cadastre-se';
+            }
+        });
+
+        function initializeAppUI() {
+            if (!currentUser) return;
+            document.getElementById('user-email').textContent = currentUser.email;
+            renderChart(); 
+            renderSyllabus(); 
+            renderModals();
+            renderSimuladosPorMateria();
+            renderWeeklyPlan();
+            renderVideoLessons();
+            loadChecklistState(); 
+            updatePerformancePanel();
+            setupNavEvents();
+        }
+        
+        function renderChart() {
+            const el = document.getElementById('examWeightsChart');
+            if (el && Chart.getChart(el)) Chart.getChart(el).destroy();
+            if(el) new Chart(el.getContext('2d'), { type: 'doughnut', data: { labels: ['Específicos', 'Português', 'Informática', 'Ética', 'Gerais'], datasets: [{ data: [60, 20, 10, 5, 5], backgroundColor: ['#0f766e', '#14b8a6', '#5eead4', '#99f6e4', '#ccfbf1'], borderColor: '#f8fafc', borderWidth: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15, color: '#475569' } }, tooltip: { callbacks: { label: c => `${c.label}: ${c.parsed}%` } } } } });
+        }
+
+        function renderWeeklyPlan() {
+            const tabsContainer = document.getElementById('tabs-container');
+            const contentContainer = document.getElementById('tabs-content-container');
+            if (!tabsContainer || !contentContainer) return;
+            tabsContainer.innerHTML = studyData.weeklyPlan.map((weekData, index) => `<button class="tab-button px-4 py-2 rounded-md font-semibold ${index === 0 ? 'active' : ''}" data-target="week-${weekData.week}">Semana ${weekData.week}</button>`).join('');
+            contentContainer.innerHTML = studyData.weeklyPlan.map((weekData, index) => {
+                let materialsHtml = (weekData.materials && weekData.materials.length > 0) ? `<h4 class="font-semibold mb-2 mt-4">Materiais:</h4>${weekData.materials.map(m => `<button class="modal-trigger text-teal-600 hover:underline" data-modal="${m.modal}">${m.label}</button>`).join('<br>')}` : '';
+                let quizHtml = weekData.quiz ? `<div class="mt-4"><button class="modal-trigger bg-teal-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-teal-700" data-modal="${weekData.quiz}">Exercícios</button></div>` : '';
+                let scheduleHtml = (weekData.schedule && weekData.schedule.length > 0) ? weekData.schedule.map(s => `<p><strong>${s.day}:</strong> ${s.topics}</p>`).join('') : '';
+                return `<div id="week-${weekData.week}" class="tab-content ${index > 0 ? 'hidden' : ''}"><h3 class="text-xl font-bold text-slate-700">${weekData.goal}</h3><div class="mt-4 space-y-2">${scheduleHtml}</div>${materialsHtml}${quizHtml}</div>`;
+            }).join('');
+        }
+        
+        function renderVideoLessons() {
+            const container = document.getElementById('videoaulas-accordion-container');
+            if (!container) return;
+            container.innerHTML = Object.keys(studyData.videoLessons).map(subjectKey => {
+                const subject = studyData.videoLessons[subjectKey];
+                return `<div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none">
+                        <span>${subject.title}</span>
+                        <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content hidden p-5 border-t border-slate-200">
+                        ${subject.topics.map(topic => `
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-slate-600">${topic.name}</h4>
+                                <ul class="list-disc list-inside mt-2 space-y-1">
+                                    ${topic.videos.map(video => `<li><a href="${video.url}" target="_blank" class="text-teal-600 hover:underline">${video.title}</a></li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+        
+        function renderSyllabus() {
+            const container = document.getElementById('accordion-container');
+            if (!container) return;
+            container.innerHTML = Object.keys(syllabusData).map(subject => `<div class="bg-white rounded-xl shadow-md overflow-hidden"><button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none"><span>${subject}</span><svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button><div class="accordion-content hidden p-5 border-t border-slate-200"><ul class="space-y-2">${syllabusData[subject].map(topic => `<li class="checklist-item p-2 rounded-md" data-topic-id="${(subject + topic).replace(/\s+/g, '')}">${topic}</li>`).join('')}</ul></div></div>`).join('');
+        }
+
+        function renderModals() {
+            const container = document.getElementById('modals-container'); 
+            if(!container) return;
+            container.innerHTML = '';
+            const allModalData = { ...studyData.summaries, ...studyData.quizzes, ...studyData.simulados };
+            Object.keys(allModalData).forEach(key => {
+                const data = allModalData[key]; if (!data || !data.title || !data.questions) return;
+                const modal = document.createElement('div'); modal.id = key; modal.className = 'modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50';
+                let contentHtml = (data.questions.length > 0) ? data.questions.map((q, i) => `<div class="quiz-item mb-4" data-quiz-id="${key}" data-question-index="${i}"><p class="font-semibold">${i + 1}. ${q.q}</p><div class="space-y-2 mt-2">${q.options.map(opt => `<div class="quiz-option border-2 border-slate-200 p-2 rounded-md" data-answer="${q.answer}">${opt}</div>`).join('')}</div><p class="quiz-feedback hidden mt-2 text-sm"></p></div>`).join('') : data.content || '';
+                modal.innerHTML = `<div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b"><h3 class="text-xl font-bold">${data.title}</h3><button class="modal-close text-2xl">&times;</button></div><div class="p-6 overflow-y-auto">${contentHtml}</div></div>`;
+                container.appendChild(modal);
+            });
+        }
+        
+        function renderSimuladosPorMateria() {
+            Object.keys(studyData.simuladosPorMateria).forEach(key => {
+                const simulado = studyData.simuladosPorMateria[key];
+                const container = document.getElementById(`simulado-${key}-container`);
+                if (!container) return;
+                container.innerHTML = simulado.questions.map((q, i) => `
+                    <div class="quiz-item border-t pt-4" data-quiz-id="${key}" data-question-index="${i}">
+                        <p class="font-semibold">${i + 1}. ${q.q}</p>
+                        <div class="grid sm:grid-cols-2 gap-2 mt-2">${q.options.map(opt => `<div class="quiz-option border-2 border-slate-200 p-2 rounded-md" data-answer="${q.answer}">${opt}</div>`).join('')}</div>
+                        <p class="quiz-feedback hidden mt-2 text-sm"></p>
+                    </div>`).join('');
+                loadQuizState(container);
+            });
+        }
+        
+        function loadChecklistState() {
+            const completed = userProgress.checklist || {};
+            document.querySelectorAll('.checklist-item').forEach(item => {
+                if (completed[item.dataset.topicId]) item.classList.add('completed');
+                else item.classList.remove('completed');
+            });
+        }
+        function saveChecklistState(item) {
+            userProgress.checklist = userProgress.checklist || {};
+            userProgress.checklist[item.dataset.topicId] = item.classList.contains('completed');
+            saveUserProgress();
+        }
+        
+        function updatePerformancePanel() {
+            const results = userProgress.quizResults || {};
+            const panel = document.getElementById('performance-content');
+            if (!panel) return;
+            if (Object.keys(results).length === 0) { panel.innerHTML = '<p>Responda aos exercícios e simulados para ver seu desempenho aqui.</p>'; return; }
+            let totalCorrect = 0, totalAnswered = 0; const subjectStats = {};
+            const allQuizzes = { ...studyData.quizzes, ...studyData.simulados, ...studyData.simuladosPorMateria };
+            for (const quizId in results) {
+                if (!allQuizzes[quizId]) continue;
+                for (const qIndex in results[quizId]) {
+                    totalAnswered++;
+                    const questionData = allQuizzes[quizId].questions[qIndex];
+                    if (!questionData) continue;
+                    const subject = (questionData.q.match(/^\[(.*?)\]/) || [])[1] || 'Geral';
+                    if (!subjectStats[subject]) subjectStats[subject] = { correct: 0, total: 0 };
+                    subjectStats[subject].total++;
+                    if (results[quizId][qIndex].isCorrect) { totalCorrect++; subjectStats[subject].correct++; }
+                }
+            }
+            const overallPercentage = totalAnswered > 0 ? ((totalCorrect / totalAnswered) * 100).toFixed(0) : 0;
+            panel.innerHTML = `<div class="grid md:grid-cols-2 gap-4 mb-6"><div class="bg-teal-50 p-4 rounded-lg text-center"><p class="text-sm">Acerto Geral (Total)</p><p class="text-2xl font-bold">${overallPercentage}%</p></div><div class="bg-teal-50 p-4 rounded-lg text-center"><p class="text-sm">Total de Questões Respondidas</p><p class="text-2xl font-bold">${totalAnswered}</p></div></div><h4 class="font-semibold mb-2">Desempenho por Disciplina:</h4><div class="space-y-2">${Object.keys(subjectStats).sort().map(s => `<div class="flex justify-between items-center"><p>${s}</p><p class="font-semibold">${subjectStats[s].total > 0 ? ((subjectStats[s].correct / subjectStats[s].total) * 100).toFixed(0) : 0}%</p></div>`).join('')}</div>`;
+        }
+
+        function loadQuizState(container) {
+            if(!container) return;
+            const normalizeText = (text) => text.trim().replace(/\s+/g, ' ');
+            container.querySelectorAll('.quiz-item').forEach(item => {
+                const quizId = item.dataset.quizId;
+                const qIndex = item.dataset.questionIndex;
+                const results = userProgress.quizResults || {};
+                item.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('answered', 'correct', 'incorrect'));
+                const feedback = item.querySelector('.quiz-feedback');
+                if (feedback) feedback.className = 'quiz-feedback hidden mt-2 text-sm';
+
+                if (results[quizId] && results[quizId][qIndex]) {
+                    const { userAnswer, isCorrect } = results[quizId][qIndex];
+                    const allOptions = item.querySelectorAll('.quiz-option');
+                    const correctAnswerText = normalizeText(item.querySelector('[data-answer]').dataset.answer);
+                    allOptions.forEach(opt => {
+                        opt.classList.add('answered');
+                        if (normalizeText(opt.textContent) === normalizeText(userAnswer)) {
+                            opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        }
+                        if (!isCorrect && normalizeText(opt.textContent) === correctAnswerText) {
+                            opt.classList.add('correct');
+                        }
+                    });
+                    if (feedback) {
+                        feedback.textContent = isCorrect ? 'Resposta Correta!' : `Incorreto. A resposta certa é: ${correctAnswerText}`;
+                        feedback.className = `quiz-feedback block mt-2 text-sm ${isCorrect ? 'text-green-600' : 'text-red-600'}`;
+                    }
+                }
+            });
+        }
+
+        function setupNavEvents() {
+            const dropdownContainer = document.getElementById('simulados-dropdown-container');
+            const dropdownMenu = document.getElementById('simulados-dropdown-menu');
+            if(dropdownContainer && dropdownMenu){
+                const toggleDropdown = () => dropdownMenu.classList.toggle('hidden');
+                dropdownContainer.addEventListener('mouseenter', toggleDropdown);
+                dropdownContainer.addEventListener('mouseleave', toggleDropdown);
+            }
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetEl = document.querySelector(this.getAttribute('href'));
+                    if(targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+                    if(dropdownMenu) dropdownMenu.classList.add('hidden');
+                });
+            });
+        }
+        
+        document.body.addEventListener('click', async e => {
+            if (e.target.classList.contains('modal-trigger')) {
+                const modalId = e.target.dataset.modal;
+                const modal = document.getElementById(modalId);
+                if (modal) { modal.classList.add('active'); if (modal.querySelector('.quiz-item')) loadQuizState(modal); }
+            }
+            if (e.target.classList.contains('modal-close') || e.target.classList.contains('modal')) {
+                e.target.closest('.modal')?.classList.remove('active');
+            }
+            
+            const quizItem = e.target.closest('.quiz-item');
+            if (quizItem && e.target.classList.contains('quiz-option') && !quizItem.querySelector('.answered')) {
+                const quizId = quizItem.dataset.quizId;
+                const qIndex = parseInt(quizItem.dataset.questionIndex, 10);
+                
+                const allQuizzes = { ...studyData.quizzes, ...studyData.simulados, ...studyData.simuladosPorMateria };
+
+                const normalizeText = (text) => text.trim().replace(/\s+/g, ' ');
+
+                const correctAnswer = normalizeText(allQuizzes[quizId].questions[qIndex].answer);
+                const userAnswer = normalizeText(e.target.textContent);
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (!userProgress.quizResults) userProgress.quizResults = {};
+                if (!userProgress.quizResults[quizId]) userProgress.quizResults[quizId] = {};
+                userProgress.quizResults[quizId][qIndex] = { userAnswer: userAnswer, isCorrect: isCorrect };
+                
+                await saveUserProgress();
+                
+                const container = quizItem.closest('.modal') || quizItem.closest('div[id$="-container"]');
+                loadQuizState(container);
+                updatePerformancePanel();
+            }
+
+            const accordionButton = e.target.closest('.accordion-button');
+            if(accordionButton){
+                accordionButton.classList.toggle('open');
+                accordionButton.nextElementSibling.classList.toggle('hidden');
+            }
+
+            if (e.target.classList.contains('checklist-item')) { 
+                e.target.classList.toggle('completed'); 
+                saveChecklistState(e.target); 
+            } 
+        });
+    });
+</script>
+</body>
+</html>
+
