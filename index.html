@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutor de Questões - Concurso-IBAM</title>
+    <title>Tutor de Questões - Concurso IBAM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        .option-btn, .subject-btn, .auth-btn {
+        .option-btn, .subject-btn, .auth-btn, .bank-btn {
             transition: all 0.2s ease-in-out;
         }
         .option-btn.selected {
@@ -28,7 +28,7 @@
             color: white;
             border-color: #dc2626; /* border-red-600 */
         }
-        .option-btn:not([disabled]):hover, .subject-btn:hover, .auth-btn:hover {
+        .option-btn:not([disabled]):hover, .subject-btn:hover, .auth-btn:hover, .bank-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
@@ -77,60 +77,81 @@
 
         <!-- Conteúdo Principal do App (Quiz) -->
         <div id="app-container" class="hidden">
-            <!-- Tela de Seleção de Disciplina -->
-            <div id="selection-screen" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
-                <div class="flex justify-between items-center mb-8">
+            
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <!-- Cabeçalho Fixo -->
+                <div id="app-header" class="flex justify-between items-center mb-8">
                     <div>
                         <h1 class="text-2xl font-bold text-slate-800">Tutor para Concurso</h1>
                         <p id="welcome-user" class="text-slate-600"></p>
                     </div>
                     <button id="logout-btn" class="text-sm bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-lg hover:bg-slate-300 transition-colors">Sair</button>
                 </div>
-                <p class="text-slate-600 text-center mb-8">Escolha uma disciplina para começar a estudar ou faça um simulado completo.</p>
-                <div id="subject-buttons-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Português">Português</button>
-                    <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Ética">Ética</button>
-                    <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Informática">Informática</button>
-                    <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Conhecimentos Específicos">Conhecimentos Específicos</button>
-                    <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Conhecimentos Gerais sobre o Município">Conhecimentos Gerais do Município</button>
-                    <button class="subject-btn w-full text-left p-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 col-span-1 md:col-span-2" data-subject="all">▶ Iniciar Simulado Completo</button>
-                </div>
-            </div>
 
-            <!-- Tela do Quiz -->
-            <div id="quiz-container" class="bg-white w-full rounded-xl shadow-lg p-6 md:p-8 hidden">
-                <div id="quiz-header" class="mb-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <h1 class="text-2xl font-bold text-slate-800">Tutor para Concurso - IBAM</h1>
-                        <span id="question-counter" class="text-sm font-semibold text-slate-500 bg-slate-200 px-3 py-1 rounded-full"></span>
-                    </div>
-                     <div class="w-full bg-slate-200 rounded-full h-2.5">
-                        <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                <!-- Tela de Seleção de Banco de Questões -->
+                <div id="bank-selection-screen">
+                    <p class="text-slate-600 text-center mb-8">Selecione um banco de questões para iniciar seus estudos.</p>
+                    <div class="grid grid-cols-1 gap-4">
+                        <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="1">
+                            <span>📚 Banco de Questões 1</span>
+                            <span class="text-sm text-slate-500">55 Questões</span>
+                        </button>
+                        <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="2">
+                             <span>✨ Banco de Questões 2</span>
+                            <span class="text-sm text-slate-500">55 Novas Questões</span>
+                        </button>
                     </div>
                 </div>
 
-                <div id="quiz-body">
-                    <p id="question-subject" class="mb-2 text-sm font-semibold text-blue-600"></p>
-                    <h2 id="question-text" class="text-lg font-semibold text-slate-700 mb-6"></h2>
-                    <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                    <div id="feedback-container" class="mt-6 hidden">
-                        <div id="feedback-result" class="text-lg font-bold mb-2"></div>
-                        <div id="feedback-explanation" class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-slate-600"></div>
+                <!-- Tela de Seleção de Disciplina -->
+                <div id="selection-screen" class="hidden">
+                    <p class="text-slate-600 text-center mb-8">Escolha uma disciplina para começar a estudar ou faça um simulado completo.</p>
+                    <div id="subject-buttons-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Português">Português</button>
+                        <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Ética">Ética</button>
+                        <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Informática">Informática</button>
+                        <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Conhecimentos Específicos">Conhecimentos Específicos</button>
+                        <button class="subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600" data-subject="Conhecimentos Gerais sobre o Município">Conhecimentos Gerais do Município</button>
+                        <button class="subject-btn w-full text-left p-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 col-span-1 md:col-span-2" data-subject="all">▶ Iniciar Simulado Completo</button>
                     </div>
+                     <button id="back-to-banks-btn" class="mt-6 text-sm text-blue-600 hover:underline">← Voltar para seleção de bancos</button>
                 </div>
 
-                <div id="quiz-footer" class="mt-8 flex justify-end">
-                    <button id="check-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">Verificar</button>
-                    <button id="next-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors hidden">Próxima Questão</button>
-                </div>
+                <!-- Tela do Quiz -->
+                <div id="quiz-container" class="hidden">
+                    <div id="quiz-header" class="mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h1 class="text-2xl font-bold text-slate-800">Tutor de Questões</h1>
+                            <span id="question-counter" class="text-sm font-semibold text-slate-500 bg-slate-200 px-3 py-1 rounded-full"></span>
+                        </div>
+                         <div class="w-full bg-slate-200 rounded-full h-2.5">
+                            <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
 
-                <div id="results-container" class="text-center hidden">
-                    <h2 class="text-3xl font-bold text-slate-800 mb-4">Quiz Finalizado!</h2>
-                    <p class="text-lg text-slate-600 mb-6">Você acertou <span id="score-correct" class="font-bold"></span> de <span id="score-total" class="font-bold"></span> questões.</p>
-                    <p class="text-4xl mb-8" id="score-emoji"></p>
-                    <div class="flex flex-col md:flex-row gap-4 justify-center">
-                        <button id="restart-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors">Refazer</button>
-                        <button id="back-to-menu-btn" class="bg-slate-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-slate-700 transition-colors">Voltar ao Início</button>
+                    <div id="quiz-body">
+                        <p id="question-subject" class="mb-2 text-sm font-semibold text-blue-600"></p>
+                        <h2 id="question-text" class="text-lg font-semibold text-slate-700 mb-6"></h2>
+                        <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                        <div id="feedback-container" class="mt-6 hidden">
+                            <div id="feedback-result" class="text-lg font-bold mb-2"></div>
+                            <div id="feedback-explanation" class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-slate-600"></div>
+                        </div>
+                    </div>
+
+                    <div id="quiz-footer" class="mt-8 flex justify-end">
+                        <button id="check-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">Verificar</button>
+                        <button id="next-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors hidden">Próxima Questão</button>
+                    </div>
+
+                    <div id="results-container" class="text-center hidden">
+                        <h2 class="text-3xl font-bold text-slate-800 mb-4">Quiz Finalizado!</h2>
+                        <p class="text-lg text-slate-600 mb-6">Você acertou <span id="score-correct" class="font-bold"></span> de <span id="score-total" class="font-bold"></span> questões.</p>
+                        <p class="text-4xl mb-8" id="score-emoji"></p>
+                        <div class="flex flex-col md:flex-row gap-4 justify-center">
+                            <button id="restart-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors">Refazer</button>
+                            <button id="back-to-menu-btn" class="bg-slate-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-slate-700 transition-colors">Voltar ao Início</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,11 +160,9 @@
 
     <!-- Firebase Scripts -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBfG-3SV8Tkczas4cGcIQwv5atFZVcDKFs",
             authDomain: "tutor-estudos.firebaseapp.com",
@@ -153,11 +172,10 @@
             appId: "1:691817799067:web:090572d64ffc44aa5dd53e"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // --- LÓGICA DE AUTENTICAÇÃO ---
+        // --- LÓGICA DE AUTENTICAÇÃO E NAVEGAÇÃO ---
         const authScreen = document.getElementById('auth-screen');
         const appContainer = document.getElementById('app-container');
         const loginForm = document.getElementById('login-form');
@@ -169,157 +187,180 @@
         const registerText = document.getElementById('register-text');
         const logoutBtn = document.getElementById('logout-btn');
         const welcomeUser = document.getElementById('welcome-user');
+        
+        const bankSelectionScreen = document.getElementById('bank-selection-screen');
+        const selectionScreen = document.getElementById('selection-screen');
+        const quizContainer = document.getElementById('quiz-container');
+        const backToBanksBtn = document.getElementById('back-to-banks-btn');
 
-        // Alternar entre formulários de login e registro
-        toggleToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginForm.classList.add('hidden');
-            registerForm.classList.remove('hidden');
-            loginText.classList.add('hidden');
-            registerText.classList.remove('hidden');
-            authError.textContent = '';
-        });
-
-        toggleToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerForm.classList.add('hidden');
-            loginForm.classList.remove('hidden');
-            registerText.classList.add('hidden');
-            loginText.classList.remove('hidden');
-            authError.textContent = '';
-        });
-
-        // Lidar com registro
+        toggleToRegister.addEventListener('click', (e) => { e.preventDefault(); loginForm.classList.add('hidden'); registerForm.classList.remove('hidden'); loginText.classList.add('hidden'); registerText.classList.remove('hidden'); authError.textContent = ''; });
+        toggleToLogin.addEventListener('click', (e) => { e.preventDefault(); registerForm.classList.add('hidden'); loginForm.classList.remove('hidden'); registerText.classList.add('hidden'); loginText.classList.remove('hidden'); authError.textContent = ''; });
+        
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
-            
-            createUserWithEmailAndPassword(auth, email, password)
-                .catch((error) => {
-                    console.error("Erro de registro:", error.code, error.message);
-                    if (error.code === 'auth/weak-password') {
-                        authError.textContent = 'Senha muito fraca. Use pelo menos 6 caracteres.';
-                    } else if (error.code === 'auth/email-already-in-use') {
-                        authError.textContent = 'Este email já está em uso.';
-                    } else {
-                        authError.textContent = 'Ocorreu um erro ao criar a conta.';
-                    }
-                });
+            createUserWithEmailAndPassword(auth, email, password).catch((error) => {
+                if (error.code === 'auth/weak-password') authError.textContent = 'Senha muito fraca. Use pelo menos 6 caracteres.';
+                else if (error.code === 'auth/email-already-in-use') authError.textContent = 'Este email já está em uso.';
+                else authError.textContent = 'Ocorreu um erro ao criar a conta.';
+            });
         });
 
-        // Lidar com login
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .catch((error) => {
-                    console.error("Erro de login:", error.code, error.message);
-                    authError.textContent = 'Email ou senha inválidos.';
-                });
+            signInWithEmailAndPassword(auth, email, password).catch(() => authError.textContent = 'Email ou senha inválidos.');
         });
 
-        // Lidar com logout
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth);
-        });
+        logoutBtn.addEventListener('click', () => signOut(auth));
 
-        // Observador de estado de autenticação
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Usuário está logado
                 authScreen.classList.add('hidden');
                 appContainer.classList.remove('hidden');
                 welcomeUser.textContent = `Bem-vindo(a), ${user.email}!`;
-                // Garante que a tela de seleção seja mostrada ao logar
-                backToMenu(); 
+                showBankSelection();
             } else {
-                // Usuário está deslogado
                 appContainer.classList.add('hidden');
                 authScreen.classList.remove('hidden');
             }
         });
 
+        function showBankSelection() {
+            bankSelectionScreen.classList.remove('hidden');
+            selectionScreen.classList.add('hidden');
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.add('hidden');
+        }
+
+        // --- BANCO DE QUESTÕES ---
+        const questionBanks = {
+            '1': [
+                 { subject: "Português", question: "Assinale a alternativa em que o uso do acento grave indicativo da crase está CORRETO:", options: ["O pesquisador se dedicou à uma nova teoria.","Eles foram para a praia às pressas.","O documento foi entregue à ele.","As aulas começarão à partir de amanhã."], answer: 1, explanation: "A crase é usada corretamente em 'às pressas', uma locução adverbial feminina." },
+                 { subject: "Português", question: "A pontuação está empregada corretamente em:", options: ["O menino, que era muito curioso, abriu a caixa.","O menino que era muito curioso abriu a caixa.","O menino, que era muito curioso abriu a caixa.","O menino que era muito curioso, abriu a caixa."], answer: 0, explanation: "A oração 'que era muito curioso' é uma oração subordinada adjetiva explicativa, devendo ser isolada por vírgulas." },
+                 { subject: "Português", question: "Qual das frases abaixo apresenta concordância verbal INCORRETA?", options: ["Fazem cinco anos que não o vejo.","Havia muitos problemas a serem resolvidos.","A maioria dos alunos passou no teste.","Um bando de pássaros sobrevoou a cidade."], answer: 0, explanation: "O verbo 'fazer', indicando tempo, é impessoal. O correto é: 'Faz cinco anos'." },
+                 { subject: "Português", question: "Na frase 'Tenho aversão ___ mentiras', a regência nominal do substantivo 'aversão' exige a preposição:", options: ["de","com","a","por"], answer: 2, explanation: "Quem tem aversão, tem aversão 'a' algo. Portanto, 'Tenho aversão a mentiras'." },
+                 { subject: "Português", question: "A colocação do pronome oblíquo átono está INCORRETA em:", options: ["Não me diga tal coisa.","Me empresta o livro, por favor?","O assunto que se discute é complexo.","Far-lhe-ei uma visita amanhã."], answer: 1, explanation: "Não se deve iniciar frase com pronome oblíquo átono na norma culta. Correto: 'Empresta-me o livro'." },
+                 { subject: "Português", question: "Assinale a alternativa em que todas as palavras estão grafadas corretamente.", options: ["Exceção, ascenção, privilégio.","Paralizar, analisar, pesquisar.","Ansiedade, espontâneo, impecilho.","Pretenção, obsessão, muçulmano."], answer: 2, explanation: "Os erros são: (A) 'ascensão'; (B) 'paralisar'; (D) 'pretensão'." },
+                 { subject: "Português", question: "Na frase 'Aquele político é uma raposa', encontramos qual figura de linguagem?", options: ["Metonímia","Hipérbole","Comparação","Metáfora"], answer: 3, explanation: "É uma metáfora, uma comparação implícita." },
+                 { subject: "Português", question: "Em 'O saber é o bem mais valioso', a palavra 'saber' é classificada morfologicamente como:", options: ["Verbo","Adjetivo","Substantivo","Advérbio"], answer: 2, explanation: "'Saber' é um verbo substantivado pelo artigo 'O'." },
+                 { subject: "Português", question: "Na oração 'Precisa-se de funcionários competentes', o sujeito é:", options: ["Oculto","Indeterminado","Inexistente","Simples (funcionários competentes)"], answer: 1, explanation: "Verbo transitivo indireto + 'se' = sujeito indeterminado." },
+                 { subject: "Português", question: "Todas as palavras são acentuadas pela mesma regra em:", options: ["pálido, lâmpada, trânsito","saúde, baú, egoísta","herói, chapéu, anéis","táxi, júri, bônus"], answer: 0, explanation: "Na alternativa A, todas são proparoxítonas." },
+                 { subject: "Ética", question: "Segundo a CF/88, a administração pública obedecerá aos princípios de:", options: ["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência.","Legalidade, Pessoalidade, Moralidade, Sigilo e Eficácia.","Soberania, Cidadania, Dignidade da pessoa humana, e Valores sociais.","Probidade, Honestidade, Decoro, Zelo e Lealdade."], answer: 0, explanation: "É o mnemônico LIMPE, do Art. 37 da Constituição Federal." },
+                 { subject: "Ética", question: "Constitui ato de improbidade administrativa que importa enriquecimento ilícito:", options: ["Negar publicidade aos atos oficiais.","Frustrar a licitude de concurso público.","Receber vantagem econômica indevida para tolerar a exploração de jogo de azar.","Deixar de prestar contas quando obrigado."], answer: 2, explanation: "Receber vantagem indevida é o núcleo do enriquecimento ilícito (Art. 9º da Lei de Improbidade)." },
+                 { subject: "Ética", question: "Conforme a Lei de Acesso à Informação, o prazo para o órgão fornecer a informação é de até:", options: ["10 dias, prorrogável por igual período.","15 dias, improrrogáveis.","20 dias, prorrogável por mais 10 dias.","30 dias, improrrogáveis."], answer: 2, explanation: "O prazo é de 20 dias, prorrogável por mais 10, conforme Art. 11 da LAI." },
+                 { subject: "Ética", question: "Qual dos itens abaixo representa um dever fundamental do servidor público?", options: ["Recusar fé a documentos públicos.","Exercer com zelo e dedicação as atribuições do cargo.","Opor resistência injustificada ao andamento de processo.","Promover manifestação de apreço no recinto da repartição."], answer: 1, explanation: "Zelo e dedicação são deveres essenciais ligados ao princípio da eficiência." },
+                 { subject: "Ética", question: "A diferença fundamental entre Ética e Moral é que:", options: ["Ética é a prática, Moral é a teoria.","Moral refere-se aos costumes, enquanto Ética é a reflexão filosófica sobre esses costumes.","Não há diferença, os termos são sinônimos.","Moral é universal, enquanto a Ética é cultural."], answer: 1, explanation: "Moral é o conjunto de regras de um grupo; Ética é a reflexão sobre essas regras." },
+                 { subject: "Ética", question: "O princípio que impõe ao servidor realizar suas atribuições com presteza e perfeição é o da:", options: ["Moralidade","Publicidade","Legalidade","Eficiência"], answer: 3, explanation: "Eficiência busca os melhores resultados com os menores custos, incluindo presteza e perfeição." },
+                 { subject: "Ética", question: "A conduta de tratar os colegas e o público com cortesia e respeito é mais associada ao princípio da:", options: ["Produtividade","Assiduidade","Urbanidade","Lealdade"], answer: 2, explanation: "Urbanidade é o dever de civilidade e cortesia no trato com as pessoas." },
+                 { subject: "Ética", question: "A lealdade do servidor à instituição que serve visa, principalmente:", options: ["Proteger seus superiores hierárquicos.","Garantir os objetivos da instituição, alinhados ao interesse público.","Evitar a fiscalização externa.","Obter vantagens pessoais."], answer: 1, explanation: "A lealdade é para com a instituição e o interesse público, não para com indivíduos." },
+                 { subject: "Ética", question: "A probidade administrativa está diretamente ligada ao dever de:", options: ["Agir sempre com honestidade e integridade no trato da coisa pública.","Apenas cumprir os prazos e horários.","Divulgar todos os atos administrativos, sem exceção.","Obedecer a ordens manifestamente ilegais."], answer: 0, explanation: "Probidade é sinônimo de honestidade e retidão na gestão pública." },
+                 { subject: "Ética", question: "Atenta contra os princípios da administração pública a conduta de:", options: ["Adquirir bens com valor desproporcional ao seu patrimônio.","Facilitar aquisição de bem por preço superior ao de mercado.","Receber vantagem para omitir ato de ofício.","Revelar fato sigiloso de que tem ciência em razão das atribuições."], answer: 3, explanation: "Revelar fato sigiloso viola os princípios da administração (Art. 11 da Lei de Improbidade)." },
+                 { subject: "Informática", question: "Qual componente de hardware é o 'cérebro' do computador?", options: ["Memória RAM","Disco Rígido (HD/SSD)","CPU (Unidade Central de Processamento)","Placa de Vídeo"], answer: 2, explanation: "A CPU (Unidade Central de Processamento) é responsável por executar a maioria das instruções." },
+                 { subject: "Informática", question: "Qual das seguintes opções NÃO é um sistema operacional?", options: ["Windows 10","Linux Ubuntu","Microsoft Word","Android"], answer: 2, explanation: "Microsoft Word é um software aplicativo (processador de texto)." },
+                 { subject: "Informática", question: "Em segurança da informação, qual é a principal função de um firewall?", options: ["Remover vírus de arquivos infectados.","Criar cópias de segurança dos dados.","Filtrar o tráfego de rede, com base em regras de segurança.","Criptografar e-mails para garantir o sigilo."], answer: 2, explanation: "Um firewall atua como uma barreira controlando o tráfego de rede." },
+                 { subject: "Informática", question: "No Excel ou Calc, qual fórmula calcula a soma do intervalo de A1 a A10?", options: ["=SOMA(A1:A10)","=TOTAL(A1-A10)","=ADICIONAR(A1..A10)","=S(A1+A10)"], answer: 0, explanation: "A função padrão é SOMA(célula_inicial:célula_final)." },
+                 { subject: "Informática", question: "A principal diferença entre Internet e Intranet é:", options: ["A Intranet é mais rápida.","São a mesma tecnologia.","Internet usa cabos e Intranet usa sem fio.","A Internet é pública e global, a Intranet é privada e restrita."], answer: 3, explanation: "A Intranet é uma rede corporativa privada que usa a tecnologia da Internet." },
+                 { subject: "Informática", question: "A LGPD (Lei Geral de Proteção de Dados) tem como principal objetivo:", options: ["Regular o comércio eletrônico.","Punir crimes cibernéticos.","Proteger os direitos de liberdade e de privacidade da pessoa natural.","Definir regras para redes sociais."], answer: 2, explanation: "O foco da LGPD é a proteção de dados pessoais e a privacidade." },
+                 { subject: "Informática", question: "Qual aplicativo do LibreOffice é o equivalente ao Microsoft PowerPoint?", options: ["Writer","Calc","Impress","Draw"], answer: 2, explanation: "Impress é o software de apresentações do pacote LibreOffice." },
+                 { subject: "Informática", question: "Qual atalho de teclado abre uma nova aba em navegadores?", options: ["Ctrl + N","Ctrl + T","Ctrl + W","Alt + Tab"], answer: 1, explanation: "Ctrl + T (Tab) abre uma nova aba. Ctrl + N abre uma nova janela." },
+                 { subject: "Informática", question: "Uma impressora multifuncional é classificada como periférico de:", options: ["Apenas Entrada","Apenas Saída","Entrada e Saída","Apenas Armazenamento"], answer: 2, explanation: "É de Entrada (scanner) e Saída (impressora)." },
+                 { subject: "Informática", question: "O que significa a sigla 'HTTP'?", options: ["High Transfer Text Protocol","Hypertext Transfer Protocol","Home Transfer Task Protocol","Hyperlink Text Translation Protocol"], answer: 1, explanation: "HTTP significa Hypertext Transfer Protocol (Protocolo de Transferência de Hipertexto)." },
+                 { subject: "Conhecimentos Específicos", question: "Um ato administrativo que concede uma licença a um servidor, após este cumprir todos os requisitos legais, é classificado como um ato:", options: ["Discricionário", "Vinculado", "Normativo", "Enunciativo"], answer: 1, explanation: "É um ato vinculado, pois a administração é obrigada a concedê-lo se os requisitos forem cumpridos." },
+                 { subject: "Conhecimentos Específicos", question: "O ciclo de vida dos documentos em arquivologia é dividido nas fases:", options: ["Criação, Uso e Descarte", "Rascunho, Oficial e Histórico", "Corrente, Intermediária e Permanente", "Ativo, Passivo e Inativo"], answer: 2, explanation: "A teoria das três idades: Corrente, Intermediária e Permanente." },
+                 { subject: "Conhecimentos Específicos", question: "Um ato administrativo, emitido por autoridade, com uma decisão ou encaminhamento sobre um processo, é denominado:", options: ["Portaria", "Circular", "Apostila", "Despacho"], answer: 3, explanation: "O despacho dá andamento ou decide sobre um processo/requerimento." },
+                 { subject: "Conhecimentos Específicos", question: "Qual documento é a comunicação entre unidades administrativas de um mesmo órgão?", options: ["Ofício", "Exposição de Motivos", "Memorando", "Aviso"], answer: 2, explanation: "O memorando é a comunicação interna por excelência." },
+                 { subject: "Conhecimentos Específicos", question: "A juntada definitiva de um processo a outro por terem o mesmo objeto é chamada de:", options: ["Apensação", "Desmembramento", "Anexação", "Autuação"], answer: 2, explanation: "Anexação é a união permanente. Apensação é temporária." },
+                 { subject: "Conhecimentos Específicos", question: "O atributo que permite à Administração executar seus atos diretamente, sem o Judiciário, é a:", options: ["Presunção de Legitimidade", "Imperatividade", "Tipicidade", "Autoexecutoriedade"], answer: 3, explanation: "A autoexecutoriedade é a capacidade de executar as próprias decisões." },
+                 { subject: "Conhecimentos Específicos", question: "O instrumento arquivístico que determina o tempo de guarda e a destinação de um documento é a:", options: ["Plano de Classificação", "Tabela de Temporalidade", "Inventário Documental", "Índice de Assuntos"], answer: 1, explanation: "A Tabela de Temporalidade define prazos de guarda e destinação final." },
+                 { subject: "Conhecimentos Específicos", question: "O ato que dá início a um processo administrativo, com capa e numeração, é chamado de:", options: ["Protocolo", "Distribuição", "Autuação", "Tramitação"], answer: 2, explanation: "Autuação é o ato de formar o processo." },
+                 { subject: "Conhecimentos Específicos", question: "A extinção de um ato administrativo por conveniência e oportunidade é feita por:", options: ["Anulação", "Revogação", "Cassação", "Caducidade"], answer: 1, explanation: "A revogação extingue um ato válido por não ser mais oportuno. A anulação ocorre por ilegalidade." },
+                 { subject: "Conhecimentos Específicos", question: "O método de gestão de materiais que classifica itens em categorias (A, B, C) por valor de demanda é:", options: ["Curva ABC", "Estoque Mínimo", "Just-in-Time", "Custo Padrão"], answer: 0, explanation: "A Curva ABC prioriza itens com base no valor de demanda." },
+                 { subject: "Conhecimentos Específicos", question: "O poder da Administração de apurar infrações e aplicar penalidades aos seus servidores é o poder:", options: ["Hierárquico", "Regulamentar", "De Polícia", "Disciplinar"], answer: 3, explanation: "O Poder Disciplinar permite à Administração punir internamente seus agentes." },
+                 { subject: "Conhecimentos Específicos", question: "Qual princípio arquivístico diz que documentos de uma fonte não devem ser misturados com os de outra?", options: ["Princípio da Unicidade", "Princípio da Proveniência", "Princípio da Cumulatividade", "Princípio da Ordem Original"], answer: 1, explanation: "O Princípio da Proveniência (ou respeito aos fundos) é a base da arquivologia." },
+                 { subject: "Conhecimentos Específicos", question: "A conferência que compara o material recebido com a nota fiscal e o pedido de compra é a:", options: ["Qualitativa", "Intrínseca", "Quantitativa", "Logística"], answer: 2, explanation: "A conferência quantitativa verifica se as quantidades estão corretas." },
+                 { subject: "Conhecimentos Específicos", question: "A Lei Orgânica do Município é considerada a:", options: ["Principal lei tributária do município.", "Lei que organiza apenas o Poder Executivo.", "Constituição do Município, definindo sua estrutura e funcionamento.", "Norma que regula as eleições municipais."], answer: 2, explanation: "A Lei Orgânica é a 'Constituição Municipal', sua lei mais importante." },
+                 { subject: "Conhecimentos Específicos", question: "O registro cronológico de recebimento e expedição de documentos é função do serviço de:", options: ["Arquivo", "Protocolo", "Almoxarifado", "Comunicação Social"], answer: 1, explanation: "O protocolo controla o fluxo de entrada e saída de documentos." },
+                 { subject: "Conhecimentos Específicos", question: "Qual das seguintes opções é uma forma de provimento de cargo público efetivo?", options: ["Exoneração", "Demissão", "Readaptação", "Nomeação"], answer: 3, explanation: "Nomeação é a forma originária de provimento. As outras são vacância ou provimento derivado." },
+                 { subject: "Conhecimentos Específicos", question: "Diferentemente de uma biblioteca, um arquivo é composto por:", options: ["Documentos de valor artístico.", "Documentos produzidos/recebidos por uma instituição em suas atividades.", "Livros e periódicos para consulta.", "Coleções de objetos raros."], answer: 1, explanation: "Um documento de arquivo tem natureza orgânica, sendo resultado das atividades de uma instituição." },
+                 { subject: "Conhecimentos Específicos", question: "Um documento que contém um pronunciamento de um órgão colegiado sobre um assunto é um(a):", options: ["Ata", "Relatório", "Parecer", "Requerimento"], answer: 2, explanation: "O parecer é a manifestação técnica ou administrativa para subsidiar uma decisão." },
+                 { subject: "Conhecimentos Específicos", question: "O ato de eliminar documentos que já cumpriram seus prazos de guarda é chamado de:", options: ["Recolhimento", "Transferência", "Descarte", "Alienação"], answer: 2, explanation: "O descarte é a destruição formal de documentos sem valor permanente." },
+                 { subject: "Conhecimentos Específicos", question: "Os poderes Executivo e Legislativo do município são exercidos por:", options: ["Câmara Municipal e Prefeito.", "Prefeito e Secretários.", "Prefeito e Câmara Municipal.", "Juiz de Direito e Promotor de Justiça."], answer: 2, explanation: "Executivo é o Prefeito; Legislativo é a Câmara Municipal." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "Qual atividade agrícola foi a base da economia de Arapiraca, rendendo-lhe o apelido de 'Capital Brasileira do Fumo'?", options: ["Cultura do algodão", "Cultura da cana-de-açúcar", "Cultura do fumo", "Cultura do milho"], answer: 2, explanation: "A cultura do fumo foi o motor do desenvolvimento de Arapiraca no século XX." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "A cidade de Arapiraca está localizada em qual mesorregião de Alagoas?", options: ["Leste Alagoano", "Sertão Alagoano", "Agreste Alagoano", "Zona da Mata Alagoana"], answer: 2, explanation: "Arapiraca é a cidade-polo do Agreste Alagoano." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a Lei Orgânica de Arapiraca, o Poder Legislativo é exercido:", options: ["Pelo Prefeito e seus Secretários.", "Pela Câmara Municipal.", "Pelos Juízes de Direito da comarca.", "Pelo Conselho Municipal de Educação."], answer: 1, explanation: "A função legislativa municipal é da Câmara Municipal." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "Além da bandeira и do hino, qual é o outro símbolo oficial de Arapiraca?", options: ["A árvore Arapiraca", "O Mercado do Artesanato", "O Brasão de Armas", "O Bosque das Arapiracas"], answer: 2, explanation: "Os símbolos oficiais são a bandeira, o hino e o brasão." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "Atualmente, a economia de Arapiraca é fortemente marcada pelo dinamismo de qual setor?", options: ["Indústria pesada", "Extrativismo mineral", "Comércio e Serviços", "Agropecuária de larga escala"], answer: 2, explanation: "Arapiraca consolidou-se como um grande polo regional de comércio e serviços." }
+            ],
+            '2': [
+                 { subject: "Português", question: "A palavra 'história' é acentuada por ser uma:", options: ["Oxítona terminada em 'a'.", "Proparoxítona.", "Paroxítona terminada em ditongo.", "Monossílaba tônica."], answer: 2, explanation: "Acentuam-se as paroxítonas terminadas em ditongo crescente, como 'his-tó-ria'." },
+                 { subject: "Português", question: "Na frase 'Os atletas chegaram exaustos à competição', a palavra 'exaustos' funciona como:", options: ["Adjetivo", "Predicativo do sujeito", "Advérbio de modo", "Objeto direto"], answer: 1, explanation: "'Exaustos' é um predicativo do sujeito, pois caracteriza o sujeito 'Os atletas' através do verbo de ligação implícito no estado em que chegaram." },
+                 { subject: "Português", question: "A concordância nominal está INCORRETA em:", options: ["É proibido entrada de estranhos.", "Água é ótima para a saúde.", "Compramos bastantes frutas na feira.", "As modelos usavam vestidos o mais elegantes possível."], answer: 0, explanation: "Quando o sujeito não vem determinado por artigo, o adjetivo concorda com 'proibido'. O correto seria 'É proibida a entrada...'. Sem o artigo, a forma masculina 'proibido' é usada." },
+                 { subject: "Português", question: "Em 'Ele agiu contra ___ vontade dos pais', a crase é:", options: ["Obrigatória", "Facultativa", "Incorreta", "Opcional, mas não recomendada"], answer: 2, explanation: "Não se usa crase antes de substantivos masculinos ('contra o querer'). A preposição 'a' não se funde com um artigo ausente." },
+                 { subject: "Português", question: "A voz passiva analítica da frase 'O governo construirá novas escolas' é:", options: ["Construir-se-ão novas escolas.", "Novas escolas serão construídas pelo governo.", "Novas escolas foram construídas pelo governo.", "O governo terá construído novas escolas."], answer: 1, explanation: "A voz passiva analítica é formada pelo verbo 'ser' no mesmo tempo do verbo principal da ativa, mais o particípio do verbo principal." },
+                 { subject: "Português", question: "Qual das palavras abaixo está com a grafia INCORRETA?", options: ["Disenteria", "Previlégio", "Digladiar", "Meteorologia"], answer: 1, explanation: "A forma correta é 'privilégio', com 'i' na segunda sílaba." },
+                 { subject: "Português", question: "Em 'O tempo urgia, por isso apressei o passo', a conjunção 'por isso' estabelece uma relação de:", options: ["Causa", "Condição", "Conclusão", "Concessão"], answer: 2, explanation: "A conjunção 'por isso' é conclusiva, indicando uma consequência lógica do fato anterior." },
+                 { subject: "Português", question: "Qual o período composto por coordenação e subordinação?", options: ["Saí de casa e encontrei um amigo.", "Quando cheguei, a festa já tinha acabado.", "Ele disse que viria, mas não apareceu.", "O aluno que estuda, passa."], answer: 2, explanation: "Temos uma oração coordenada adversativa ('mas não apareceu') e uma oração subordinada substantiva objetiva direta ('que viria')." },
+                 { subject: "Português", question: "A palavra 'imoral' é formada pelo processo de:", options: ["Derivação sufixal", "Derivação parassintética", "Composição por aglutinação", "Derivação prefixal"], answer: 3, explanation: "O prefixo 'i-' (de negação) é adicionado à palavra primitiva 'moral'." },
+                 { subject: "Português", question: "Identifique a função sintática do termo destacado em 'A cidade foi cercada *de inimigos*'.", options: ["Objeto indireto", "Complemento nominal", "Agente da passiva", "Adjunto adnominal"], answer: 2, explanation: "O termo 'de inimigos' é o agente da ação na voz passiva, correspondendo ao sujeito da voz ativa ('Inimigos cercaram a cidade')." },
+                 { subject: "Ética", question: "O servidor que utiliza recursos materiais da repartição em serviços ou atividades particulares comete ato que atenta contra o princípio da:", options: ["Eficiência", "Legalidade", "Moralidade", "Publicidade"], answer: 2, explanation: "Usar bens públicos para fins privados é uma violação direta da moralidade e da probidade administrativa." },
+                 { subject: "Ética", question: "A recusa de um servidor em fornecer informações públicas, não protegidas por sigilo, fere qual princípio e qual lei?", options: ["Princípio da Eficiência e Lei de Improbidade.", "Princípio da Impessoalidade e Constituição Federal.", "Princípio da Publicidade e Lei de Acesso à Informação.", "Princípio da Legalidade e Estatuto do Servidor."], answer: 2, explanation: "A publicidade é o princípio que rege a transparência dos atos, e a recusa fere diretamente a Lei nº 12.527/2011 (LAI)." },
+                 { subject: "Ética", question: "Um servidor que recebe um presente de alto valor de uma empresa que tem contrato com seu órgão pode ser enquadrado em:", options: ["Conflito de Interesses", "Exercício regular de direito", "Mero ato de cortesia", "Dever de urbanidade"], answer: 0, explanation: "Receber vantagens de partes interessadas nas decisões do agente público configura um claro conflito entre o interesse público e o privado." },
+                 { subject: "Ética", question: "O dever de manter sigilo sobre assuntos da repartição abrange:", options: ["Apenas informações secretas de Estado.", "Todas as informações, internas e externas.", "Fatos de que tenha ciência em razão do cargo e que não sejam públicos.", "Apenas conversas com superiores hierárquicos."], answer: 2, explanation: "O dever de sigilo se refere a informações não públicas às quais o servidor tem acesso devido ao exercício de suas funções." },
+                 { subject: "Ética", question: "A diferença primordial entre improbidade administrativa e infração disciplinar é:", options: ["A improbidade gera demissão, a infração não.", "A improbidade é julgada pelo Judiciário com sanções mais amplas; a infração é apurada administrativamente com sanções funcionais.", "Não há diferença, são termos para o mesmo ato.", "A improbidade é um crime, a infração é um ato administrativo."], answer: 1, explanation: "A infração disciplinar é apurada no âmbito administrativo (sindicância, PAD), com penas como advertência ou demissão. A improbidade é uma ilegalidade qualificada, julgada na esfera judicial, com sanções mais graves como perda de direitos políticos e ressarcimento." },
+                 { subject: "Ética", question: "O zelo no serviço público significa:", options: ["Trabalhar além do horário para mostrar serviço.", "Cuidar dos bens públicos como se fossem seus e desempenhar as funções com cuidado e atenção.", "Apenas ser pontual e assíduo.", "Cumprir ordens sem questionar, mesmo que pareçam incorretas."], answer: 1, explanation: "Zelo envolve o cuidado com o patrimônio público e a dedicação na execução das tarefas." },
+                 { subject: "Ética", question: "Qual conduta NÃO é vedada ao servidor público?", options: ["Retirar, sem prévia anuência da autoridade, qualquer documento ou objeto da repartição.", "Promover manifestação de apreço ou desapreço no recinto da repartição.", "Participar de gerência ou administração de empresa privada, na condição de acionista.", "Valer-se do cargo para lograr proveito pessoal."], answer: 2, explanation: "A lei veda a participação na gerência ou administração, mas não proíbe ser acionista ou cotista, desde que não haja conflito de interesses." },
+                 { subject: "Ética", question: "O direito de petição, assegurado ao servidor e aos cidadãos, está ligado ao princípio da:", options: ["Inafastabilidade da jurisdição", "Ampla defesa e contraditório", "Democracia e cidadania", "Eficiência administrativa"], answer: 2, explanation: "O direito de petição é uma expressão da cidadania, permitindo que qualquer pessoa se dirija ao poder público para defender direitos ou se manifestar contra ilegalidades." },
+                 { subject: "Ética", question: "A honestidade no serviço público se manifesta quando o servidor:", options: ["Apenas não furta ou desvia bens públicos.", "Age com retidão, transparência e sinceridade, sem buscar vantagens indevidas.", "Trata bem seus colegas de trabalho.", "Completa todas as suas tarefas no prazo."], answer: 1, explanation: "A honestidade é um conceito amplo que vai além da apropriação de bens, incluindo a retidão de caráter e a transparência em todas as ações." },
+                 { subject: "Ética", question: "A publicidade dos atos administrativos, como regra, visa garantir:", options: ["O controle social e a transparência.", "Apenas a validade jurídica do ato.", "A autopromoção dos gestores públicos.", "A arrecadação de taxas e emolumentos."], answer: 0, explanation: "A principal função da publicidade é permitir que a sociedade fiscalize as ações da administração pública, promovendo a transparência e o controle social." },
+                 { subject: "Informática", question: "O que é um 'phishing' no contexto de segurança digital?", options: ["Um tipo de vírus que se replica automaticamente.", "Um software que protege o computador contra-ataques.", "Uma técnica para enganar usuários e obter informações confidenciais, como senhas e dados bancários.", "Uma falha de segurança em um sistema operacional."], answer: 2, explanation: "'Phishing' (pescaria) é uma fraude eletrônica onde o criminoso se passa por uma entidade confiável para 'pescar' informações sensíveis da vítima." },
+                 { subject: "Informática", question: "Qual é a principal vantagem de um SSD (Solid State Drive) em comparação com um HD (Hard Disk Drive) tradicional?", options: ["Maior capacidade de armazenamento pelo mesmo preço.", "Maior durabilidade contra quedas e impactos.", "Velocidade de leitura e escrita de dados significativamente maior.", "Compatibilidade com sistemas operacionais mais antigos."], answer: 2, explanation: "SSDs não possuem partes móveis, o que lhes permite acessar dados de forma quase instantânea, resultando em um sistema muito mais rápido." },
+                 { subject: "Informática", question: "No Google Chrome, qual o atalho para reabrir a última aba que foi fechada?", options: ["Ctrl + T", "Ctrl + Shift + R", "Ctrl + H", "Ctrl + Shift + T"], answer: 3, explanation: "Ctrl + Shift + T é um atalho extremamente útil para restaurar abas fechadas acidentalmente." },
+                 { subject: "Informática", question: "O que significa 'armazenamento em nuvem' (Cloud Storage)?", options: ["Salvar arquivos em um servidor remoto acessível pela internet.", "Usar um pendrive de alta capacidade.", "Fazer um backup em um HD externo.", "Criar uma partição especial no disco rígido do computador."], answer: 0, explanation: "Serviços como Google Drive, OneDrive e Dropbox armazenam seus arquivos em servidores de data centers, permitindo o acesso de qualquer lugar com internet." },
+                 { subject: "Informática", question: "Qual dos seguintes formatos de arquivo é mais comumente usado para documentos de texto que preservam a formatação original e não são facilmente editáveis?", options: [".DOCX", ".TXT", ".PDF", ".XLSX"], answer: 2, explanation: "PDF (Portable Document Format) foi criado para apresentar documentos de maneira consistente, independentemente do software, hardware ou sistema operacional." },
+                 { subject: "Informática", question: "Para que serve a 'limpeza de cache' em um navegador de internet?", options: ["Para apagar senhas salvas e histórico de navegação.", "Para remover arquivos temporários que podem causar problemas de visualização em sites.", "Para aumentar a velocidade da conexão com a internet.", "Para desinstalar extensões e plugins indesejados."], answer: 1, explanation: "O cache armazena partes de sites (imagens, scripts) para carregá-los mais rápido no futuro. Limpá-lo força o navegador a baixar as versões mais recentes, resolvendo problemas de exibição." },
+                 { subject: "Informática", question: "Em uma planilha eletrônica (Excel/Calc), se a célula A1 tem o valor 10 e a célula A2 tem o valor 20, qual será o resultado da fórmula '=SE(A1>5;A2*2;A2/2)'?", options: ["10", "20", "40", "5"], answer: 2, explanation: "A fórmula SE testa uma condição. Como A1 (10) é maior que 5 (verdadeiro), a fórmula executa a segunda parte: A2 (20) * 2, que resulta em 40." },
+                 { subject: "Informática", question: "Qual é a função do 'Modo de Segurança' do Windows?", options: ["Navegar na internet de forma anônima.", "Iniciar o sistema com um conjunto mínimo de drivers e serviços para solucionar problemas.", "Proteger o computador contra ransomware.", "Executar aplicativos em um ambiente isolado."], answer: 1, explanation: "O Modo de Segurança é uma ferramenta de diagnóstico que carrega apenas o essencial para o funcionamento do Windows, ajudando a identificar e resolver falhas." },
+                 { subject: "Informática", question: "A topologia de rede em que todos os computadores se conectam a um dispositivo central, como um switch ou hub, é chamada de:", options: ["Anel (Ring)", "Barramento (Bus)", "Estrela (Star)", "Malha (Mesh)"], answer: 2, explanation: "Na topologia em estrela, a falha de um cabo afeta apenas um computador, e a falha do dispositivo central paralisa a rede." },
+                 { subject: "Informática", question: "Qual a diferença entre CC e CCO no envio de um e-mail?", options: ["Não há diferença prática.", "CC envia uma cópia visível a todos; CCO envia uma cópia oculta dos outros destinatários.", "CCO é para respostas; CC é para novos e-mails.", "CC é para destinatários principais; CCO é para secundários."], answer: 1, explanation: "CC (Com Cópia) permite que todos vejam quem recebeu a mensagem. CCO (Com Cópia Oculta) esconde os endereços dos outros destinatários, garantindo a privacidade." },
+                 { subject: "Conhecimentos Específicos", question: "Quais são os cinco elementos ou requisitos de validade do ato administrativo?", options: ["Legalidade, Moralidade, Finalidade, Motivo e Objeto.", "Competência, Finalidade, Forma, Motivo e Objeto.", "Sujeito, Vontade, Causa, Objeto e Forma.", "Agente, Eficiência, Publicidade, Forma e Causa."], answer: 1, explanation: "São os elementos essenciais para a validade de qualquer ato administrativo: Competência (quem pode praticar), Finalidade (o interesse público a ser alcançado), Forma (o modo como se exterioriza), Motivo (a situação de fato e de direito) e Objeto (o conteúdo do ato)." },
+                 { subject: "Conhecimentos Específicos", question: "A anulação de um ato administrativo difere da revogação porque:", options: ["A anulação tem efeitos para o futuro (ex nunc); a revogação retroage (ex tunc).", "A anulação decorre de ilegalidade e retroage; a revogação ocorre por conveniência e não retroage.", "A anulação só pode ser feita pelo Judiciário; a revogação, pela própria Administração.", "A anulação é para atos vinculados; a revogação, para atos discricionários."], answer: 1, explanation: "A anulação é a extinção de um ato ilegal, com efeitos retroativos (ex tunc). A revogação é a extinção de um ato legal, mas que se tornou inoportuno, com efeitos para o futuro (ex nunc)." },
+                 { subject: "Conhecimentos Específicos", question: "O que é um arquivo setorial ou de gestão?", options: ["É o arquivo central de um órgão, que guarda documentos permanentes.", "É o arquivo de uma unidade específica (setor, departamento) que guarda seus documentos de uso corrente.", "É um arquivo localizado em outro prédio.", "É o local onde os documentos são eliminados."], answer: 1, explanation: "Os arquivos setoriais são descentralizados e ficam próximos aos setores que produzem e utilizam os documentos com frequência (fase corrente)." },
+                 { subject: "Conhecimentos Específicos", question: "Qual modalidade de licitação é utilizada para a compra de bens e serviços comuns, de qualquer valor, por meio de lances em sessão pública?", options: ["Convite", "Tomada de Preços", "Concorrência", "Pregão"], answer: 3, explanation: "O Pregão, principalmente em sua forma eletrônica, é a modalidade preferencial para bens e serviços comuns, caracterizado pela disputa de preços por meio de lances." },
+                 { subject: "Conhecimentos Específicos", question: "A avaliação de desempenho de um servidor público visa principalmente:", options: ["Justificar punições e demissões.", "Promover a competição entre os servidores.", "Identificar necessidades de capacitação e subsidiar a progressão na carreira.", "Controlar o horário de entrada e saída dos funcionários."], answer: 2, explanation: "É uma ferramenta de gestão de pessoas para desenvolver os servidores, melhorar o serviço e dar base para promoções e outras formas de desenvolvimento na carreira." },
+                 { subject: "Conhecimentos Específicos", question: "O poder da Administração de editar atos gerais e abstratos para complementar as leis e permitir sua fiel execução é o poder:", options: ["Disciplinar", "Hierárquico", "De Polícia", "Regulamentar (ou Normativo)"], answer: 3, explanation: "O Poder Regulamentar se manifesta por meio de decretos e regulamentos, que detalham a aplicação da lei, sem inovar ou contrariá-la." },
+                 { subject: "Conhecimentos Específicos", question: "O que é 'desmembramento' no contexto da gestão de processos?", options: ["A união de dois processos em um só.", "A separação de partes de um processo para formar um novo processo.", "O cancelamento de um processo.", "A inserção de folhas em um processo já existente."], answer: 1, explanation: "O desmembramento ocorre quando um ou mais documentos de um processo são separados para formar um novo processo, por tratarem de matéria diversa." },
+                 { subject: "Conhecimentos Específicos", question: "O ato administrativo que impõe uma obrigação ou restrição a um particular, como uma multa de trânsito, possui qual atributo?", options: ["Negocial", "Autoexecutoriedade", "Imperatividade", "Tipicidade"], answer: 2, explanation: "A imperatividade é o atributo pelo qual o ato se impõe a terceiros, independentemente de sua concordância, criando obrigações unilaterais." },
+                 { subject: "Conhecimentos Específicos", question: "Um documento de arquivo é considerado 'ostensivo' quando:", options: ["Seu acesso é restrito por sigilo legal.", "Ele é antigo e de valor histórico.", "Seu acesso é público e irrestrito.", "Ele foi produzido em formato digital."], answer: 2, explanation: "Documentos ostensivos são aqueles que não contêm informações sigilosas e, portanto, podem ser acessados livremente pelo público." },
+                 { subject: "Conhecimentos Específicos", question: "O documento administrativo que formaliza a gravação dos fatos, deliberações e decisões de uma reunião ou assembleia é a:", options: ["Ata", "Portaria", "Circular", "Relatório"], answer: 0, explanation: "A ata é o registro fiel e sucinto de tudo o que ocorreu em uma sessão ou reunião, servindo como documento de valor probatório." },
+                 { subject: "Conhecimentos Específicos", question: "A fase do processo de aquisição de materiais que envolve a pesquisa de fornecedores e a cotação de preços é a:", options: ["Seleção", "Recebimento", "Licitação", "Compra"], answer: 3, explanation: "A fase de compra (ou aquisição) é onde se realizam os procedimentos para efetivamente adquirir o material, o que inclui a cotação de preços e a escolha do fornecedor, muitas vezes por meio de licitação." },
+                 { subject: "Conhecimentos Específicos", question: "O que é 'vacância' de um cargo público?", options: ["É a nomeação de um novo servidor.", "É quando o cargo público fica vago, ou seja, sem titular.", "É a promoção do servidor para um cargo superior.", "É a licença do servidor para tratar de assuntos particulares."], answer: 1, explanation: "A vacância ocorre quando o vínculo do servidor com o cargo é extinto, deixando o cargo livre para ser preenchido novamente. Exoneração e demissão são exemplos de vacância." },
+                 { subject: "Conhecimentos Específicos", question: "O princípio arquivístico da 'Ordem Original' determina que:", options: ["Os arquivos devem ser organizados por ordem alfabética.", "A organização interna de um fundo de arquivo deve ser mantida ou respeitada.", "Os documentos mais antigos devem ser guardados separadamente.", "Apenas os documentos originais devem ser arquivados."], answer: 1, explanation: "Este princípio, também chamado de 'princípio do respeito à ordem interna', defende que a ordem dada pelo produtor do arquivo reflete suas atividades e deve ser preservada." },
+                 { subject: "Conhecimentos Específicos", question: "A comunicação oficial enviada por um chefe de poder a outro (ex: Prefeito para Presidente da Câmara) é tipicamente feita por:", options: ["Memorando", "Ofício", "Exposição de Motivos", "Mensagem"], answer: 3, explanation: "Mensagem é a comunicação oficial entre chefes dos poderes, especialmente do Executivo para o Legislativo, para fazer comunicações importantes, como o veto a um projeto de lei." },
+                 { subject: "Conhecimentos Específicos", question: "O estágio probatório, período em que se avalia a aptidão do servidor para o cargo, tem duração, segundo a Constituição Federal, de:", options: ["Dois anos", "Três anos", "Cinco anos", "Um ano"], answer: 1, explanation: "Após a Emenda Constitucional nº 19/1998, o prazo do estágio probatório para aquisição da estabilidade foi fixado em 3 anos de efetivo exercício." },
+                 { subject: "Conhecimentos Específicos", question: "O ato de ordenar documentos de acordo com um método preestabelecido (alfabético, numérico, etc.) é chamado de:", options: ["Classificação", "Catalogação", "Ordenação", "Protocolo"], answer: 2, explanation: "A ordenação é a disposição física dos documentos dentro das pastas ou caixas, seguindo uma sequência lógica. A classificação é a etapa anterior, que define os assuntos." },
+                 { subject: "Conhecimentos Específicos", question: "A 'dispensa de licitação' ocorre quando:", options: ["A Administração pode escolher livremente com quem contratar.", "Embora a competição seja possível, a lei autoriza a contratação direta em certas situações.", "Não existe nenhum fornecedor para o bem ou serviço desejado.", "O valor da compra é muito alto."], answer: 1, explanation: "Na dispensa, há viabilidade de competição, mas a lei faculta à Administração não realizar a licitação por razões específicas (ex: baixo valor, emergência)." },
+                 { subject: "Conhecimentos Específicos", question: "Qual dos seguintes direitos NÃO é assegurado ao servidor público pela Constituição Federal?", options: ["Greve, nos termos da lei.", "Livre associação sindical.", "Irredutibilidade de subsídio.", "Acumulação remunerada de quaisquer cargos públicos."], answer: 3, explanation: "A acumulação de cargos é vedada como regra geral, com poucas exceções previstas na própria Constituição (ex: dois cargos de professor)." },
+                 { subject: "Conhecimentos Específicos", question: "O que é 'Tombamento' no contexto do patrimônio público?", options: ["A demolição de um prédio público sem valor.", "O registro contábil de um bem móvel.", "O ato administrativo que reconhece o valor histórico ou cultural de um bem, protegendo-o.", "A venda de um bem público em leilão."], answer: 2, explanation: "O tombamento é um instrumento legal de proteção do patrimônio cultural, que impõe restrições à destruição ou descaracterização do bem protegido." },
+                 { subject: "Conhecimentos Específicos", question: "A tramitação de um processo consiste em:", options: ["Seu registro inicial no protocolo.", "Sua movimentação entre os diferentes setores do órgão.", "Seu arquivamento definitivo.", "Sua análise por um especialista para emissão de parecer."], answer: 1, explanation: "Tramitação é o curso do processo dentro da repartição, passando pelas diversas unidades administrativas competentes para análise e providências." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "Qual personalidade histórica é considerada a fundadora de Arapiraca?", options: ["Manoel André Correia dos Santos", "Graciliano Ramos", "Marechal Deodoro da Fonseca", "Esperidião Rodrigues"], answer: 0, explanation: "Manoel André é reconhecido como o fundador da cidade, tendo se estabelecido na região em meados do século XIX, dando início ao povoado." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "O Bosque das Arapiracas é um importante espaço público da cidade voltado principalmente para:", options: ["Eventos industriais e feiras de negócios.", "Alojamento de servidores públicos.", "Prática de esportes, lazer e eventos culturais.", "Preservação de fauna e flora exóticas."], answer: 2, explanation: "O Bosque é um dos principais parques da cidade, utilizado pela população para caminhadas, atividades físicas, lazer em família e como palco para diversos eventos." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "Qual destes é um importante evento cultural e tradicional que acontece em Arapiraca?", options: ["O Festival de Inverno de Arapiraca", "A Festa da Padroeira Nossa Senhora do Bom Conselho", "A Corrida de Jegues de Arapiraca", "O Carnaval fora de época 'Arapiraca Fest'"], answer: 1, explanation: "A festa da padroeira, celebrada no início de fevereiro, é um dos mais importantes eventos religiosos e culturais do calendário da cidade, mobilizando a comunidade local." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "O Mercado do Artesanato de Arapiraca é um espaço que valoriza principalmente:", options: ["A venda de produtos importados e eletrônicos.", "A produção agrícola familiar da região.", "A comercialização de veículos e máquinas.", "A cultura local através da arte e dos produtos típicos do Agreste."], answer: 3, explanation: "O mercado é um ponto turístico e cultural que reúne o trabalho de artesãos locais, oferecendo produtos que representam a identidade cultural da região." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "Arapiraca se destaca no estado de Alagoas por ser a:", options: ["Capital do estado.", "Cidade mais antiga de Alagoas.", "Segunda cidade mais populosa e principal polo econômico do interior.", "Principal cidade litorânea depois de Maceió."], answer: 2, explanation: "Arapiraca é a segunda maior cidade de Alagoas em população e se consolidou como o mais importante centro econômico, de saúde e educacional do Agreste e Sertão alagoano." }
+            ]
+        };
 
         // --- LÓGICA DO QUIZ ---
-        const allQuestions = [
-            // ... (O banco de questões completo permanece aqui, igual à versão anterior) ...
-             // --- QUESTÕES DE PORTUGUÊS --- (10 questões)
-             { subject: "Português", question: "Assinale a alternativa em que o uso do acento grave indicativo da crase está CORRETO:", options: ["O pesquisador se dedicou à uma nova teoria.","Eles foram para a praia às pressas.","O documento foi entregue à ele.","As aulas começarão à partir de amanhã."], answer: 1, explanation: "A crase é usada corretamente em 'às pressas', uma locução adverbial feminina. Nas outras opções: (A) não se usa crase antes de artigo indefinido 'uma'; (C) não se usa crase antes de pronome pessoal 'ele'; (D) não se usa crase antes de verbo 'partir'." },
-                { subject: "Português", question: "A pontuação está empregada corretamente em:", options: ["O menino, que era muito curioso, abriu a caixa.","O menino que era muito curioso abriu a caixa.","O menino, que era muito curioso abriu a caixa.","O menino que era muito curioso, abriu a caixa."], answer: 0, explanation: "A oração 'que era muito curioso' é uma oração subordinada adjetiva explicativa, que adiciona uma informação acessória sobre o substantivo 'menino'. Orações explicativas devem ser isoladas por vírgulas." },
-                { subject: "Português", question: "Qual das frases abaixo apresenta concordância verbal INCORRETA?", options: ["Fazem cinco anos que não o vejo.","Havia muitos problemas a serem resolvidos.","A maioria dos alunos passou no teste.","Um bando de pássaros sobrevoou a cidade."], answer: 0, explanation: "O verbo 'fazer', quando indica tempo decorrido, é impessoal e deve permanecer na 3ª pessoa do singular. O correto seria: 'Faz cinco anos que não o vejo'. As outras alternativas estão corretas." },
-                { subject: "Português", question: "Na frase 'Tenho aversão ___ mentiras', a regência nominal do substantivo 'aversão' exige a preposição:", options: ["de","com","a","por"], answer: 2, explanation: "O substantivo 'aversão' exige a preposição 'a'. Quem tem aversão, tem aversão A algo ou A alguém. Portanto, a frase correta é 'Tenho aversão a mentiras'." },
-                { subject: "Português", question: "A colocação do pronome oblíquo átono está INCORRETA em:", options: ["Não me diga tal coisa.","Me empresta o livro, por favor?","O assunto que se discute é complexo.","Far-lhe-ei uma visita amanhã."], answer: 1, explanation: "De acordo com a norma culta da língua portuguesa, não se deve iniciar uma frase com pronome oblíquo átono. O correto seria 'Empresta-me o livro, por favor?'. As demais opções estão corretas (próclise em A e C, mesóclise em D)." },
-                { subject: "Português", question: "Assinale a alternativa em que todas as palavras estão grafadas corretamente.", options: ["Exceção, ascenção, privilégio.","Paralizar, analisar, pesquisar.","Ansiedade, espontâneo, impecilho.","Pretenção, obsessão, muçulmano."], answer: 2, explanation: "A alternativa correta é a C. Os erros nas outras são: (A) 'ascensão'; (B) 'paralisar'; (D) 'pretensão'." },
-                { subject: "Português", question: "Na frase 'Aquele político é uma raposa', encontramos qual figura de linguagem?", options: ["Metonímia","Hipérbole","Comparação","Metáfora"], answer: 3, explanation: "Temos uma metáfora, que é uma comparação implícita em que se atribui a característica de um ser (astúcia da raposa) a outro (o político), sem usar um conectivo de comparação (como, tal qual, etc.)." },
-                { subject: "Português", question: "Em 'O saber é o bem mais valioso', a palavra 'saber' é classificada morfologicamente como:", options: ["Verbo","Adjetivo","Substantivo","Advérbio"], answer: 2, explanation: "Nesse contexto, 'saber' é um verbo substantivado pelo artigo 'O'. Ele funciona como um substantivo, nomeando o ato de saber." },
-                { subject: "Português", question: "Na oração 'Precisa-se de funcionários competentes', o sujeito é:", options: ["Oculto","Indeterminado","Inexistente","Simples (funcionários competentes)"], answer: 1, explanation: "O verbo 'precisar' é transitivo indireto (precisa-se DE algo) e está acompanhado da partícula 'se', que atua como índice de indeterminação do sujeito. Portanto, o sujeito é indeterminado." },
-                { subject: "Português", question: "Todas as palavras são acentuadas pela mesma regra em:", options: ["pálido, lâmpada, trânsito","saúde, baú, egoísta","herói, chapéu, anéis","táxi, júri, bônus"], answer: 0, explanation: "Na alternativa A, todas as palavras ('pálido', 'lâmpada', 'trânsito') são proparoxítonas, ou seja, têm a antepenúltima sílaba tônica. Todas as proparoxítonas são acentuadas." },
-                
-                // --- QUESTÕES DE ÉTICA --- (10 questões)
-                { subject: "Ética", question: "Segundo a Constituição Federal de 1988, a administração pública direta e indireta obedecerá aos princípios de:", options: ["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência.","Legalidade, Pessoalidade, Moralidade, Sigilo e Eficácia.","Soberania, Cidadania, Dignidade da pessoa humana, e Valores sociais.","Probidade, Honestidade, Decoro, Zelo e Lealdade."], answer: 0, explanation: "O Art. 37 da Constituição Federal estabelece expressamente os princípios da Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (mnemônico LIMPE) como norteadores da Administração Pública." },
-                { subject: "Ética", question: "Constitui ato de improbidade administrativa que importa enriquecimento ilícito:", options: ["Negar publicidade aos atos oficiais.","Frustrar a licitude de concurso público.","Receber vantagem econômica indevida para tolerar a exploração de jogo de azar.","Deixar de prestar contas quando obrigado."], answer: 2, explanation: "A alternativa C descreve uma ação que gera vantagem econômica indevida para o agente, configurando enriquecimento ilícito, conforme previsto no Art. 9º da Lei de Improbidade Administrativa." },
-                { subject: "Ética", question: "Conforme a Lei de Acesso à Informação, o prazo para o órgão fornecer a informação, caso não seja possível de imediato, é de até:", options: ["10 dias, prorrogável por igual período.","15 dias, improrrogáveis.","20 dias, prorrogável por mais 10 dias.","30 dias, improrrogáveis."], answer: 2, explanation: "A Lei de Acesso à Informação (Art. 11) estipula que, quando não for possível o acesso imediato, o órgão tem o prazo de até 20 dias para responder. Esse prazo pode ser prorrogado por mais 10 dias." },
-                { subject: "Ética", question: "Qual dos itens abaixo representa um dever fundamental do servidor público?", options: ["Recusar fé a documentos públicos.","Exercer com zelo e dedicação as atribuições do cargo.","Opor resistência injustificada ao andamento de processo.","Promover manifestação de apreço no recinto da repartição."], answer: 1, explanation: "Exercer as atribuições com zelo e dedicação é um dos principais deveres de qualquer servidor público, ligado diretamente ao princípio da eficiência. As outras opções representam vedações." },
-                { subject: "Ética", question: "A diferença fundamental entre Ética e Moral é que:", options: ["Ética é a prática, Moral é a teoria.","Moral refere-se aos costumes, enquanto Ética é a reflexão filosófica sobre esses costumes.","Não há diferença, os termos são sinônimos.","Moral é universal, enquanto a Ética é cultural."], answer: 1, explanation: "A Moral é o conjunto de regras e costumes de um grupo social. A Ética é a reflexão filosófica sobre os fundamentos da moral, questionando por que algo é considerado certo ou errado." },
-                { subject: "Ética", question: "O princípio que impõe ao servidor a obrigação de realizar suas atribuições com presteza e perfeição é o da:", options: ["Moralidade","Publicidade","Legalidade","Eficiência"], answer: 3, explanation: "O princípio da Eficiência exige que a atividade administrativa seja exercida com presteza, perfeição e rendimento funcional, buscando os melhores resultados com os menores custos." },
-                { subject: "Ética", question: "A conduta de tratar os colegas e o público com cortesia e respeito é mais associada ao princípio da:", options: ["Produtividade","Assiduidade","Urbanidade","Lealdade"], answer: 2, explanation: "A urbanidade é o dever de tratar a todos com civilidade, cortesia e respeito, sendo um pilar fundamental para um ambiente de trabalho harmonioso e um bom atendimento ao público." },
-                { subject: "Ética", question: "A lealdade do servidor à instituição que serve visa, principalmente:", options: ["Proteger seus superiores hierárquicos.","Garantir os objetivos da instituição, alinhados ao interesse público.","Evitar a fiscalização externa.","Obter vantagens pessoais."], answer: 1, explanation: "A lealdade do servidor público deve ser para com a instituição e o interesse público que ela representa, e não uma lealdade cega a indivíduos. Ela visa a preservação dos fins institucionais." },
-                { subject: "Ética", question: "A probidade administrativa está diretamente ligada ao dever de:", options: ["Agir sempre com honestidade e integridade no trato da coisa pública.","Apenas cumprir os prazos e horários.","Divulgar todos os atos administrativos, sem exceção.","Obedecer a ordens manifestamente ilegais."], answer: 0, explanation: "Probidade é sinônimo de honestidade e retidão. Agir com probidade na administração pública significa atuar de forma íntegra, em conformidade com os princípios morais e legais." },
-                { subject: "Ética", question: "Atenta contra os princípios da administração pública a conduta de:", options: ["Adquirir bens com valor desproporcional ao seu patrimônio.","Facilitar aquisição de bem por preço superior ao de mercado.","Receber vantagem para omitir ato de ofício.","Revelar fato sigiloso de que tem ciência em razão das atribuições."], answer: 3, explanation: "A revelação indevida de informação sigilosa é um ato que viola os princípios da administração, como lealdade e moralidade, tipificado no Art. 11 da Lei de Improbidade Administrativa." },
-
-                // --- QUESTÕES DE INFORMÁTICA --- (10 questões)
-                { subject: "Informática", question: "Qual componente de hardware é frequentemente chamado de 'cérebro' do computador?", options: ["Memória RAM","Disco Rígido (HD/SSD)","CPU (Unidade Central de Processamento)","Placa de Vídeo"], answer: 2, explanation: "A CPU (Central Processing Unit) ou UCP (Unidade Central de Processamento) é o principal componente que executa as instruções e os cálculos necessários para o funcionamento do computador." },
-                { subject: "Informática", question: "Qual das seguintes opções NÃO é um sistema operacional?", options: ["Windows 10","Linux Ubuntu","Microsoft Word","Android"], answer: 2, explanation: "Microsoft Word é um software aplicativo para processamento de texto, enquanto Windows, Linux e Android são sistemas operacionais que gerenciam o hardware e o software de um dispositivo." },
-                { subject: "Informática", question: "Em segurança da informação, qual é a principal função de um firewall?", options: ["Remover vírus de arquivos infectados.","Criar cópias de segurança dos dados.","Filtrar o tráfego de rede, permitindo ou bloqueando comunicações com base em regras de segurança.","Criptografar e-mails para garantir o sigilo."], answer: 2, explanation: "Um firewall atua como uma barreira entre uma rede interna confiável e redes externas não confiáveis (como a Internet), controlando o tráfego de entrada e saída." },
-                { subject: "Informática", question: "No Microsoft Excel ou LibreOffice Calc, qual fórmula calcula a soma dos valores no intervalo de A1 a A10?", options: ["=SOMA(A1:A10)","=TOTAL(A1-A10)","=ADICIONAR(A1..A10)","=S(A1+A10)"], answer: 0, explanation: "A função SOMA() é a padrão em planilhas eletrônicas para somar um conjunto de números. A sintaxe correta para um intervalo é `SOMA(célula_inicial:célula_final)`." },
-                { subject: "Informática", question: "Qual é a principal diferença entre a Internet e uma Intranet?", options: ["A Intranet é mais rápida que a Internet.","Não há diferença, são a mesma tecnologia.","A Internet usa cabos e a Intranet usa tecnologia sem fio.","A Internet é uma rede pública e global, enquanto a Intranet é uma rede privada e restrita a uma organização."], answer: 3, explanation: "Uma Intranet utiliza a mesma tecnologia da Internet (protocolos TCP/IP, navegadores), mas seu acesso é restrito aos membros de uma organização específica, servindo como uma rede corporativa interna." },
-                { subject: "Informática", question: "A Lei Geral de Proteção de Dados (LGPD) tem como principal objetivo:", options: ["Regular o comércio eletrônico no Brasil.","Punir crimes cibernéticos como invasão de sistemas.","Proteger os direitos fundamentais de liberdade e de privacidade da pessoa natural.","Definir regras para o uso de redes sociais por menores de idade."], answer: 2, explanation: "O foco da LGPD é estabelecer regras claras sobre a coleta, armazenamento, tratamento e compartilhamento de dados pessoais, dando mais controle aos cidadãos sobre suas informações." },
-                { subject: "Informática", question: "Qual aplicativo do pacote LibreOffice é o equivalente ao Microsoft PowerPoint?", options: ["Writer","Calc","Impress","Draw"], answer: 2, explanation: "No pacote LibreOffice, o Writer é o processador de texto, o Calc é a planilha eletrônica e o Impress é o software para criação de apresentações de slides." },
-                { subject: "Informática", question: "Qual atalho de teclado é universalmente usado em navegadores para abrir uma nova aba?", options: ["Ctrl + N","Ctrl + T","Ctrl + W","Alt + Tab"], answer: 1, explanation: "Ctrl + T (de 'Tab') é o atalho padrão para abrir uma nova aba. Ctrl + N abre uma nova janela, e Ctrl + W fecha a aba atual." },
-                { subject: "Informática", question: "Uma impressora multifuncional (imprime, digitaliza, copia) é classificada como um periférico de:", options: ["Apenas Entrada","Apenas Saída","Entrada e Saída","Apenas Armazenamento"], answer: 2, explanation: "É um periférico de Entrada e Saída (ou híbrido) porque ela recebe dados do computador para imprimir (Saída) e envia dados para o computador ao digitalizar (Entrada)." },
-                { subject: "Informática", question: "O que significa a sigla 'HTTP' no contexto de navegação na web?", options: ["High Transfer Text Protocol","Hypertext Transfer Protocol","Home Transfer Task Protocol","Hyperlink Text Translation Protocol"], answer: 1, explanation: "HTTP (Hypertext Transfer Protocol) ou Protocolo de Transferência de Hipertexto é o protocolo fundamental usado para a comunicação e transferência de dados na World Wide Web." },
-
-                // --- CONHECIMENTOS ESPECÍFICOS --- (20 questões)
-                { subject: "Conhecimentos Específicos", question: "Um ato administrativo que concede uma licença a um servidor, após este cumprir todos os requisitos legais, é classificado como um ato:", options: ["Discricionário", "Vinculado", "Normativo", "Enunciativo"], answer: 1, explanation: "É um ato vinculado, pois a administração não tem liberdade de escolha. Se o servidor preenche os requisitos, a administração é obrigada a conceder a licença." },
-                { subject: "Conhecimentos Específicos", question: "O ciclo de vida dos documentos em arquivologia é dividido nas seguintes fases ou idades:", options: ["Criação, Uso e Descarte", "Rascunho, Oficial e Histórico", "Corrente, Intermediária e Permanente", "Ativo, Passivo e Inativo"], answer: 2, explanation: "A teoria das três idades define o ciclo de vida dos documentos como: Idade Corrente (uso frequente), Idade Intermediária (uso pouco frequente) e Idade Permanente (guarda definitiva)." },
-                { subject: "Conhecimentos Específicos", question: "Um ato administrativo, emitido por autoridade superior, que contém uma decisão ou encaminhamento sobre um assunto em um processo, é denominado:", options: ["Portaria", "Circular", "Apostila", "Despacho"], answer: 3, explanation: "O despacho é o ato pelo qual a autoridade competente dá andamento a um processo ou a um requerimento, proferindo uma decisão ou determinando providências." },
-                { subject: "Conhecimentos Específicos", question: "Qual documento é a modalidade de comunicação entre unidades administrativas de um mesmo órgão?", options: ["Ofício", "Exposição de Motivos", "Memorando", "Aviso"], answer: 2, explanation: "O memorando é a comunicação eminentemente interna, ágil e simples, utilizada entre unidades de um mesmo órgão." },
-                { subject: "Conhecimentos Específicos", question: "A juntada de um processo a outro, em caráter definitivo, por terem o mesmo objeto, é um procedimento chamado de:", options: ["Apensação", "Desmembramento", "Anexação", "Autuação"], answer: 2, explanation: "Anexação é a união permanente de um processo a outro, que se torna a parte principal. Já a apensação é uma união temporária." },
-                { subject: "Conhecimentos Específicos", question: "O atributo que permite à Administração Pública executar seus atos diretamente, sem intervenção do Judiciário, é a:", options: ["Presunção de Legitimidade", "Imperatividade", "Tipicidade", "Autoexecutoriedade"], answer: 3, explanation: "A autoexecutoriedade permite que a Administração execute suas decisões sem precisar de uma ordem judicial para tal, como na demolição de uma obra irregular." },
-                { subject: "Conhecimentos Específicos", question: "O instrumento arquivístico que determina o tempo de guarda e a destinação final de um documento é a:", options: ["Plano de Classificação", "Tabela de Temporalidade", "Inventário Documental", "Índice de Assuntos"], answer: 1, explanation: "A Tabela de Temporalidade de Documentos é fundamental para a gestão documental, pois estabelece os prazos de guarda e a destinação final (eliminação ou guarda permanente)." },
-                { subject: "Conhecimentos Específicos", question: "O ato que dá início a um processo administrativo, formalizando-o com capa e numeração, é chamado de:", options: ["Protocolo", "Distribuição", "Autuação", "Tramitação"], answer: 2, explanation: "Autuação é o ato de formar o processo, organizando os documentos em ordem cronológica e registrando-os oficialmente para que possam tramitar no órgão." },
-                { subject: "Conhecimentos Específicos", question: "A extinção de um ato administrativo por razões de conveniência e oportunidade é feita por meio da:", options: ["Anulação", "Revogação", "Cassação", "Caducidade"], answer: 1, explanation: "A revogação é o desfazimento de um ato válido por motivos de mérito administrativo (não é mais conveniente). A anulação ocorre por vício de legalidade." },
-                { subject: "Conhecimentos Específicos", question: "Na gestão de materiais, o método que classifica itens em categorias (A, B e C) de acordo com seu valor de demanda é conhecido como:", options: ["Curva ABC", "Estoque Mínimo", "Just-in-Time", "Custo Padrão"], answer: 0, explanation: "A Curva ABC classifica os itens de estoque por sua importância. Itens 'A' são os de maior valor de demanda, 'B' intermediários, e 'C' de menor valor." },
-                { subject: "Conhecimentos Específicos", question: "O poder da Administração Pública de apurar infrações e aplicar penalidades aos seus próprios servidores é chamado de poder:", options: ["Hierárquico", "Regulamentar", "De Polícia", "Disciplinar"], answer: 3, explanation: "O Poder Disciplinar é o que permite à Administração punir internamente as infrações funcionais de seus servidores e demais pessoas sujeitas à disciplina administrativa." },
-                { subject: "Conhecimentos Específicos", question: "Qual princípio arquivístico estabelece que os documentos de uma mesma fonte não devem ser misturados com os de outra?", options: ["Princípio da Unicidade", "Princípio da Proveniência", "Princípio da Cumulatividade", "Princípio da Ordem Original"], answer: 1, explanation: "O Princípio da Proveniência (ou do respeito aos fundos) é a base da arquivologia e determina que o arquivo de uma entidade coletiva, pessoa ou família não deve ser misturado aos de outras entidades." },
-                { subject: "Conhecimentos Específicos", question: "No recebimento de materiais, a verificação que compara o material recebido com a nota fiscal e o pedido de compra é a conferência:", options: ["Qualitativa", "Intrínseca", "Quantitativa", "Logística"], answer: 2, explanation: "A conferência quantitativa visa verificar se as quantidades de itens entregues pelo fornecedor correspondem às quantidades especificadas nos documentos da compra." },
-                { subject: "Conhecimentos Específicos", question: "A Lei Orgânica do Município é considerada a:", options: ["Principal lei tributária do município.", "Lei que organiza apenas o Poder Executivo.", "Constituição do Município, definindo sua estrutura e funcionamento.", "Norma que regula as eleições municipais."], answer: 2, explanation: "A Lei Orgânica funciona como a 'Constituição Municipal', sendo a lei mais importante do município, que estrutura os Poderes Executivo e Legislativo, define competências e estabelece os direitos e deveres dos cidadãos." },
-                { subject: "Conhecimentos Específicos", question: "O registro cronológico de recebimento e expedição de documentos em um órgão público é função do serviço de:", options: ["Arquivo", "Protocolo", "Almoxarifado", "Comunicação Social"], answer: 1, explanation: "O protocolo é o setor responsável por receber, registrar, classificar, distribuir, controlar a tramitação e expedir documentos, garantindo a sua rastreabilidade." },
-                { subject: "Conhecimentos Específicos", question: "Qual das seguintes opções é uma forma de provimento de cargo público efetivo?", options: ["Exoneração", "Demissão", "Readaptação", "Nomeação"], answer: 3, explanation: "Nomeação é a forma originária de provimento de cargo público, que ocorre após aprovação em concurso. As outras opções são formas de vacância (exoneração, demissão) ou de provimento derivado (readaptação)." },
-                { subject: "Conhecimentos Específicos", question: "Diferentemente de uma biblioteca, um arquivo é composto majoritariamente por:", options: ["Documentos de valor artístico e cultural.", "Documentos produzidos e/ou recebidos por uma instituição no exercício de suas atividades.", "Livros, periódicos e materiais de referência para consulta pública.", "Coleções de objetos raros e históricos."], answer: 1, explanation: "A principal característica de um documento de arquivo é sua natureza orgânica, ou seja, ele é produzido como resultado das atividades de uma instituição, servindo como prova ou informação dessas atividades." },
-                { subject: "Conhecimentos Específicos", question: "Um documento que contém um pronunciamento de um órgão colegiado (como um conselho ou comissão) sobre determinado assunto é, tipicamente, um(a):", options: ["Ata", "Relatório", "Parecer", "Requerimento"], answer: 2, explanation: "O parecer é a manifestação técnica, jurídica ou administrativa sobre um assunto, emitida por um especialista ou órgão consultivo para subsidiar uma decisão." },
-                { subject: "Conhecimentos Específicos", question: "O ato de eliminar documentos que já cumpriram seus prazos de guarda e não possuem valor permanente, conforme a Tabela de Temporalidade, é chamado de:", options: ["Recolhimento", "Transferência", "Descarte", "Alienação"], answer: 2, explanation: "O descarte é a destruição de documentos que, após análise, foram considerados sem valor para guarda permanente. Deve ser um procedimento formal e documentado." },
-                { subject: "Conhecimentos Específicos", question: "Os poderes Executivo e Legislativo do município são, respectivamente, exercidos por:", options: ["Câmara Municipal e Prefeito.", "Prefeito e Secretários.", "Prefeito e Câmara Municipal.", "Juiz de Direito e Promotor de Justiça."], answer: 2, explanation: "O Poder Executivo municipal é chefiado pelo Prefeito, auxiliado pelos seus secretários. O Poder Legislativo é exercido pela Câmara Municipal, composta pelos Vereadores." },
-                
-                // --- CONHECIMENTOS GERAIS SOBRE O MUNICÍPIO --- (5 questões)
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual atividade agrícola foi historicamente a base da economia de Arapiraca e lhe rendeu o apelido de 'Capital Brasileira do Fumo'?", options: ["Cultura do algodão", "Cultura da cana-de-açúcar", "Cultura do fumo", "Cultura do milho"], answer: 2, explanation: "A cultura do fumo foi o principal motor do desenvolvimento econômico e social de Arapiraca durante grande parte do século XX, tornando a cidade conhecida nacionalmente." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "A cidade de Arapiraca está localizada em qual mesorregião do estado de Alagoas?", options: ["Leste Alagoano", "Sertão Alagoano", "Agreste Alagoano", "Zona da Mata Alagoana"], answer: 2, explanation: "Arapiraca é a cidade-polo da mesorregião do Agreste Alagoano, uma área de transição entre a Zona da Mata (litoral) e o Sertão." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a Lei Orgânica do Município de Arapiraca, o Poder Legislativo é exercido:", options: ["Pelo Prefeito e seus Secretários.", "Pela Câmara Municipal.", "Pelos Juízes de Direito da comarca.", "Pelo Conselho Municipal de Educação."], answer: 1, explanation: "Assim como em todos os municípios brasileiros, a função legislativa (criar leis, fiscalizar o Executivo) em Arapiraca é de responsabilidade da Câmara Municipal, composta pelos vereadores." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Além da bandeira e do hino, qual é o outro símbolo oficial que representa o município de Arapiraca?", options: ["A árvore Arapiraca", "O Mercado do Artesanato", "O Brasão de Armas", "O Bosque das Arapiracas"], answer: 2, explanation: "Os símbolos oficiais de um município, conforme estabelecido na Lei Orgânica, são a bandeira, o hino e o brasão." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Atualmente, a economia de Arapiraca é fortemente marcada pelo dinamismo de qual setor?", options: ["Indústria pesada", "Extrativismo mineral", "Comércio e Serviços", "Agropecuária de larga escala"], answer: 2, explanation: "Embora a agricultura ainda seja importante, Arapiraca se consolidou como um grande polo de comércio e serviços, atendendo a dezenas de municípios da região Agreste e do Sertão." }
-        ];
-
+        let activeBank = [];
         let currentQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
         let selectedOptionIndex = null;
 
-        const selectionScreen = document.getElementById('selection-screen');
         const subjectButtonsContainer = document.getElementById('subject-buttons-container');
-        const quizContainer = document.getElementById('quiz-container');
         const questionCounter = document.getElementById('question-counter');
         const progressBar = document.getElementById('progress-bar');
         const questionSubject = document.getElementById('question-subject');
@@ -336,23 +377,30 @@
         const quizHeader = document.getElementById('quiz-header');
         const restartBtn = document.getElementById('restart-btn');
         const backToMenuBtn = document.getElementById('back-to-menu-btn');
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
         
+        document.querySelectorAll('.bank-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const bankId = button.dataset.bank;
+                activeBank = questionBanks[bankId];
+                bankSelectionScreen.classList.add('hidden');
+                selectionScreen.classList.remove('hidden');
+            });
+        });
+
+        backToBanksBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showBankSelection();
+        });
+
         subjectButtonsContainer.addEventListener('click', (event) => {
             const button = event.target.closest('.subject-btn');
             if (!button) return;
 
             const subject = button.dataset.subject;
             if (subject === 'all') {
-                currentQuestions = [...allQuestions];
+                currentQuestions = [...activeBank];
             } else {
-                currentQuestions = allQuestions.filter(q => q.subject === subject);
+                currentQuestions = activeBank.filter(q => q.subject === subject);
             }
             
             selectionScreen.classList.add('hidden');
@@ -360,14 +408,21 @@
             startQuiz();
         });
 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
         function startQuiz() {
             shuffleArray(currentQuestions);
             currentQuestionIndex = 0;
             score = 0;
             resultsContainer.classList.add('hidden');
+            quizHeader.classList.remove('hidden');
             quizBody.classList.remove('hidden');
             quizFooter.classList.remove('hidden');
-            quizHeader.classList.remove('hidden');
             loadQuestion();
         }
 
@@ -403,9 +458,8 @@
 
         function selectOption(index) {
             selectedOptionIndex = index;
-            const optionButtons = document.querySelectorAll('.option-btn');
-            optionButtons.forEach(btn => btn.classList.remove('selected'));
-            optionButtons[index].classList.add('selected');
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.option-btn')[index].classList.add('selected');
             checkBtn.disabled = false;
         }
 
@@ -424,15 +478,12 @@
             } else {
                 feedbackResult.textContent = '❌ Resposta Incorreta!';
                 feedbackResult.className = 'text-lg font-bold mb-2 text-red-600';
-                if (selectedOptionIndex !== null) {
-                    optionButtons[selectedOptionIndex].classList.add('incorrect');
-                }
+                if (selectedOptionIndex !== null) optionButtons[selectedOptionIndex].classList.add('incorrect');
                 optionButtons[currentQuestionData.answer].classList.add('correct');
             }
 
             feedbackExplanation.textContent = currentQuestionData.explanation;
             feedbackContainer.classList.remove('hidden');
-
             optionButtons.forEach(btn => btn.disabled = true);
         }
 
@@ -456,26 +507,16 @@
             document.getElementById('score-total').textContent = currentQuestions.length;
             
             let emoji = '';
-            if (percentage >= 80) {
-                emoji = '🏆';
-            } else if (percentage >= 50) {
-                emoji = '👍';
-            } else {
-                emoji = '📚';
-            }
+            if (percentage >= 80) emoji = '🏆';
+            else if (percentage >= 50) emoji = '👍';
+            else emoji = '📚';
             document.getElementById('score-emoji').textContent = emoji;
-        }
-        
-        function backToMenu() {
-            quizContainer.classList.add('hidden');
-            resultsContainer.classList.add('hidden');
-            selectionScreen.classList.remove('hidden');
         }
 
         checkBtn.addEventListener('click', checkAnswer);
         nextBtn.addEventListener('click', nextQuestion);
         restartBtn.addEventListener('click', startQuiz);
-        backToMenuBtn.addEventListener('click', backToMenu);
+        backToMenuBtn.addEventListener('click', showBankSelection);
 
     </script>
 </body>
