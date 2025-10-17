@@ -32,6 +32,13 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
+        /* Estilos para o conteúdo do resumo */
+        #summary-content h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #1e293b; }
+        #summary-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #334155; }
+        #summary-content p { margin-bottom: 1rem; line-height: 1.6; }
+        #summary-content ul { list-style-position: inside; margin-left: 0.5rem; margin-bottom: 1rem; }
+        #summary-content li { margin-bottom: 0.5rem; }
+        #summary-content strong { color: #1e293b; }
     </style>
 </head>
 <body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
@@ -90,7 +97,7 @@
 
                 <!-- Tela de Seleção de Banco de Questões -->
                 <div id="bank-selection-screen">
-                    <p class="text-slate-600 text-center mb-8">Selecione um banco de questões para iniciar seus estudos.</p>
+                    <p class="text-slate-600 text-center mb-8">Selecione uma opção para iniciar seus estudos.</p>
                     <div class="grid grid-cols-1 gap-4">
                         <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="1">
                             <span>📚 Banco de Questões 1</span>
@@ -99,6 +106,10 @@
                         <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="2">
                              <span>✨ Banco de Questões 2</span>
                             <span class="text-sm text-slate-500">55 Novas Questões</span>
+                        </button>
+                         <button id="show-summary-btn" class="bank-btn w-full text-left p-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 flex items-center justify-between">
+                             <span>📄 Consultar Resumo Teórico</span>
+                             <span class="text-sm text-gray-300">Arapiraca/AL</span>
                         </button>
                     </div>
                 </div>
@@ -116,6 +127,18 @@
                     </div>
                      <button id="back-to-banks-btn" class="mt-6 text-sm text-blue-600 hover:underline">← Voltar para seleção de bancos</button>
                 </div>
+                
+                <!-- Tela de Resumo Teórico -->
+                <div id="summary-screen" class="hidden">
+                    <div class="flex justify-between items-center mb-6 border-b pb-4">
+                         <h2 class="text-xl font-bold text-slate-800">Resumo Teórico - Arapiraca/AL</h2>
+                         <button id="back-to-menu-from-summary-btn" class="text-sm text-blue-600 hover:underline font-semibold">← Voltar ao menu</button>
+                    </div>
+                    <div id="summary-content" class="max-h-[60vh] overflow-y-auto pr-2 text-slate-700">
+                        <!-- O CONTEÚDO SERÁ INSERIDO AQUI VIA JAVASCRIPT -->
+                    </div>
+                </div>
+
 
                 <!-- Tela do Quiz -->
                 <div id="quiz-container" class="hidden">
@@ -192,6 +215,10 @@
         const selectionScreen = document.getElementById('selection-screen');
         const quizContainer = document.getElementById('quiz-container');
         const backToBanksBtn = document.getElementById('back-to-banks-btn');
+        const summaryScreen = document.getElementById('summary-screen');
+        const showSummaryBtn = document.getElementById('show-summary-btn');
+        const backToMenuFromSummaryBtn = document.getElementById('back-to-menu-from-summary-btn');
+
 
         toggleToRegister.addEventListener('click', (e) => { e.preventDefault(); loginForm.classList.add('hidden'); registerForm.classList.remove('hidden'); loginText.classList.add('hidden'); registerText.classList.remove('hidden'); authError.textContent = ''; });
         toggleToLogin.addEventListener('click', (e) => { e.preventDefault(); registerForm.classList.add('hidden'); loginForm.classList.remove('hidden'); registerText.classList.add('hidden'); loginText.classList.remove('hidden'); authError.textContent = ''; });
@@ -232,8 +259,63 @@
             bankSelectionScreen.classList.remove('hidden');
             selectionScreen.classList.add('hidden');
             quizContainer.classList.add('hidden');
+            summaryScreen.classList.add('hidden');
             resultsContainer.classList.add('hidden');
         }
+
+        showSummaryBtn.addEventListener('click', () => {
+            bankSelectionScreen.classList.add('hidden');
+            summaryScreen.classList.remove('hidden');
+        });
+
+        backToMenuFromSummaryBtn.addEventListener('click', showBankSelection);
+        
+        // --- CONTEÚDO DO RESUMO TEÓRICO ---
+        const summaryContentContainer = document.getElementById('summary-content');
+        summaryContentContainer.innerHTML = `
+            <h2>1. Informações Gerais sobre o Município de Arapiraca</h2>
+            <h3>Dados Históricos, Geográficos e Econômicos</h3>
+            <p><strong>História:</strong> O povoamento da região de Arapiraca começou na primeira metade do século XIX. A fundação da cidade é atribuída a Manoel André Correia dos Santos, que, ao descansar sob a sombra de uma árvore "Arapiraca", teve a ideia de se estabelecer no local. Em 1864, ele construiu a capela de Santa Cruz, dedicando-a a Nossa Senhora do Bom Conselho, que permanece como padroeira da cidade. O nome "Arapiraca" deriva de uma árvore da família das leguminosas, e uma tradição popular sugere que a palavra tem origem indígena, significando "ramo que arara visita".</p>
+            <p><strong>Evolução Administrativa:</strong> Como distrito, Arapiraca foi subordinada a Penedo, Porto Real do Colégio, São Brás e Limoeiro. Foi elevada à categoria de município em 30 de outubro de 1924, pela Lei Estadual nº 1009, de 30 de maio de 1924, com instalação em 30 de dezembro do mesmo ano. Ao longo do tempo, distritos como Lagoa da Canoa e Craíbas foram desmembrados ou anexados.</p>
+            <p><strong>Localização e Limites:</strong> Arapiraca está localizada no Agreste alagoano, a cerca de 125 km da capital, Maceió. Limita-se ao norte com Igaci, ao sul com São Sebastião, a leste com Coité do Noia e Limoeiro de Anadia, e a oeste com Lagoa da Canoa, Girau do Ponciano e Feira Grande.</p>
+            <p><strong>Dados Geográficos:</strong> O município ocupa uma área de aproximadamente 346 km², situado em uma planície a 265 metros de altitude.</p>
+            <p><strong>População:</strong> De acordo com o Censo do IBGE de 2022, a população de Arapiraca é de 234.696 habitantes, consolidando-se como a segunda maior cidade do estado de Alagoas.</p>
+            <p><strong>Economia:</strong> Arapiraca é um polo regional de grande relevância, especialmente no comércio de vestuário. O Produto Interno Bruto (PIB) do município é de aproximadamente R$ 5,9 bilhões, com um PIB per capita de R$ 25,2 mil. As atividades que mais empregam são a administração pública, teleatendimento e atendimento hospitalar. Nos anos 70, a cidade foi conhecida como a "Capital do Fumo" por ser a maior produtora de tabaco do país.</p>
+            <h3>Datas Comemorativas, Manifestações Culturais e Atrativos Turísticos</h3>
+            <ul>
+                <li><strong>2 de Fevereiro:</strong> Feriado municipal em homenagem a Nossa Senhora do Bom Conselho.</li>
+                <li><strong>30 de Outubro:</strong> Aniversário da Emancipação Política de Arapiraca.</li>
+                <li><strong>Festa da Padroeira:</strong> Tradicional celebração religiosa.</li>
+                <li><strong>Atrativos:</strong> Lago da Perucaba, Bosque das Arapiracas, Parque Ceci Cunha, Museu Zezito Guedes e Planetário Digital.</li>
+            </ul>
+            <h2>2. Lei Orgânica do Município</h2>
+            <h3>Posição na Federação, Princípios e Autonomia</h3>
+            <p><strong>Posição e Autonomia:</strong> O Município de Arapiraca é uma entidade autônoma (política, administrativa, financeira), integrando o Brasil e o Estado de Alagoas (Art. 1º). A autonomia se manifesta na capacidade de legislar sobre interesse local, organizar seus serviços e arrecadar tributos (Art. 3º).</p>
+            <p><strong>Princípios:</strong> A administração segue os princípios de prevalência do interesse coletivo, legalidade, moralidade, impessoalidade e publicidade (Art. 1º, VII).</p>
+            <h3>Organização Municipal e Poderes</h3>
+            <p><strong>Poderes Municipais:</strong> Exercido pelos Poderes Executivo (Prefeito e Secretários) e Legislativo (Câmara Municipal), independentes e harmônicos (Art. 6º).</p>
+            <p><strong>Poder Executivo:</strong> Chefiado pelo Prefeito, que tem como atribuições representar o Município, sancionar leis, administrar os bens e expedir decretos (Art. 51). É substituído pelo Vice-Prefeito.</p>
+            <p><strong>Poder Legislativo:</strong> Exercido pela Câmara Municipal, composta por 19 vereadores. Suas funções são legislar, fiscalizar os atos do Executivo e julgar as contas do Prefeito (Art. 8º, 9º).</p>
+            <p><strong>Processo Legislativo:</strong> A iniciativa de leis pode ser do Prefeito, de vereador ou popular (1% do eleitorado). Leis sobre a estrutura da administração são de iniciativa exclusiva do Prefeito (Art. 22, 23).</p>
+            <h2>3. Plano de Cargos e Carreiras dos Servidores</h2>
+            <p>A Lei Orgânica determina um regime jurídico único e planos de carreira para os servidores. A investidura em cargo depende de aprovação em concurso público (Art. 75, 77). Leis específicas (como a nº 2.799/2012) detalham esses planos.</p>
+            <h2>4. Atos Administrativos</h2>
+            <p>São manifestações unilaterais da Administração Pública. Suas espécies principais são: Atos Normativos (decretos), Ordinatórios (portarias, ofícios), Negociais (licenças), Enunciativos (certidões, pareceres) e Punitivos (multas).</p>
+            <h2>5. Documentação e Arquivo</h2>
+            <p><strong>Ciclo Vital dos Documentos (Teoria das Três Idades):</strong></p>
+            <ul>
+                <li><strong>Fase Corrente:</strong> Documentos de uso frequente, mantidos nos setores.</li>
+                <li><strong>Fase Intermediária:</strong> Uso pouco frequente, aguardando destinação.</li>
+                <li><strong>Fase Permanente:</strong> Valor histórico, para guarda definitiva.</li>
+            </ul>
+            <p><strong>Instrumentos de Gestão:</strong> Plano de Classificação e Tabela de Temporalidade (define prazos de guarda e destinação).</p>
+            <h2>6. Funções de Protocolo e Gerenciamento de Documentos</h2>
+            <p>O protocolo formaliza e controla o fluxo de documentos. Inclui atividades como recepção, autuação, tramitação, distribuição e expedição. A juntada de processos pode ser por anexação (definitiva) ou apensação (temporária).</p>
+            <h2>7. Gestão de Materiais e Estoques</h2>
+            <p>Visa garantir que o material certo esteja disponível na quantidade e tempo certos. Envolve recebimento, guarda, distribuição e controle de estoques, além de inventário periódico para contagem física.</p>
+            <h2>8. Processos Administrativos</h2>
+            <p>É a sequência de atos para uma decisão final, garantindo ampla defesa. As atividades incluem autuação (início), instrução (coleta de provas), controle da tramitação, juntada, encerramento e arquivamento.</p>
+        `;
 
         // --- BANCO DE QUESTÕES ---
         const questionBanks = {
@@ -291,7 +373,7 @@
                  { subject: "Conhecimentos Gerais sobre o Município", question: "Qual atividade agrícola foi a base da economia de Arapiraca, rendendo-lhe o apelido de 'Capital Brasileira do Fumo'?", options: ["Cultura do algodão", "Cultura da cana-de-açúcar", "Cultura do fumo", "Cultura do milho"], answer: 2, explanation: "A cultura do fumo foi o motor do desenvolvimento de Arapiraca no século XX." },
                  { subject: "Conhecimentos Gerais sobre o Município", question: "A cidade de Arapiraca está localizada em qual mesorregião de Alagoas?", options: ["Leste Alagoano", "Sertão Alagoano", "Agreste Alagoano", "Zona da Mata Alagoana"], answer: 2, explanation: "Arapiraca é a cidade-polo do Agreste Alagoano." },
                  { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a Lei Orgânica de Arapiraca, o Poder Legislativo é exercido:", options: ["Pelo Prefeito e seus Secretários.", "Pela Câmara Municipal.", "Pelos Juízes de Direito da comarca.", "Pelo Conselho Municipal de Educação."], answer: 1, explanation: "A função legislativa municipal é da Câmara Municipal." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "Além da bandeira и do hino, qual é o outro símbolo oficial de Arapiraca?", options: ["A árvore Arapiraca", "O Mercado do Artesanato", "O Brasão de Armas", "O Bosque das Arapiracas"], answer: 2, explanation: "Os símbolos oficiais são a bandeira, o hino e o brasão." },
+                 { subject: "Conhecimentos Gerais sobre o Município", question: "Além da bandeira e do hino, qual é o outro símbolo oficial de Arapiraca?", options: ["A árvore Arapiraca", "O Mercado do Artesanato", "O Brasão de Armas", "O Bosque das Arapiracas"], answer: 2, explanation: "Os símbolos oficiais são a bandeira, o hino e o brasão." },
                  { subject: "Conhecimentos Gerais sobre o Município", question: "Atualmente, a economia de Arapiraca é fortemente marcada pelo dinamismo de qual setor?", options: ["Indústria pesada", "Extrativismo mineral", "Comércio e Serviços", "Agropecuária de larga escala"], answer: 2, explanation: "Arapiraca consolidou-se como um grande polo regional de comércio e serviços." }
             ],
             '2': [
@@ -320,7 +402,7 @@
                  { subject: "Informática", question: "No Google Chrome, qual o atalho para reabrir a última aba que foi fechada?", options: ["Ctrl + T", "Ctrl + Shift + R", "Ctrl + H", "Ctrl + Shift + T"], answer: 3, explanation: "Ctrl + Shift + T é um atalho extremamente útil para restaurar abas fechadas acidentalmente." },
                  { subject: "Informática", question: "O que significa 'armazenamento em nuvem' (Cloud Storage)?", options: ["Salvar arquivos em um servidor remoto acessível pela internet.", "Usar um pendrive de alta capacidade.", "Fazer um backup em um HD externo.", "Criar uma partição especial no disco rígido do computador."], answer: 0, explanation: "Serviços como Google Drive, OneDrive e Dropbox armazenam seus arquivos em servidores de data centers, permitindo o acesso de qualquer lugar com internet." },
                  { subject: "Informática", question: "Qual dos seguintes formatos de arquivo é mais comumente usado para documentos de texto que preservam a formatação original e não são facilmente editáveis?", options: [".DOCX", ".TXT", ".PDF", ".XLSX"], answer: 2, explanation: "PDF (Portable Document Format) foi criado para apresentar documentos de maneira consistente, independentemente do software, hardware ou sistema operacional." },
-                 { subject: "Informática", question: "Para que serve a 'limpeza de cache' em um navegador de internet?", options: ["Para apagar senhas salvas e histórico de navegação.", "Para remover arquivos temporários que podem causar problemas de visualização em sites.", "Para aumentar a velocidade da conexão com a internet.", "Para desinstalar extensões e plugins indesejados."], answer: 1, explanation: "O cache armazena partes de sites (imagens, scripts) para carregá-los mais rápido no futuro. Limpá-lo força o navegador a baixar as versões mais recentes, resolvendo problemas de exibição." },
+                 { subject: "Informática", question: "Para que serve a 'limpeza de cache' em um navegador de internet?", options: ["Para apagar senhas salvas e histórico de navegação.", "Para remover arquivos temporários que podem causar problemas de visualização em sites.", "Para aumentar a velocidade da conexão com a internet.", "Para desinstalar extensões e plugins indesejados."], answer: 1, explanation: "O cache armena partes de sites (imagens, scripts) para carregá-los mais rápido no futuro. Limpá-lo força o navegador a baixar as versões mais recentes, resolvendo problemas de exibição." },
                  { subject: "Informática", question: "Em uma planilha eletrônica (Excel/Calc), se a célula A1 tem o valor 10 e a célula A2 tem o valor 20, qual será o resultado da fórmula '=SE(A1>5;A2*2;A2/2)'?", options: ["10", "20", "40", "5"], answer: 2, explanation: "A fórmula SE testa uma condição. Como A1 (10) é maior que 5 (verdadeiro), a fórmula executa a segunda parte: A2 (20) * 2, que resulta em 40." },
                  { subject: "Informática", question: "Qual é a função do 'Modo de Segurança' do Windows?", options: ["Navegar na internet de forma anônima.", "Iniciar o sistema com um conjunto mínimo de drivers e serviços para solucionar problemas.", "Proteger o computador contra ransomware.", "Executar aplicativos em um ambiente isolado."], answer: 1, explanation: "O Modo de Segurança é uma ferramenta de diagnóstico que carrega apenas o essencial para o funcionamento do Windows, ajudando a identificar e resolver falhas." },
                  { subject: "Informática", question: "A topologia de rede em que todos os computadores se conectam a um dispositivo central, como um switch ou hub, é chamada de:", options: ["Anel (Ring)", "Barramento (Bus)", "Estrela (Star)", "Malha (Mesh)"], answer: 2, explanation: "Na topologia em estrela, a falha de um cabo afeta apenas um computador, e a falha do dispositivo central paralisa a rede." },
