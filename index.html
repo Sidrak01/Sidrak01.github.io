@@ -9,6 +9,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Evita scroll enquanto o loader estiver ativo */
         }
         .option-btn, .subject-btn, .auth-btn, .bank-btn {
             transition: all 0.2s ease-in-out;
@@ -40,51 +41,96 @@
         #summary-content ul { list-style-position: inside; margin-left: 0.5rem; margin-bottom: 1rem; }
         #summary-content li { margin-bottom: 0.5rem; }
         #summary-content strong { color: #1e293b; }
+        
+        /* Animação do Loader */
+        #loader {
+            transition: opacity 0.5s ease-out;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #09f;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Destaque da Pesquisa */
+        mark {
+            background-color: #fef08a; /* yellow-200 */
+            padding: 0 2px;
+            border-radius: 2px;
+        }
     </style>
 </head>
-<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+<body class="bg-slate-50">
 
-    <main class="w-full max-w-3xl">
+    <!-- Tela de Carregamento (Loader) -->
+    <div id="loader" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
+        <div class="spinner"></div>
+        <p class="mt-4 text-slate-600">Carregando...</p>
+    </div>
+
+    <main class="w-full max-w-4xl min-h-screen flex items-center justify-center p-4">
 
         <!-- Tela de Autenticação (Login/Registro) -->
-        <div id="auth-screen" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
-            <h1 class="text-2xl font-bold text-slate-800 text-center mb-2">Acesso ao Tutor de Estudos</h1>
-            <p class="text-slate-600 text-center mb-8">Faça login ou crie uma conta para continuar.</p>
-            
-            <form id="login-form">
-                <div class="mb-4">
-                    <label for="login-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                    <input type="email" id="login-email" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="seu@email.com">
+        <div id="auth-screen" class="hidden w-full">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden md:grid md:grid-cols-2">
+                <div class="relative hidden md:block bg-gradient-to-br from-blue-500 to-indigo-600 p-8 text-white">
+                     <div class="absolute inset-0 bg-black opacity-10"></div>
+                     <div class="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                           <h2 class="text-3xl font-bold tracking-tight">Tutor de Estudos</h2>
+                           <p class="mt-2 text-blue-200">Sua plataforma completa de preparação para concursos.</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="absolute bottom-8 right-8 opacity-20"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                     </div>
                 </div>
-                <div class="mb-6">
-                    <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1">Senha</label>
-                    <input type="password" id="login-password" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
-                </div>
-                <button type="submit" class="auth-btn w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700">Entrar</button>
-            </form>
+                <div class="p-8">
+                    <h1 class="text-2xl font-bold text-slate-800 text-center mb-2">Acesso à Plataforma</h1>
+                    <p class="text-slate-500 text-center mb-8">Faça login ou crie sua conta.</p>
+                    
+                    <form id="login-form">
+                        <div class="mb-4">
+                            <label for="login-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                            <input type="email" id="login-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
+                        </div>
+                        <div class="mb-6">
+                            <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1">Senha</label>
+                            <input type="password" id="login-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="auth-btn w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700">Entrar</button>
+                    </form>
 
-            <form id="register-form" class="hidden">
-                 <div class="mb-4">
-                    <label for="register-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                    <input type="email" id="register-email" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="seu@email.com">
-                </div>
-                <div class="mb-6">
-                    <label for="register-password" class="block text-sm font-medium text-slate-700 mb-1">Senha (mínimo 6 caracteres)</label>
-                    <input type="password" id="register-password" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
-                </div>
-                <button type="submit" class="auth-btn w-full bg-green-600 text-white font-bold py-2.5 rounded-lg hover:bg-green-700">Criar Conta</button>
-            </form>
+                    <form id="register-form" class="hidden">
+                         <div class="mb-4">
+                            <label for="register-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                            <input type="email" id="register-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
+                        </div>
+                        <div class="mb-6">
+                            <label for="register-password" class="block text-sm font-medium text-slate-700 mb-1">Senha (mín. 6 caracteres)</label>
+                            <input type="password" id="register-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="auth-btn w-full bg-green-600 text-white font-bold py-2.5 rounded-lg hover:bg-green-700">Criar Conta</button>
+                    </form>
 
-            <div id="auth-error" class="mt-4 text-center text-red-600 font-semibold"></div>
+                    <div id="auth-error" class="mt-4 text-center text-red-600 font-semibold h-5"></div>
 
-            <p class="mt-6 text-center text-sm text-slate-600">
-                <span id="login-text">Não tem uma conta? <a href="#" id="toggle-to-register" class="font-semibold text-blue-600 hover:underline">Registre-se</a></span>
-                <span id="register-text" class="hidden">Já tem uma conta? <a href="#" id="toggle-to-login" class="font-semibold text-blue-600 hover:underline">Faça login</a></span>
-            </p>
+                    <p class="mt-6 text-center text-sm text-slate-600">
+                        <span id="login-text">Não tem uma conta? <a href="#" id="toggle-to-register" class="font-semibold text-blue-600 hover:underline">Registre-se</a></span>
+                        <span id="register-text" class="hidden">Já tem uma conta? <a href="#" id="toggle-to-login" class="font-semibold text-blue-600 hover:underline">Faça login</a></span>
+                    </p>
+                </div>
+            </div>
         </div>
 
+
         <!-- Conteúdo Principal do App (Quiz) -->
-        <div id="app-container" class="hidden">
+        <div id="app-container" class="hidden w-full">
             
             <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
                 <!-- Cabeçalho Fixo -->
@@ -131,10 +177,15 @@
                 
                 <!-- Tela de Resumo Teórico -->
                 <div id="summary-screen" class="hidden">
-                    <div class="flex justify-between items-center mb-6 border-b pb-4">
-                         <h2 class="text-xl font-bold text-slate-800">Resumo Teórico - Arapiraca/AL</h2>
-                         <button id="back-to-menu-from-summary-btn" class="text-sm text-blue-600 hover:underline font-semibold">← Voltar ao menu</button>
+                    <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 border-b pb-4">
+                         <h2 class="text-xl font-bold text-slate-800 m-0">Resumo Teórico - Arapiraca/AL</h2>
+                         <div class="relative w-full md:w-auto">
+                           <input type="search" id="summary-search-input" placeholder="Pesquisar no resumo..." class="w-full md:w-64 pl-4 pr-10 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                           <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                         </div>
+                         <button id="back-to-menu-from-summary-btn" class="text-sm text-blue-600 hover:underline font-semibold whitespace-nowrap">← Voltar ao menu</button>
                     </div>
+                    <p id="search-results-info" class="text-sm text-slate-500 mb-4 hidden"></p>
                     <div id="summary-content" class="max-h-[60vh] overflow-y-auto pr-2 text-slate-700">
                         <!-- O CONTEÚDO SERÁ INSERIDO AQUI VIA JAVASCRIPT -->
                     </div>
@@ -200,6 +251,7 @@
         const auth = getAuth(app);
 
         // --- LÓGICA DE AUTENTICAÇÃO E NAVEGAÇÃO ---
+        const loader = document.getElementById('loader');
         const authScreen = document.getElementById('auth-screen');
         const appContainer = document.getElementById('app-container');
         const loginForm = document.getElementById('login-form');
@@ -219,41 +271,63 @@
         const summaryScreen = document.getElementById('summary-screen');
         const showSummaryBtn = document.getElementById('show-summary-btn');
         const backToMenuFromSummaryBtn = document.getElementById('back-to-menu-from-summary-btn');
+        const summarySearchInput = document.getElementById('summary-search-input');
+        const searchResultsInfo = document.getElementById('search-results-info');
 
 
         toggleToRegister.addEventListener('click', (e) => { e.preventDefault(); loginForm.classList.add('hidden'); registerForm.classList.remove('hidden'); loginText.classList.add('hidden'); registerText.classList.remove('hidden'); authError.textContent = ''; });
         toggleToLogin.addEventListener('click', (e) => { e.preventDefault(); registerForm.classList.add('hidden'); loginForm.classList.remove('hidden'); registerText.classList.add('hidden'); loginText.classList.remove('hidden'); authError.textContent = ''; });
         
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            createUserWithEmailAndPassword(auth, email, password).catch((error) => {
-                if (error.code === 'auth/weak-password') authError.textContent = 'Senha muito fraca. Use pelo menos 6 caracteres.';
-                else if (error.code === 'auth/email-already-in-use') authError.textContent = 'Este email já está em uso.';
-                else authError.textContent = 'Ocorreu um erro ao criar a conta.';
-            });
-        });
+        const showAuthError = (message) => {
+            authError.textContent = message;
+        };
 
-        loginForm.addEventListener('submit', (e) => {
+        const handleAuthSubmit = (e, authFunction) => {
             e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            signInWithEmailAndPassword(auth, email, password).catch(() => authError.textContent = 'Email ou senha inválidos.');
-        });
+            const form = e.target;
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('input[type="password"]').value;
+            const button = form.querySelector('button[type="submit"]');
+            
+            button.disabled = true;
+            button.textContent = 'Aguarde...';
+            showAuthError('');
 
+            authFunction(auth, email, password)
+              .catch((error) => {
+                if (error.code === 'auth/weak-password') showAuthError('Senha muito fraca. Use pelo menos 6 caracteres.');
+                else if (error.code === 'auth/email-already-in-use') showAuthError('Este email já está em uso.');
+                else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') showAuthError('Email ou senha inválidos.');
+                else showAuthError('Ocorreu um erro. Tente novamente.');
+              })
+              .finally(() => {
+                button.disabled = false;
+                button.textContent = form.id === 'login-form' ? 'Entrar' : 'Criar Conta';
+              });
+        };
+
+        registerForm.addEventListener('submit', (e) => handleAuthSubmit(e, createUserWithEmailAndPassword));
+        loginForm.addEventListener('submit', (e) => handleAuthSubmit(e, signInWithEmailAndPassword));
+        
         logoutBtn.addEventListener('click', () => signOut(auth));
 
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                authScreen.classList.add('hidden');
-                appContainer.classList.remove('hidden');
-                welcomeUser.textContent = `Bem-vindo(a), ${user.email}!`;
-                showBankSelection();
-            } else {
-                appContainer.classList.add('hidden');
-                authScreen.classList.remove('hidden');
-            }
+            setTimeout(() => {
+                if (user) {
+                    authScreen.classList.add('hidden');
+                    appContainer.classList.remove('hidden');
+                    welcomeUser.textContent = `Bem-vindo(a), ${user.email}!`;
+                    showBankSelection();
+                } else {
+                    appContainer.classList.add('hidden');
+                    authScreen.classList.remove('hidden');
+                }
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 500);
+            }, 1000); // Simula um tempo de carregamento
         });
 
         function showBankSelection() {
@@ -271,15 +345,14 @@
 
         backToMenuFromSummaryBtn.addEventListener('click', showBankSelection);
         
-        // --- CONTEÚDO DO RESUMO TEÓRICO ---
+        // --- CONTEÚDO E PESQUISA DO RESUMO TEÓRICO ---
         const summaryContentContainer = document.getElementById('summary-content');
-        summaryContentContainer.innerHTML = `
+        const originalSummaryHTML = `
             <h2>1. Informações Gerais sobre o Município de Arapiraca</h2>
             <h3>Dados Históricos, Geográficos e Econômicos</h3>
             <p><strong>História:</strong> O povoamento da região de Arapiraca começou na primeira metade do século XIX. A fundação da cidade é atribuída a Manoel André Correia dos Santos, que, ao descansar sob a sombra de uma árvore "Arapiraca", teve a ideia de se estabelecer no local. Em 1864, ele construiu a capela de Santa Cruz, dedicando-a a Nossa Senhora do Bom Conselho, que permanece como padroeira da cidade. O nome "Arapiraca" deriva de uma árvore da família das leguminosas, e uma tradição popular sugere que a palavra tem origem indígena, significando "ramo que arara visita".</p>
             <p><strong>Evolução Administrativa:</strong> Como distrito, Arapiraca foi subordinada a Penedo, Porto Real do Colégio, São Brás e Limoeiro. Foi elevada à categoria de município em 30 de outubro de 1924, pela Lei Estadual nº 1009, de 30 de maio de 1924, com instalação em 30 de dezembro do mesmo ano. Ao longo do tempo, distritos como Lagoa da Canoa e Craíbas foram desmembrados ou anexados.</p>
             <p><strong>Localização e Limites:</strong> Arapiraca está localizada no Agreste alagoano, a cerca de 125 km da capital, Maceió. Limita-se ao norte com Igaci, ao sul com São Sebastião, a leste com Coité do Noia e Limoeiro de Anadia, e a oeste com Lagoa da Canoa, Girau do Ponciano e Feira Grande.</p>
-            <p><strong>Dados Geográficos:</strong> O município ocupa uma área de aproximadamente 346 km², situado em uma planície a 265 metros de altitude.</p>
             <p><strong>População:</strong> De acordo com o Censo do IBGE de 2022, a população de Arapiraca é de 234.696 habitantes, consolidando-se como a segunda maior cidade do estado de Alagoas.</p>
             <p><strong>Economia:</strong> Arapiraca é um polo regional de grande relevância, especialmente no comércio de vestuário. O Produto Interno Bruto (PIB) do município é de aproximadamente R$ 5,9 bilhões, com um PIB per capita de R$ 25,2 mil. As atividades que mais empregam são a administração pública, teleatendimento e atendimento hospitalar. Nos anos 70, a cidade foi conhecida como a "Capital do Fumo" por ser a maior produtora de tabaco do país.</p>
             <h3>Datas Comemorativas, Manifestações Culturais e Atrativos Turísticos</h3>
@@ -298,31 +371,47 @@
             <h2>2. Lei Orgânica do Município</h2>
             <h3>Posição na Federação, Princípios e Autonomia</h3>
             <p><strong>Posição e Autonomia:</strong> O Município de Arapiraca é uma entidade autônoma (política, administrativa, financeira), integrando o Brasil e o Estado de Alagoas (Art. 1º). A autonomia se manifesta na capacidade de legislar sobre interesse local, organizar seus serviços e arrecadar tributos (Art. 3º).</p>
-            <p><strong>Princípios:</strong> A administração segue os princípios de prevalência do interesse coletivo, legalidade, moralidade, impessoalidade e publicidade (Art. 1º, VII).</p>
             <h3>Organização Municipal e Poderes</h3>
             <p><strong>Poderes Municipais:</strong> Exercido pelos Poderes Executivo (Prefeito e Secretários) e Legislativo (Câmara Municipal), independentes e harmônicos (Art. 6º).</p>
-            <p><strong>Poder Executivo:</strong> Chefiado pelo Prefeito, que tem como atribuições representar o Município, sancionar leis, administrar os bens e expedir decretos (Art. 51). É substituído pelo Vice-Prefeito.</p>
-            <p><strong>Poder Legislativo:</strong> Exercido pela Câmara Municipal, composta por 19 vereadores. Suas funções são legislar, fiscalizar os atos do Executivo e julgar as contas do Prefeito (Art. 8º, 9º).</p>
-            <p><strong>Processo Legislativo:</strong> A iniciativa de leis pode ser do Prefeito, de vereador ou popular (1% do eleitorado). Leis sobre a estrutura da administração são de iniciativa exclusiva do Prefeito (Art. 22, 23).</p>
             <h2>3. Plano de Cargos e Carreiras dos Servidores</h2>
-            <p>A Lei Orgânica determina um regime jurídico único e planos de carreira para os servidores. A investidura em cargo depende de aprovação em concurso público (Art. 75, 77). Leis específicas (como a nº 2.799/2012) detalham esses planos.</p>
+            <p>A Lei Orgânica determina um regime jurídico único e planos de carreira para os servidores. A investidura em cargo depende de aprovação em concurso público (Art. 75, 77).</p>
             <h2>4. Atos Administrativos</h2>
             <p>São manifestações unilaterais da Administração Pública. Suas espécies principais são: Atos Normativos (decretos), Ordinatórios (portarias, ofícios), Negociais (licenças), Enunciativos (certidões, pareceres) e Punitivos (multas).</p>
             <h2>5. Documentação e Arquivo</h2>
-            <p><strong>Ciclo Vital dos Documentos (Teoria das Três Idades):</strong></p>
-            <ul>
-                <li><strong>Fase Corrente:</strong> Documentos de uso frequente, mantidos nos setores.</li>
-                <li><strong>Fase Intermediária:</strong> Uso pouco frequente, aguardando destinação.</li>
-                <li><strong>Fase Permanente:</strong> Valor histórico, para guarda definitiva.</li>
-            </ul>
-            <p><strong>Instrumentos de Gestão:</strong> Plano de Classificação e Tabela de Temporalidade (define prazos de guarda e destinação).</p>
+            <p><strong>Ciclo Vital dos Documentos:</strong> Fase Corrente, Fase Intermediária, Fase Permanente. <strong>Instrumentos de Gestão:</strong> Plano de Classificação e Tabela de Temporalidade.</p>
             <h2>6. Funções de Protocolo e Gerenciamento de Documentos</h2>
-            <p>O protocolo formaliza e controla o fluxo de documentos. Inclui atividades como recepção, autuação, tramitação, distribuição e expedição. A juntada de processos pode ser por anexação (definitiva) ou apensação (temporária).</p>
-            <h2>7. Gestão de Materiais e Estoques</h2>
-            <p>Visa garantir que o material certo esteja disponível na quantidade e tempo certos. Envolve recebimento, guarda, distribuição e controle de estoques, além de inventário periódico para contagem física.</p>
-            <h2>8. Processos Administrativos</h2>
-            <p>É a sequência de atos para uma decisão final, garantindo ampla defesa. As atividades incluem autuação (início), instrução (coleta de provas), controle da tramitação, juntada, encerramento e arquivamento.</p>
+            <p>O protocolo formaliza e controla o fluxo de documentos. Inclui recepção, autuação, tramitação, distribuição e expedição.</p>
         `;
+        summaryContentContainer.innerHTML = originalSummaryHTML;
+
+        summarySearchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.trim();
+            summaryContentContainer.innerHTML = originalSummaryHTML; // Restaura o conteúdo original
+
+            if (searchTerm === '') {
+                searchResultsInfo.classList.add('hidden');
+                return;
+            }
+
+            const regex = new RegExp(searchTerm, 'gi');
+            let count = 0;
+            
+            const highlightedHTML = originalSummaryHTML.replace(regex, (match) => {
+                count++;
+                return `<mark>${match}</mark>`;
+            });
+
+            summaryContentContainer.innerHTML = highlightedHTML;
+            searchResultsInfo.classList.remove('hidden');
+            if (count > 0) {
+                searchResultsInfo.textContent = `${count} resultado(s) encontrado(s).`;
+                searchResultsInfo.className = 'text-sm text-green-600 mb-4';
+            } else {
+                searchResultsInfo.textContent = 'Nenhum resultado encontrado.';
+                searchResultsInfo.className = 'text-sm text-red-600 mb-4';
+            }
+        });
+
 
         // --- BANCO DE QUESTÕES ---
         const questionBanks = {
@@ -620,7 +709,4 @@
     </script>
 </body>
 </html>
-" selected.
-
-coloque um campo de pesquisa no material e mude a tela de carregamento coloque uma animação no inicio e melhore a estetica da tela de login
 
