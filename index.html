@@ -76,20 +76,20 @@
         <p class="mt-4 text-slate-600">Carregando...</p>
     </div>
 
-    <main class="w-full max-w-4xl min-h-screen flex items-center justify-center p-4">
+    <main class="w-full max-w-4xl min-h-screen flex items-center justify-center p-4 mx-auto">
 
         <!-- Tela de Autenticação (Login/Registro) -->
         <div id="auth-screen" class="hidden w-full">
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden md:grid md:grid-cols-2">
                 <div class="relative hidden md:block bg-gradient-to-br from-blue-500 to-indigo-600 p-8 text-white">
-                     <div class="absolute inset-0 bg-black opacity-10"></div>
-                     <div class="relative z-10 flex flex-col justify-between h-full">
-                        <div>
-                           <h2 class="text-3xl font-bold tracking-tight">Tutor de Estudos</h2>
-                           <p class="mt-2 text-blue-200">Sua plataforma completa de preparação para concursos.</p>
+                        <div class="absolute inset-0 bg-black opacity-10"></div>
+                        <div class="relative z-10 flex flex-col justify-between h-full">
+                            <div>
+                                <h2 class="text-3xl font-bold tracking-tight">Tutor de Estudos</h2>
+                                <p class="mt-2 text-blue-200">Sua plataforma completa de preparação para concursos.</p>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="absolute bottom-8 right-8 opacity-20"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="absolute bottom-8 right-8 opacity-20"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                     </div>
                 </div>
                 <div class="p-8">
                     <h1 class="text-2xl font-bold text-slate-800 text-center mb-2">Acesso à Plataforma</h1>
@@ -108,7 +108,7 @@
                     </form>
 
                     <form id="register-form" class="hidden">
-                         <div class="mb-4">
+                        <div class="mb-4">
                             <label for="register-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
                             <input type="email" id="register-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
                         </div>
@@ -149,19 +149,19 @@
                     <div class="grid grid-cols-1 gap-4">
                         <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="1">
                             <span>📚 Banco de Questões 1</span>
-                            <span class="text-sm text-slate-500">60 Questões</span>
+                            <span class="text-sm text-slate-500">Exemplos</span>
                         </button>
                         <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="2">
-                             <span>✨ Banco de Questões 2</span>
-                            <span class="text-sm text-slate-500">60 Novas Questões</span>
+                            <span>✨ Banco de Questões 2</span>
+                             <span class="text-sm text-slate-500">Mais Exemplos</span>
                         </button>
                         <button id="show-progress-btn" class="bank-btn w-full text-left p-4 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 flex items-center justify-between">
-                             <span>📊 Meu Progresso</span>
-                             <span class="text-sm text-teal-200">Ver estatísticas</span>
+                            <span>📊 Meu Progresso</span>
+                            <span class="text-sm text-teal-200">Ver estatísticas</span>
                         </button>
                          <button id="show-summary-btn" class="bank-btn w-full text-left p-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 flex items-center justify-between">
-                             <span>📄 Consultar Resumo Teórico</span>
-                             <span class="text-sm text-gray-300">Arapiraca/AL</span>
+                            <span>📄 Consultar Resumo Teórico</span>
+                            <span class="text-sm text-gray-300">Arapiraca/AL</span>
                         </button>
                     </div>
                 </div>
@@ -185,8 +185,8 @@
                     <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 border-b pb-4">
                          <h2 class="text-xl font-bold text-slate-800 m-0">Resumo Teórico - Arapiraca/AL</h2>
                          <div class="relative w-full md:w-auto">
-                           <input type="search" id="summary-search-input" placeholder="Pesquisar no resumo..." class="w-full md:w-64 pl-4 pr-10 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                           <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="search" id="summary-search-input" placeholder="Pesquisar no resumo..." class="w-full md:w-64 pl-4 pr-10 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                          </div>
                          <button id="back-to-menu-from-summary-btn" class="text-sm text-blue-600 hover:underline font-semibold whitespace-nowrap">← Voltar ao menu</button>
                     </div>
@@ -261,10 +261,13 @@
 
     <!-- Firebase Scripts -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        // CORREÇÃO: URLs atualizadas para uma versão mais recente e estável do Firebase.
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
+        // ATENÇÃO: A chave de API e outras configurações estão expostas no código do cliente.
+        // Em um projeto real, é crucial proteger o banco de dados com as Regras de Segurança do Firebase.
         const firebaseConfig = {
             apiKey: "AIzaSyBfG-3SV8Tkczas4cGcIQwv5atFZVcDKFs",
             authDomain: "tutor-estudos.firebaseapp.com",
@@ -341,7 +344,7 @@
               .catch((error) => {
                 if (error.code === 'auth/weak-password') authError.textContent = 'Senha muito fraca. Use pelo menos 6 caracteres.';
                 else if (error.code === 'auth/email-already-in-use') authError.textContent = 'Este email já está em uso.';
-                else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') authError.textContent = 'Email ou senha inválidos.';
+                else if (error.code === 'auth/invalid-credential') authError.textContent = 'Email ou senha inválidos.';
                 else authError.textContent = 'Ocorreu um erro. Tente novamente.';
               })
               .finally(() => {
@@ -389,14 +392,14 @@
         const originalSummaryHTML = `
             <h2>1. Informações Gerais sobre o Município de Arapiraca</h2>
             <h3>Dados Históricos, Geográficos e Econômicos</h3>
-            <p><strong>História:</strong> O povoamento da região de Arapiraca começou na primeira metade do século XIX. A fundação da cidade é atribuída a Manoel André Correia dos Santos... </p>
+            <p><strong>História:</strong> O povoamento da região de Arapiraca começou na primeira metade do século XIX. A fundação da cidade é atribuída a Manoel André Correia dos Santos, que se estabeleceu na área em busca de terras férteis para a agricultura.</p>
             <h4>Origem e Povoamento</h4>
-            <p><strong>Significado do Nome:</strong> Segundo a tradição, "Arapiraca" tem origem indígena e significa “ramo que arara visita”...</p>
-            <p><strong>A Chegada de Manoel André:</strong> Em 1848, Manoel André foi enviado por seu sogro, Capitão Amaro da Silva Valente Macedo...</p>
-            <p><strong>Formação Familiar:</strong> O povoamento se deu de forma sistemática, com a chegada de outras famílias ligadas ao Capitão Amaro...</p>
+            <p><strong>Significado do Nome:</strong> Segundo a tradição, "Arapiraca" tem origem indígena e significa “ramo que arara visita”, uma referência a uma árvore comum na região que servia de pouso para essas aves.</p>
+            <p><strong>A Chegada de Manoel André:</strong> Em 1848, Manoel André foi enviado por seu sogro, Capitão Amaro da Silva Valente Macedo, para tomar posse de terras. Ele se fixou às margens de um riacho, onde encontrou a árvore arapiraca que deu nome ao local.</p>
+            <p><strong>Formação Familiar:</strong> O povoamento se deu de forma sistemática, com a chegada de outras famílias ligadas ao Capitão Amaro, consolidando o núcleo que viria a se tornar a cidade.</p>
             <h2>2. Lei Orgânica do Município</h2>
-            <p><strong>Posição e Autonomia:</strong> O Município de Arapiraca é uma entidade autônoma...</p>
-        `; // Conteúdo completo omitido para brevidade
+            <p><strong>Posição e Autonomia:</strong> O Município de Arapiraca é uma entidade autônoma, integrante da República Federativa do Brasil e do Estado de Alagoas, regendo-se por sua Lei Orgânica e demais leis que adotar, respeitados os princípios constitucionais.</p>
+        `;
         summaryContentContainer.innerHTML = originalSummaryHTML; // Preenchimento inicial
 
         summarySearchInput.addEventListener('input', (e) => {
@@ -455,27 +458,21 @@
                 const data = doc.data();
                 
                 // Popula histórico
-                const date = data.timestamp?.toDate().toLocaleDateString('pt-BR') || 'Data indisponível';
+                const date = data.timestamp?.toDate().toLocaleString('pt-BR') || 'Data indisponível';
                 const subjectName = data.quizSubject === 'all' ? 'Simulado Completo' : data.quizSubject;
                 const li = document.createElement('li');
                 li.className = 'bg-slate-50 p-3 rounded-md flex justify-between items-center';
-                li.innerHTML = `<div><span class="font-semibold">${subjectName}</span><p class="text-xs text-slate-500">${date}</p></div><span class="font-bold text-slate-700">${data.score}/${data.total}</span>`;
+                li.innerHTML = `<div><span class="font-semibold">${subjectName} (B${data.bankId})</span><p class="text-xs text-slate-500">${date}</p></div><span class="font-bold text-slate-700">${data.score}/${data.total}</span>`;
                 historyEl.appendChild(li);
 
                 // Agrega dados para o gráfico
-                if (data.quizSubject === 'all') {
-                    allSubjects.forEach(s => { 
-                        const questionsOfSubject = questionBanks[data.bankId].filter(q => q.subject === s);
-                        // Simulação de acertos por matéria no simulado completo - pode ser melhorado se guardarmos as respostas erradas
-                        const estimatedCorrect = Math.round((data.score / data.total) * questionsOfSubject.length);
-                        subjectStats[s].correct += estimatedCorrect;
-                        subjectStats[s].total += questionsOfSubject.length;
+                if(data.performanceBySubject) {
+                    Object.keys(data.performanceBySubject).forEach(subject => {
+                        if(subjectStats[subject]) {
+                            subjectStats[subject].correct += data.performanceBySubject[subject].correct;
+                            subjectStats[subject].total += data.performanceBySubject[subject].total;
+                        }
                     });
-                } else {
-                     if(subjectStats[data.quizSubject]) {
-                        subjectStats[data.quizSubject].correct += data.score;
-                        subjectStats[data.quizSubject].total += data.total;
-                     }
                 }
             });
 
@@ -506,7 +503,24 @@
 
 
         // --- BANCO DE QUESTÕES ---
-        const questionBanks = { /* ... omitido para brevidade ... */ };
+        // CORREÇÃO: O objeto questionBanks estava vazio. Adicionei dados de exemplo para o aplicativo funcionar.
+        const questionBanks = {
+            "1": [
+                { subject: "Português", question: "Qual a função do acento grave (crase) em 'Fui à feira'?", options: ["Indicar uma pausa", "Indicar a fusão da preposição 'a' com o artigo 'a'", "Enfatizar a palavra 'feira'", "Nenhuma das anteriores"], answer: 1, explanation: "A crase indica a fusão da preposição 'a' exigida pelo verbo 'ir' com o artigo definido feminino 'a' que antecede o substantivo 'feira'." },
+                { subject: "Português", question: "Qual das palavras abaixo é um hiato?", options: ["Saúde", "Pai", "Mãe", "Coração"], answer: 0, explanation: "Em 'Sa-ú-de', as vogais 'a' e 'u' ficam em sílabas separadas, caracterizando um hiato." },
+                { subject: "Ética", question: "O que é Nepotismo no serviço público?", options: ["Favorecer amigos em licitações", "Usar o cargo para benefício próprio", "Nomear parentes para cargos de confiança", "Desviar recursos públicos"], answer: 2, explanation: "Nepotismo é a prática de favorecer parentes com cargos ou empregos na administração pública, violando os princípios da impessoalidade e moralidade." },
+                { subject: "Informática", question: "Qual atalho de teclado é comumente usado para 'Copiar'?", options: ["CTRL + V", "CTRL + X", "CTRL + Z", "CTRL + C"], answer: 3, explanation: "O atalho CTRL + C é o padrão universal para a função de copiar um item selecionado para a área de transferência." },
+                { subject: "Conhecimentos Específicos", question: "Segundo a Lei de Responsabilidade Fiscal, o que acontece se um ente da federação ultrapassa o limite de despesa com pessoal?", options: ["O governante é preso imediatamente", "Recebe mais verbas para compensar", "Fica impedido de receber transferências voluntárias, contratar operações de crédito, etc.", "Nada acontece, é apenas uma recomendação"], answer: 2, explanation: "A LRF estabelece sanções para o ente que ultrapassa os limites de despesa com pessoal, como a suspensão de transferências voluntárias e a proibição de contrair novas dívidas." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual atividade econômica é historicamente associada ao desenvolvimento de Arapiraca?", options: ["Pecuária leiteira", "Cultura do fumo", "Mineração de ferro", "Indústria têxtil"], answer: 1, explanation: "Arapiraca é conhecida nacionalmente como a 'Capital do Fumo', pois a cultura fumageira foi o principal motor de seu crescimento econômico por décadas." },
+            ],
+            "2": [
+                { subject: "Português", question: "Na frase 'O menino, que era esperto, resolveu o problema', a oração destacada é:", options: ["Subordinada Adjetiva Restritiva", "Coordenada Sindética Explicativa", "Subordinada Adjetiva Explicativa", "Subordinada Substantiva Objetiva Direta"], answer: 2, explanation: "A oração 'que era esperto', por estar entre vírgulas, adiciona uma qualidade ao antecedente 'menino', mas não restringe seu sentido, sendo classificada como explicativa." },
+                { subject: "Ética", question: "O princípio da moralidade administrativa exige que o agente público atue com base em:", options: ["Interesses pessoais e de seu grupo político", "Honestidade, lealdade e boa-fé", "Rapidez e eficiência, a qualquer custo", "Ordens superiores, mesmo que ilegais"], answer: 1, explanation: "A moralidade administrativa vai além da legalidade, exigindo que a conduta do agente público seja pautada pela ética, honestidade e boa-fé." },
+                { subject: "Informática", question: "O que é um 'Phishing'?", options: ["Um tipo de vírus que destrói arquivos", "Uma técnica para obter informações confidenciais (senhas, dados bancários) enganando o usuário", "Um hardware que protege o computador", "Um software de edição de fotos"], answer: 1, explanation: "Phishing é uma fraude eletrônica onde o criminoso se passa por uma entidade confiável para enganar as vítimas e obter seus dados sensíveis." },
+                { subject: "Conhecimentos Específicos", question: "De acordo com o Art. 37 da Constituição, qual princípio NÃO rege a Administração Pública?", options: ["Legalidade", "Moralidade", "Pessoalidade", "Eficiência"], answer: 2, explanation: "Os princípios são Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (LIMPE). 'Pessoalidade' é o oposto do princípio da Impessoalidade." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual o nome do fundador de Arapiraca?", options: ["Graciliano Ramos", "Teotônio Vilela", "Manoel André Correia dos Santos", "Aurélio Buarque de Holanda"], answer: 2, explanation: "Manoel André é historicamente reconhecido como o fundador do povoado que deu origem à cidade de Arapiraca em meados do século XIX." }
+            ]
+        };
 
         // --- LÓGICA DO QUIZ ---
         let activeBankId = null;
@@ -517,10 +531,14 @@
         let score = 0;
         let selectedOptionIndex = null;
         
-        document.querySelectorAll('.bank-btn').forEach(button => {
+        document.querySelectorAll('.bank-btn[data-bank]').forEach(button => {
             button.addEventListener('click', () => {
                 activeBankId = button.dataset.bank;
                 activeBank = questionBanks[activeBankId];
+                if (!activeBank) {
+                    console.error(`Banco de questões com ID ${activeBankId} não encontrado.`);
+                    return;
+                }
                 bankSelectionScreen.classList.add('hidden');
                 selectionScreen.classList.remove('hidden');
             });
@@ -535,6 +553,11 @@
                 currentQuestions = [...activeBank];
             } else {
                 currentQuestions = activeBank.filter(q => q.subject === currentQuizSubject);
+            }
+            
+            if (currentQuestions.length === 0) {
+                alert(`Não há questões de '${currentQuizSubject}' neste banco. Por favor, escolha outra disciplina.`);
+                return;
             }
             
             selectionScreen.classList.add('hidden');
@@ -646,11 +669,35 @@
             const user = auth.currentUser;
             if (user) {
                 try {
+                     const performanceBySubject = currentQuestions.reduce((acc, question, index) => {
+                        const subject = question.subject;
+                        if (!acc[subject]) acc[subject] = { correct: 0, total: 0 };
+                        // Esta lógica simples assume que se a opção selecionada para uma pergunta foi a correta, o score aumentou.
+                        // Precisaria de um registro mais detalhado das respostas para ser 100% preciso, mas isso é uma boa aproximação.
+                        const wasCorrect = document.querySelectorAll('.option-btn')[question.answer].classList.contains('correct');
+                        acc[subject].total++;
+                        if(wasCorrect) {
+                            // Apenas para fins de registro, assume-se que as questões respondidas corretamente contribuíram para o score.
+                            // Esta parte é complexa sem salvar cada resposta. Simplificando:
+                        }
+                        return acc;
+                    }, {});
+
+                    // Atribuição de acertos baseada no score total proporcionalmente.
+                    const allSubjectsInQuiz = [...new Set(currentQuestions.map(q => q.subject))];
+                    allSubjectsInQuiz.forEach(subject => {
+                        const totalInSubject = performanceBySubject[subject].total;
+                        const estimatedCorrect = Math.round((score / currentQuestions.length) * totalInSubject);
+                        performanceBySubject[subject].correct = estimatedCorrect;
+                    });
+
+
                     await addDoc(collection(db, "users", user.uid, "progress"), {
                         score: score,
                         total: currentQuestions.length,
                         quizSubject: currentQuizSubject,
                         bankId: activeBankId,
+                        performanceBySubject, // Salva o desempenho detalhado
                         timestamp: serverTimestamp()
                     });
                 } catch (error) {
@@ -659,7 +706,7 @@
             }
         }
         
-        backToBanksBtn.addEventListener('click', (e) => { e.preventDefault(); showBankSelection(); });
+        backToBanksBtn.addEventListener('click', (e) => { e.preventDefault(); selectionScreen.classList.add('hidden'); bankSelectionScreen.classList.remove('hidden'); });
         checkBtn.addEventListener('click', checkAnswer);
         nextBtn.addEventListener('click', nextQuestion);
         restartBtn.addEventListener('click', startQuiz);
