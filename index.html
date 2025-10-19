@@ -73,57 +73,69 @@
         <div class="spinner"></div>
         <p class="mt-4 text-slate-600">Carregando...</p>
     </div>
+    
+    <!-- NOVO: Modal de Confirmação -->
+    <div id="confirmation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full text-center">
+            <p id="modal-message" class="text-slate-700 mb-6"></p>
+            <div class="flex justify-center gap-4">
+                <button id="modal-cancel-btn" class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Cancelar</button>
+                <button id="modal-confirm-btn" class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
 
     <main class="w-full max-w-4xl min-h-screen flex items-center justify-center p-4">
 
         <!-- Tela de Autenticação (Login/Registro) -->
         <div id="auth-screen" class="hidden w-full max-w-4xl">
              <div class="bg-white rounded-2xl shadow-xl overflow-hidden md:grid md:grid-cols-2">
-                 <div class="relative hidden md:block bg-gradient-to-br from-blue-500 to-indigo-600 p-8 text-white">
-                      <div class="absolute inset-0 bg-black opacity-10"></div>
-                      <div class="relative z-10 flex flex-col justify-between h-full">
-                          <div>
-                             <h2 class="text-3xl font-bold tracking-tight">Tutor de Estudos</h2>
-                             <p class="mt-2 text-blue-200">Sua plataforma completa de preparação para concursos.</p>
-                          </div>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="absolute bottom-8 right-8 opacity-20"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                     </div>
-                 </div>
-                 <div class="p-8">
-                    <h1 class="text-2xl font-bold text-slate-800 text-center mb-2">Acesso à Plataforma</h1>
-                    <p class="text-slate-500 text-center mb-8">Faça login ou crie sua conta.</p>
-                    
-                    <form id="login-form">
-                        <div class="mb-4">
-                            <label for="login-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                            <input type="email" id="login-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
+                   <div class="relative hidden md:block bg-gradient-to-br from-blue-500 to-indigo-600 p-8 text-white">
+                         <div class="absolute inset-0 bg-black opacity-10"></div>
+                         <div class="relative z-10 flex flex-col justify-between h-full">
+                               <div>
+                                   <h2 class="text-3xl font-bold tracking-tight">Tutor de Estudos</h2>
+                                   <p class="mt-2 text-blue-200">Sua plataforma completa de preparação para concursos.</p>
+                               </div>
+                               <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="absolute bottom-8 right-8 opacity-20"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                         </div>
-                        <div class="mb-6">
-                            <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1">Senha</label>
-                            <input type="password" id="login-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
-                        </div>
-                        <button type="submit" class="auth-btn w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700">Entrar</button>
-                    </form>
+                   </div>
+                   <div class="p-8">
+                        <h1 class="text-2xl font-bold text-slate-800 text-center mb-2">Acesso à Plataforma</h1>
+                        <p class="text-slate-500 text-center mb-8">Faça login ou crie sua conta.</p>
+                        
+                        <form id="login-form">
+                            <div class="mb-4">
+                                <label for="login-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" id="login-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
+                            </div>
+                            <div class="mb-6">
+                                <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1">Senha</label>
+                                <input type="password" id="login-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
+                            </div>
+                            <button type="submit" class="auth-btn w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700">Entrar</button>
+                        </form>
 
-                    <form id="register-form" class="hidden">
-                         <div class="mb-4">
-                            <label for="register-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                            <input type="email" id="register-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
-                        </div>
-                        <div class="mb-6">
-                            <label for="register-password" class="block text-sm font-medium text-slate-700 mb-1">Senha (mín. 6 caracteres)</label>
-                            <input type="password" id="register-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
-                        </div>
-                        <button type="submit" class="auth-btn w-full bg-green-600 text-white font-bold py-2.5 rounded-lg hover:bg-green-700">Criar Conta</button>
-                    </form>
+                        <form id="register-form" class="hidden">
+                             <div class="mb-4">
+                                <label for="register-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" id="register-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
+                            </div>
+                            <div class="mb-6">
+                                <label for="register-password" class="block text-sm font-medium text-slate-700 mb-1">Senha (mín. 6 caracteres)</label>
+                                <input type="password" id="register-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
+                            </div>
+                            <button type="submit" class="auth-btn w-full bg-green-600 text-white font-bold py-2.5 rounded-lg hover:bg-green-700">Criar Conta</button>
+                        </form>
 
-                    <div id="auth-error" class="mt-4 text-center text-red-600 font-semibold h-5"></div>
+                        <div id="auth-error" class="mt-4 text-center text-red-600 font-semibold h-5"></div>
 
-                    <p class="mt-6 text-center text-sm text-slate-600">
-                        <span id="login-text">Não tem uma conta? <a href="#" id="toggle-to-register" class="font-semibold text-blue-600 hover:underline">Registre-se</a></span>
-                        <span id="register-text" class="hidden">Já tem uma conta? <a href="#" id="toggle-to-login" class="font-semibold text-blue-600 hover:underline">Faça login</a></span>
-                    </p>
-                </div>
+                        <p class="mt-6 text-center text-sm text-slate-600">
+                            <span id="login-text">Não tem uma conta? <a href="#" id="toggle-to-register" class="font-semibold text-blue-600 hover:underline">Registre-se</a></span>
+                            <span id="register-text" class="hidden">Já tem uma conta? <a href="#" id="toggle-to-login" class="font-semibold text-blue-600 hover:underline">Faça login</a></span>
+                        </p>
+                   </div>
             </div>
         </div>
 
@@ -146,16 +158,21 @@
                     <p class="text-slate-600 text-center mb-8">Selecione uma opção para iniciar seus estudos.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <button id="start-new-quiz-btn" class="nav-btn w-full text-left p-5 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 flex items-center gap-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-swords"><path d="m14.5 17.5 4-4-2-6-6-2-4 4 2 6 6 2Z"/><path d="m13 19 6-6"/><path d="m5.5 11.5 4-4-2-6-6-2-4 4 2 6 6 2Z"/><path d="m3 21 6-6"/></svg>
                             <span>Iniciar Novo Quiz</span>
                         </button>
                          <button id="review-errors-btn" class="nav-btn w-full text-left p-5 bg-yellow-500 text-white rounded-lg font-semibold hover:bg-yellow-600 flex items-center gap-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw"><path d="M3 2v6h6"/><path d="M3 13a9 9 0 1 0 3-7.7L3 8"/></svg>
                             <span>Revisar Meus Erros</span>
                         </button>
-                         <button id="show-summary-btn" class="nav-btn w-full text-left p-5 bg-slate-600 text-white rounded-lg font-semibold hover:bg-slate-700 flex items-center gap-4 col-span-1 md:col-span-2">
+                         <button id="show-summary-btn" class="nav-btn w-full text-left p-5 bg-slate-600 text-white rounded-lg font-semibold hover:bg-slate-700 flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                            <span>Consultar Resumo Teórico de Arapiraca/AL</span>
+                            <span>Consultar Resumo Teórico</span>
+                        </button>
+                        <!-- NOVO: Botão para resetar o progresso -->
+                        <button id="reset-progress-btn" class="nav-btn w-full text-left p-5 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 flex items-center gap-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                           <span>Resetar Progresso do Quiz</span>
                         </button>
                     </div>
                 </div>
@@ -301,18 +318,30 @@
         const startNewQuizBtn = document.getElementById('start-new-quiz-btn');
         const reviewErrorsBtn = document.getElementById('review-errors-btn');
         const showSummaryBtn = document.getElementById('show-summary-btn');
+        const resetProgressBtn = document.getElementById('reset-progress-btn'); // NOVO
         const backToMainMenuFromBanksBtn = document.getElementById('back-to-main-menu-from-banks-btn');
         const backToBanksBtn = document.getElementById('back-to-banks-btn');
         const backToMenuFromSummaryBtn = document.getElementById('back-to-main-menu-from-summary-btn');
         const backToMainMenuFromHistoryBtn = document.getElementById('back-to-main-menu-from-history-btn');
         const backToSubjectsBtn = document.getElementById('back-to-subjects-btn');
-        const backToMenuBtn = document.getElementById('back-to-menu-btn'); // Botão na tela de resultados
+        const backToMenuBtn = document.getElementById('back-to-menu-btn');
+
+        // Modal de Confirmação
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+
 
         // --- LÓGICA DE NAVEGAÇÃO ENTRE TELAS ---
         function showScreen(screenToShow) {
             [mainMenuScreen, bankSelectionScreen, selectionScreen, quizContainer, summaryScreen, historyScreen, resultsContainer].forEach(screen => {
                 screen.classList.add('hidden');
             });
+            // Esconde o contêiner de resultados dentro do quiz-container
+            if (screenToShow === quizContainer) {
+                resultsContainer.classList.add('hidden');
+            }
             screenToShow.classList.remove('hidden');
         }
 
@@ -329,7 +358,26 @@
         backToMainMenuFromHistoryBtn.addEventListener('click', () => showScreen(mainMenuScreen));
         backToSubjectsBtn.addEventListener('click', () => showScreen(selectionScreen));
         backToMenuBtn.addEventListener('click', () => showScreen(mainMenuScreen));
+        
+        // --- LÓGICA DO MODAL DE CONFIRMAÇÃO (NOVO) ---
+        let confirmCallback = null;
+        function showConfirmationModal(message, callback) {
+            modalMessage.textContent = message;
+            confirmCallback = callback;
+            confirmationModal.classList.remove('hidden');
+        }
 
+        modalConfirmBtn.addEventListener('click', () => {
+            if (confirmCallback) {
+                confirmCallback();
+            }
+            confirmationModal.classList.add('hidden');
+        });
+
+        modalCancelBtn.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+        });
+        
 
         // --- LÓGICA DE AUTENTICAÇÃO ---
         toggleToRegister.addEventListener('click', (e) => { e.preventDefault(); loginForm.classList.add('hidden'); registerForm.classList.remove('hidden'); loginText.classList.add('hidden'); registerText.classList.remove('hidden'); authError.textContent = ''; });
@@ -445,66 +493,66 @@
         // --- BANCO DE QUESTÕES ---
         const questionBanks = {
             '1': [
-                 { subject: "Português", question: "Assinale a alternativa em que o uso do acento grave indicativo da crase está CORRETO:", options: ["O pesquisador se dedicou à uma nova teoria.","Eles foram para a praia às pressas.","O documento foi entregue à ele.","As aulas começarão à partir de amanhã."], answer: 1, explanation: "A crase é usada corretamente em 'às pressas', uma locução adverbial feminina." },
-                 { subject: "Português", question: "A pontuação está empregada corretamente em:", options: ["O menino, que era muito curioso, abriu a caixa.","O menino que era muito curioso abriu a caixa.","O menino, que era muito curioso abriu a caixa.","O menino que era muito curioso, abriu a caixa."], answer: 0, explanation: "A oração 'que era muito curioso' é uma oração subordinada adjetiva explicativa, devendo ser isolada por vírgulas." },
-                 { subject: "Português", question: "Qual das frases abaixo apresenta concordância verbal INCORRETA?", options: ["Fazem cinco anos que não o vejo.","Havia muitos problemas a serem resolvidos.","A maioria dos alunos passou no teste.","Um bando de pássaros sobrevoou a cidade."], answer: 0, explanation: "O verbo 'fazer', indicando tempo, é impessoal. O correto é: 'Faz cinco anos'." },
-                 { subject: "Português", question: "Na frase 'Tenho aversão ___ mentiras', a regência nominal do substantivo 'aversão' exige a preposição:", options: ["de","com","a","por"], answer: 2, explanation: "Quem tem aversão, tem aversão 'a' algo. Portanto, 'Tenho aversão a mentiras'." },
-                 { subject: "Português", question: "A colocação do pronome oblíquo átono está INCORRETA em:", options: ["Não me diga tal coisa.","Me empresta o livro, por favor?","O assunto que se discute é complexo.","Far-lhe-ei uma visita amanhã."], answer: 1, explanation: "Não se deve iniciar frase com pronome oblíquo átono na norma culta. Correto: 'Empresta-me o livro'." },
-                 { subject: "Português", question: "Assinale a alternativa em que todas as palavras estão grafadas corretamente.", options: ["Exceção, ascenção, privilégio.","Paralizar, analisar, pesquisar.","Ansiedade, espontâneo, impecilho.","Pretenção, obsessão, muçulmano."], answer: 2, explanation: "Os erros são: (A) 'ascensão'; (B) 'paralisar'; (D) 'pretensão'." },
-                 { subject: "Português", question: "Na frase 'Aquele político é uma raposa', encontramos qual figura de linguagem?", options: ["Metonímia","Hipérbole","Comparação","Metáfora"], answer: 3, explanation: "É uma metáfora, uma comparação implícita." },
-                 { subject: "Português", question: "Em 'O saber é o bem mais valioso', a palavra 'saber' é classificada morfologicamente como:", options: ["Verbo","Adjetivo","Substantivo","Advérbio"], answer: 2, explanation: "'Saber' é um verbo substantivado pelo artigo 'O'." },
-                 { subject: "Português", question: "Na oração 'Precisa-se de funcionários competentes', o sujeito é:", options: ["Oculto","Indeterminado","Inexistente","Simples (funcionários competentes)"], answer: 1, explanation: "Verbo transitivo indireto + 'se' = sujeito indeterminado." },
-                 { subject: "Português", question: "Todas as palavras são acentuadas pela mesma regra em:", options: ["pálido, lâmpada, trânsito","saúde, baú, egoísta","herói, chapéu, anéis","táxi, júri, bônus"], answer: 0, explanation: "Na alternativa A, todas são proparoxítonas." },
-                 { subject: "Ética", question: "Segundo a CF/88, a administração pública obedecerá aos princípios de:", options: ["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência.","Legalidade, Pessoalidade, Moralidade, Sigilo e Eficácia.","Soberania, Cidadania, Dignidade da pessoa humana, e Valores sociais.","Probidade, Honestidade, Decoro, Zelo e Lealdade."], answer: 0, explanation: "É o mnemônico LIMPE, do Art. 37 da Constituição Federal." },
-                 { subject: "Ética", question: "Constitui ato de improbidade administrativa que importa enriquecimento ilícito:", options: ["Negar publicidade aos atos oficiais.","Frustrar a licitude de concurso público.","Receber vantagem econômica indevida para tolerar a exploração de jogo de azar.","Deixar de prestar contas quando obrigado."], answer: 2, explanation: "Receber vantagem indevida é o núcleo do enriquecimento ilícito (Art. 9º da Lei de Improbidade)." },
-                 { subject: "Ética", question: "Conforme a Lei de Acesso à Informação, o prazo para o órgão fornecer a informação é de até:", options: ["10 dias, prorrogável por igual período.","15 dias, improrrogáveis.","20 dias, prorrogável por mais 10 dias.","30 dias, improrrogáveis."], answer: 2, explanation: "O prazo é de 20 dias, prorrogável por mais 10, conforme Art. 11 da LAI." },
-                 { subject: "Ética", question: "Qual dos itens abaixo representa um dever fundamental do servidor público?", options: ["Recusar fé a documentos públicos.","Exercer com zelo e dedicação as atribuições do cargo.","Opor resistência injustificada ao andamento de processo.","Promover manifestação de apreço no recinto da repartição."], answer: 1, explanation: "Zelo e dedicação são deveres essenciais ligados ao princípio da eficiência." },
-                 { subject: "Ética", question: "A diferença fundamental entre Ética e Moral é que:", options: ["Ética é a prática, Moral é a teoria.","Moral refere-se aos costumes, enquanto Ética é a reflexão filosófica sobre esses costumes.","Não há diferença, os termos são sinônimos.","Moral é universal, enquanto a Ética é cultural."], answer: 1, explanation: "Moral é o conjunto de regras de um grupo; Ética é a reflexão sobre essas regras." },
-                 { subject: "Ética", question: "O princípio que impõe ao servidor realizar suas atribuições com presteza e perfeição é o da:", options: ["Moralidade","Publicidade","Legalidade","Eficiência"], answer: 3, explanation: "Eficiência busca os melhores resultados com os menores custos, incluindo presteza e perfeição." },
-                 { subject: "Ética", question: "A conduta de tratar os colegas e o público com cortesia e respeito é mais associada ao princípio da:", options: ["Produtividade","Assiduidade","Urbanidade","Lealdade"], answer: 2, explanation: "Urbanidade é o dever de civilidade e cortesia no trato com as pessoas." },
-                 { subject: "Ética", question: "A lealdade do servidor à instituição que serve visa, principalmente:", options: ["Proteger seus superiores hierárquicos.","Garantir os objetivos da instituição, alinhados ao interesse público.","Evitar a fiscalização externa.","Obter vantagens pessoais."], answer: 1, explanation: "A lealdade é para com a instituição e o interesse público, não para com indivíduos." },
-                 { subject: "Ética", question: "A probidade administrativa está diretamente ligada ao dever de:", options: ["Agir sempre com honestidade e integridade no trato da coisa pública.","Apenas cumprir os prazos e horários.","Divulgar todos os atos administrativos, sem exceção.","Obedecer a ordens manifestamente ilegais."], answer: 0, explanation: "Probidade é sinônimo de honestidade e retidão na gestão pública." },
-                 { subject: "Ética", question: "Atenta contra os princípios da administração pública a conduta de:", options: ["Adquirir bens com valor desproporcional ao seu patrimônio.","Facilitar aquisição de bem por preço superior ao de mercado.","Receber vantagem para omitir ato de ofício.","Revelar fato sigiloso de que tem ciência em razão das atribuições."], answer: 3, explanation: "Revelar fato sigiloso viola os princípios da administração (Art. 11 da Lei de Improbidade)." },
-                 { subject: "Informática", question: "Qual componente de hardware é o 'cérebro' do computador?", options: ["Memória RAM","Disco Rígido (HD/SSD)","CPU (Unidade Central de Processamento)","Placa de Vídeo"], answer: 2, explanation: "A CPU (Unidade Central de Processamento) é responsável por executar a maioria das instruções." },
-                 { subject: "Informática", question: "Qual das seguintes opções NÃO é um sistema operacional?", options: ["Windows 10","Linux Ubuntu","Microsoft Word","Android"], answer: 2, explanation: "Microsoft Word é um software aplicativo (processador de texto)." },
-                 { subject: "Informática", question: "Em segurança da informação, qual é a principal função de um firewall?", options: ["Remover vírus de arquivos infectados.","Criar cópias de segurança dos dados.","Filtrar o tráfego de rede, com base em regras de segurança.","Criptografar e-mails para garantir o sigilo."], answer: 2, explanation: "Um firewall atua como uma barreira controlando o tráfego de rede." },
-                 { subject: "Informática", question: "No Excel ou Calc, qual fórmula calcula a soma do intervalo de A1 a A10?", options: ["=SOMA(A1:A10)","=TOTAL(A1-A10)","=ADICIONAR(A1..A10)","=S(A1+A10)"], answer: 0, explanation: "A função padrão é SOMA(célula_inicial:célula_final)." },
-                 { subject: "Informática", question: "A principal diferença entre Internet e Intranet é:", options: ["A Intranet é mais rápida.","São a mesma tecnologia.","Internet usa cabos e Intranet usa sem fio.","A Internet é pública e global, a Intranet é privada e restrita."], answer: 3, explanation: "A Intranet é uma rede corporativa privada que usa a tecnologia da Internet." },
-                 { subject: "Informática", question: "A LGPD (Lei Geral de Proteção de Dados) tem como principal objetivo:", options: ["Regular o comércio eletrônico.","Punir crimes cibernéticos.","Proteger os direitos de liberdade e de privacidade da pessoa natural.","Definir regras para redes sociais."], answer: 2, explanation: "O foco da LGPD é a proteção de dados pessoais e a privacidade." },
-                 { subject: "Informática", question: "Qual aplicativo do LibreOffice é o equivalente ao Microsoft PowerPoint?", options: ["Writer","Calc","Impress","Draw"], answer: 2, explanation: "Impress é o software de apresentações do pacote LibreOffice." },
-                 { subject: "Informática", question: "Qual atalho de teclado abre uma nova aba em navegadores?", options: ["Ctrl + N","Ctrl + T","Ctrl + W","Alt + Tab"], answer: 1, explanation: "Ctrl + T (Tab) abre uma nova aba. Ctrl + N abre uma nova janela." },
-                 { subject: "Informática", question: "Uma impressora multifuncional é classificada como periférico de:", options: ["Apenas Entrada","Apenas Saída","Entrada e Saída","Apenas Armazenamento"], answer: 2, explanation: "É de Entrada (scanner) e Saída (impressora)." },
-                 { subject: "Informática", question: "O que significa a sigla 'HTTP'?", options: ["High Transfer Text Protocol","Hypertext Transfer Protocol","Home Transfer Task Protocol","Hyperlink Text Translation Protocol"], answer: 1, explanation: "HTTP significa Hypertext Transfer Protocol (Protocolo de Transferência de Hipertexto)." },
-                 { subject: "Conhecimentos Específicos", question: "Um ato administrativo que concede uma licença a um servidor, após este cumprir todos os requisitos legais, é classificado como um ato:", options: ["Discricionário", "Vinculado", "Normativo", "Enunciativo"], answer: 1, explanation: "É um ato vinculado, pois a administração é obrigada a concedê-lo se os requisitos forem cumpridos." },
-                 { subject: "Conhecimentos Específicos", question: "O ciclo de vida dos documentos em arquivologia é dividido nas fases:", options: ["Criação, Uso e Descarte", "Rascunho, Oficial e Histórico", "Corrente, Intermediária e Permanente", "Ativo, Passivo e Inativo"], answer: 2, explanation: "A teoria das três idades: Corrente, Intermediária e Permanente." },
-                 { subject: "Conhecimentos Específicos", question: "Um ato administrativo, emitido por autoridade, com uma decisão ou encaminhamento sobre um processo, é denominado:", options: ["Portaria", "Circular", "Apostila", "Despacho"], answer: 3, explanation: "O despacho dá andamento ou decide sobre um processo/requerimento." },
-                 { subject: "Conhecimentos Específicos", question: "Qual documento é a comunicação entre unidades administrativas de um mesmo órgão?", options: ["Ofício", "Exposição de Motivos", "Memorando", "Aviso"], answer: 2, explanation: "O memorando é a comunicação interna por excelência." },
-                 { subject: "Conhecimentos Específicos", question: "A juntada definitiva de um processo a outro por terem o mesmo objeto é chamada de:", options: ["Apensação", "Desmembramento", "Anexação", "Autuação"], answer: 2, explanation: "Anexação é a união permanente. Apensação é temporária." },
-                 { subject: "Conhecimentos Específicos", question: "O atributo que permite à Administração executar seus atos diretamente, sem o Judiciário, é a:", options: ["Presunção de Legitimidade", "Imperatividade", "Tipicidade", "Autoexecutoriedade"], answer: 3, explanation: "A autoexecutoriedade é a capacidade de executar as próprias decisões." },
-                 { subject: "Conhecimentos Específicos", question: "O instrumento arquivístico que determina o tempo de guarda e a destinação de um documento é a:", options: ["Plano de Classificação", "Tabela de Temporalidade", "Inventário Documental", "Índice de Assuntos"], answer: 1, explanation: "A Tabela de Temporalidade define prazos de guarda e destinação final." },
-                 { subject: "Conhecimentos Específicos", question: "O ato que dá início a um processo administrativo, com capa e numeração, é chamado de:", options: ["Protocolo", "Distribuição", "Autuação", "Tramitação"], answer: 2, explanation: "Autuação é o ato de formar o processo." },
-                 { subject: "Conhecimentos Específicos", question: "A extinção de um ato administrativo por conveniência e oportunidade é feita por:", options: ["Anulação", "Revogação", "Cassação", "Caducidade"], answer: 1, explanation: "A revogação extingue um ato válido por não ser mais oportuno. A anulação ocorre por ilegalidade." },
-                 { subject: "Conhecimentos Específicos", question: "O método de gestão de materiais que classifica itens em categorias (A, B, C) por valor de demanda é:", options: ["Curva ABC", "Estoque Mínimo", "Just-in-Time", "Custo Padrão"], answer: 0, explanation: "A Curva ABC prioriza itens com base no valor de demanda." },
-                 { subject: "Conhecimentos Específicos", question: "O poder da Administração de apurar infrações e aplicar penalidades aos seus servidores é o poder:", options: ["Hierárquico", "Regulamentar", "De Polícia", "Disciplinar"], answer: 3, explanation: "O Poder Disciplinar permite à Administração punir internamente seus agentes." },
-                 { subject: "Conhecimentos Específicos", question: "Qual princípio arquivístico diz que documentos de uma fonte não devem ser misturados com os de outra?", options: ["Princípio da Unicidade", "Princípio da Proveniência", "Princípio da Cumulatividade", "Princípio da Ordem Original"], answer: 1, explanation: "O Princípio da Proveniência (ou respeito aos fundos) é a base da arquivologia." },
-                 { subject: "Conhecimentos Específicos", question: "A conferência que compara o material recebido com a nota fiscal e o pedido de compra é a:", options: ["Qualitativa", "Intrínseca", "Quantitativa", "Logística"], answer: 2, explanation: "A conferência quantitativa verifica se as quantidades estão corretas." },
-                 { subject: "Conhecimentos Específicos", question: "A Lei Orgânica do Município é considerada a:", options: ["Principal lei tributária do município.", "Lei que organiza apenas o Poder Executivo.", "Constituição do Município, definindo sua estrutura e funcionamento.", "Norma que regula as eleições municipais."], answer: 2, explanation: "A Lei Orgânica é a 'Constituição Municipal', sua lei mais importante." },
-                 { subject: "Conhecimentos Específicos", question: "O registro cronológico de recebimento e expedição de documentos é função do serviço de:", options: ["Arquivo", "Protocolo", "Almoxarifado", "Comunicação Social"], answer: 1, explanation: "O protocolo controla o fluxo de entrada e saída de documentos." },
-                 { subject: "Conhecimentos Específicos", question: "Qual das seguintes opções é uma forma de provimento de cargo público efetivo?", options: ["Exoneração", "Demissão", "Readaptação", "Nomeação"], answer: 3, explanation: "Nomeação é a forma originária de provimento. As outras são vacância ou provimento derivado." },
-                 { subject: "Conhecimentos Específicos", question: "Diferentemente de uma biblioteca, um arquivo é composto por:", options: ["Documentos de valor artístico.", "Documentos produzidos/recebidos por uma instituição em suas atividades.", "Livros e periódicos para consulta.", "Coleções de objetos raros."], answer: 1, explanation: "Um documento de arquivo tem natureza orgânica, sendo resultado das atividades de uma instituição." },
-                 { subject: "Conhecimentos Específicos", question: "Um documento que contém um pronunciamento de um órgão colegiado sobre um assunto é um(a):", options: ["Ata", "Relatório", "Parecer", "Requerimento"], answer: 2, explanation: "O parecer é a manifestação técnica ou administrativa para subsidiar uma decisão." },
-                 { subject: "Conhecimentos Específicos", question: "O ato de eliminar documentos que já cumpriram seus prazos de guarda é chamado de:", options: ["Recolhimento", "Transferência", "Descarte", "Alienação"], answer: 2, explanation: "O descarte é a destruição formal de documentos sem valor permanente." },
-                 { subject: "Conhecimentos Específicos", question: "Os poderes Executivo e Legislativo do município são exercidos por:", options: ["Câmara Municipal e Prefeito.", "Prefeito e Secretários.", "Prefeito e Câmara Municipal.", "Juiz de Direito e Promotor de Justiça."], answer: 2, explanation: "Executivo é o Prefeito; Legislativo é a Câmara Municipal." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "Qual atividade agrícola foi a base da economia de Arapiraca, rendendo-lhe o apelido de 'Capital Brasileira do Fumo'?", options: ["Cultura do algodão", "Cultura da cana-de-açúcar", "Cultura do fumo", "Cultura do milho"], answer: 2, explanation: "A cultura do fumo foi o motor do desenvolvimento de Arapiraca no século XX." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "A cidade de Arapiraca está localizada em qual mesorregião de Alagoas?", options: ["Leste Alagoano", "Sertão Alagoano", "Agreste Alagoano", "Zona da Mata Alagoana"], answer: 2, explanation: "Arapiraca é a cidade-polo do Agreste Alagoano." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a Lei Orgânica de Arapiraca, o Poder Legislativo é exercido:", options: ["Pelo Prefeito e seus Secretários.", "Pela Câmara Municipal.", "Pelos Juízes de Direito da comarca.", "Pelo Conselho Municipal de Educação."], answer: 1, explanation: "A função legislativa municipal é da Câmara Municipal." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "Além da bandeira e do hino, qual é o outro símbolo oficial de Arapiraca?", options: ["A árvore Arapiraca", "O Mercado do Artesanato", "O Brasão de Armas", "O Bosque das Arapiracas"], answer: 2, explanation: "Os símbolos oficiais são a bandeira, o hino e o brasão." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "Atualmente, a economia de Arapiraca é fortemente marcada pelo dinamismo de qual setor?", options: ["Indústria pesada", "Extrativismo mineral", "Comércio e Serviços", "Agropecuária de larga escala"], answer: 2, explanation: "Arapiraca consolidou-se como um grande polo regional de comércio e serviços." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a tradição e a ciência, o nome 'Arapiraca' refere-se a:", options: ["Um rio de águas claras.", "Um líder indígena da região.", "Uma árvore da família das Leguminosas Mimosáceas (Angico Branco).", "Uma formação rochosa."], answer: 2, explanation: "O nome 'Arapiraca' vem de uma árvore de angico branco, sob a qual o fundador Manoel André descansou. A tradição popular diz que significa 'ramo que arara visita'." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "Qual foi o motivo principal que levou Manoel André Correia dos Santos a se estabelecer na região que viria a ser Arapiraca em 1848?", options: ["Ele estava fugindo da convocação para a Guerra do Paraguai.", "Ele foi enviado por seu sogro, Capitão Amaro da Silva Valente, para ocupar terras após um incidente familiar.", "Ele estava em uma expedição em busca de ouro.", "Ele foi nomeado administrador da região pelo governo provincial."], answer: 1, explanation: "O sogro de Manoel André, Capitão Amaro da Silva Valente, o enviou para ocupar as terras de Alto do Espigão do Simão de Cangandu devido a um sério incidente com seu cunhado." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "Qual foi a primeira construção de referência erguida por Manoel André no local que se tornaria o centro de Arapiraca?", options: ["A sede de uma grande fazenda de gado.", "Uma casa de farinha.", "Uma cabana de madeira coberta com cascas de angico, à sombra da árvore Arapiraca.", "Uma fortaleza para defesa contra ataques."], answer: 2, explanation: "Antes mesmo da primeira casa, Manoel André construiu uma cabana provisória sob a árvore Arapiraca, que se tornou o marco inicial do povoado." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "Além de Manoel André, qual outro genro do Capitão Amaro da Silva Valente foi um dos primeiros povoadores, ocupando a parte sul da propriedade?", options: ["Manoel Cupertino de Albuquerque", "José Veríssimo dos Santos", "Domingos Nunes Barbosa", "Pedro Cavalcante de Albuquerque"], answer: 1, explanation: "O texto informa que em 1858, o Capitão Amaro enviou outro genro, José Veríssimo dos Santos, para ocupar a parte sul da propriedade, denominada Cacimbas." },
-                 { subject: "Conhecimentos Gerais sobre o Município", question: "A formação do povoado de Arapiraca foi marcada por um forte entrelaçamento familiar. Quem era o sogro em comum dos pioneiros Manoel André e José Veríssimo?", options: ["José Ferreira de Macedo", "Manoel Cupertino de Albuquerque", "Capitão Amaro da Silva Valente Macedo", "Bernardino José dos Santos"], answer: 2, explanation: "O texto deixa claro que tanto Manoel André quanto José Veríssimo eram genros do Capitão Amaro da Silva Valente Macedo, que foi o proprietário original das terras e orquestrou a ocupação inicial." }
+                { subject: "Português", question: "Assinale a alternativa em que o uso do acento grave indicativo da crase está CORRETO:", options: ["O pesquisador se dedicou à uma nova teoria.","Eles foram para a praia às pressas.","O documento foi entregue à ele.","As aulas começarão à partir de amanhã."], answer: 1, explanation: "A crase é usada corretamente em 'às pressas', uma locução adverbial feminina." },
+                { subject: "Português", question: "A pontuação está empregada corretamente em:", options: ["O menino, que era muito curioso, abriu a caixa.","O menino que era muito curioso abriu a caixa.","O menino, que era muito curioso abriu a caixa.","O menino que era muito curioso, abriu a caixa."], answer: 0, explanation: "A oração 'que era muito curioso' é uma oração subordinada adjetiva explicativa, devendo ser isolada por vírgulas." },
+                { subject: "Português", question: "Qual das frases abaixo apresenta concordância verbal INCORRETA?", options: ["Fazem cinco anos que não o vejo.","Havia muitos problemas a serem resolvidos.","A maioria dos alunos passou no teste.","Um bando de pássaros sobrevoou a cidade."], answer: 0, explanation: "O verbo 'fazer', indicando tempo, é impessoal. O correto é: 'Faz cinco anos'." },
+                { subject: "Português", question: "Na frase 'Tenho aversão ___ mentiras', a regência nominal do substantivo 'aversão' exige a preposição:", options: ["de","com","a","por"], answer: 2, explanation: "Quem tem aversão, tem aversão 'a' algo. Portanto, 'Tenho aversão a mentiras'." },
+                { subject: "Português", question: "A colocação do pronome oblíquo átono está INCORRETA em:", options: ["Não me diga tal coisa.","Me empresta o livro, por favor?","O assunto que se discute é complexo.","Far-lhe-ei uma visita amanhã."], answer: 1, explanation: "Não se deve iniciar frase com pronome oblíquo átono na norma culta. Correto: 'Empresta-me o livro'." },
+                { subject: "Português", question: "Assinale a alternativa em que todas as palavras estão grafadas corretamente.", options: ["Exceção, ascenção, privilégio.","Paralizar, analisar, pesquisar.","Ansiedade, espontâneo, impecilho.","Pretenção, obsessão, muçulmano."], answer: 2, explanation: "Os erros são: (A) 'ascensão'; (B) 'paralisar'; (D) 'pretensão'." },
+                { subject: "Português", question: "Na frase 'Aquele político é uma raposa', encontramos qual figura de linguagem?", options: ["Metonímia","Hipérbole","Comparação","Metáfora"], answer: 3, explanation: "É uma metáfora, uma comparação implícita." },
+                { subject: "Português", question: "Em 'O saber é o bem mais valioso', a palavra 'saber' é classificada morfologicamente como:", options: ["Verbo","Adjetivo","Substantivo","Advérbio"], answer: 2, explanation: "'Saber' é um verbo substantivado pelo artigo 'O'." },
+                { subject: "Português", question: "Na oração 'Precisa-se de funcionários competentes', o sujeito é:", options: ["Oculto","Indeterminado","Inexistente","Simples (funcionários competentes)"], answer: 1, explanation: "Verbo transitivo indireto + 'se' = sujeito indeterminado." },
+                { subject: "Português", question: "Todas as palavras são acentuadas pela mesma regra em:", options: ["pálido, lâmpada, trânsito","saúde, baú, egoísta","herói, chapéu, anéis","táxi, júri, bônus"], answer: 0, explanation: "Na alternativa A, todas são proparoxítonas." },
+                { subject: "Ética", question: "Segundo a CF/88, a administração pública obedecerá aos princípios de:", options: ["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência.","Legalidade, Pessoalidade, Moralidade, Sigilo e Eficácia.","Soberania, Cidadania, Dignidade da pessoa humana, e Valores sociais.","Probidade, Honestidade, Decoro, Zelo e Lealdade."], answer: 0, explanation: "É o mnemônico LIMPE, do Art. 37 da Constituição Federal." },
+                { subject: "Ética", question: "Constitui ato de improbidade administrativa que importa enriquecimento ilícito:", options: ["Negar publicidade aos atos oficiais.","Frustrar a licitude de concurso público.","Receber vantagem econômica indevida para tolerar a exploração de jogo de azar.","Deixar de prestar contas quando obrigado."], answer: 2, explanation: "Receber vantagem indevida é o núcleo do enriquecimento ilícito (Art. 9º da Lei de Improbidade)." },
+                { subject: "Ética", question: "Conforme a Lei de Acesso à Informação, o prazo para o órgão fornecer a informação é de até:", options: ["10 dias, prorrogável por igual período.","15 dias, improrrogáveis.","20 dias, prorrogável por mais 10 dias.","30 dias, improrrogáveis."], answer: 2, explanation: "O prazo é de 20 dias, prorrogável por mais 10, conforme Art. 11 da LAI." },
+                { subject: "Ética", question: "Qual dos itens abaixo representa um dever fundamental do servidor público?", options: ["Recusar fé a documentos públicos.","Exercer com zelo e dedicação as atribuições do cargo.","Opor resistência injustificada ao andamento de processo.","Promover manifestação de apreço no recinto da repartição."], answer: 1, explanation: "Zelo e dedicação são deveres essenciais ligados ao princípio da eficiência." },
+                { subject: "Ética", question: "A diferença fundamental entre Ética e Moral é que:", options: ["Ética é a prática, Moral é a teoria.","Moral refere-se aos costumes, enquanto Ética é a reflexão filosófica sobre esses costumes.","Não há diferença, os termos são sinônimos.","Moral é universal, enquanto a Ética é cultural."], answer: 1, explanation: "Moral é o conjunto de regras de um grupo; Ética é a reflexão sobre essas regras." },
+                { subject: "Ética", question: "O princípio que impõe ao servidor realizar suas atribuições com presteza e perfeição é o da:", options: ["Moralidade","Publicidade","Legalidade","Eficiência"], answer: 3, explanation: "Eficiência busca os melhores resultados com os menores custos, incluindo presteza e perfeição." },
+                { subject: "Ética", question: "A conduta de tratar os colegas e o público com cortesia e respeito é mais associada ao princípio da:", options: ["Produtividade","Assiduidade","Urbanidade","Lealdade"], answer: 2, explanation: "Urbanidade é o dever de civilidade e cortesia no trato com as pessoas." },
+                { subject: "Ética", question: "A lealdade do servidor à instituição que serve visa, principalmente:", options: ["Proteger seus superiores hierárquicos.","Garantir os objetivos da instituição, alinhados ao interesse público.","Evitar a fiscalização externa.","Obter vantagens pessoais."], answer: 1, explanation: "A lealdade é para com a instituição e o interesse público, não para com indivíduos." },
+                { subject: "Ética", question: "A probidade administrativa está diretamente ligada ao dever de:", options: ["Agir sempre com honestidade e integridade no trato da coisa pública.","Apenas cumprir os prazos e horários.","Divulgar todos os atos administrativos, sem exceção.","Obedecer a ordens manifestamente ilegais."], answer: 0, explanation: "Probidade é sinônimo de honestidade e retidão na gestão pública." },
+                { subject: "Ética", question: "Atenta contra os princípios da administração pública a conduta de:", options: ["Adquirir bens com valor desproporcional ao seu patrimônio.","Facilitar aquisição de bem por preço superior ao de mercado.","Receber vantagem para omitir ato de ofício.","Revelar fato sigiloso de que tem ciência em razão das atribuições."], answer: 3, explanation: "Revelar fato sigiloso viola os princípios da administração (Art. 11 da Lei de Improbidade)." },
+                { subject: "Informática", question: "Qual componente de hardware é o 'cérebro' do computador?", options: ["Memória RAM","Disco Rígido (HD/SSD)","CPU (Unidade Central de Processamento)","Placa de Vídeo"], answer: 2, explanation: "A CPU (Unidade Central de Processamento) é responsável por executar a maioria das instruções." },
+                { subject: "Informática", question: "Qual das seguintes opções NÃO é um sistema operacional?", options: ["Windows 10","Linux Ubuntu","Microsoft Word","Android"], answer: 2, explanation: "Microsoft Word é um software aplicativo (processador de texto)." },
+                { subject: "Informática", question: "Em segurança da informação, qual é a principal função de um firewall?", options: ["Remover vírus de arquivos infectados.","Criar cópias de segurança dos dados.","Filtrar o tráfego de rede, com base em regras de segurança.","Criptografar e-mails para garantir o sigilo."], answer: 2, explanation: "Um firewall atua como uma barreira controlando o tráfego de rede." },
+                { subject: "Informática", question: "No Excel ou Calc, qual fórmula calcula a soma do intervalo de A1 a A10?", options: ["=SOMA(A1:A10)","=TOTAL(A1-A10)","=ADICIONAR(A1..A10)","=S(A1+A10)"], answer: 0, explanation: "A função padrão é SOMA(célula_inicial:célula_final)." },
+                { subject: "Informática", question: "A principal diferença entre Internet e Intranet é:", options: ["A Intranet é mais rápida.","São a mesma tecnologia.","Internet usa cabos e Intranet usa sem fio.","A Internet é pública e global, a Intranet é privada e restrita."], answer: 3, explanation: "A Intranet é uma rede corporativa privada que usa a tecnologia da Internet." },
+                { subject: "Informática", question: "A LGPD (Lei Geral de Proteção de Dados) tem como principal objetivo:", options: ["Regular o comércio eletrônico.","Punir crimes cibernéticos.","Proteger os direitos de liberdade e de privacidade da pessoa natural.","Definir regras para redes sociais."], answer: 2, explanation: "O foco da LGPD é a proteção de dados pessoais e a privacidade." },
+                { subject: "Informática", question: "Qual aplicativo do LibreOffice é o equivalente ao Microsoft PowerPoint?", options: ["Writer","Calc","Impress","Draw"], answer: 2, explanation: "Impress é o software de apresentações do pacote LibreOffice." },
+                { subject: "Informática", question: "Qual atalho de teclado abre uma nova aba em navegadores?", options: ["Ctrl + N","Ctrl + T","Ctrl + W","Alt + Tab"], answer: 1, explanation: "Ctrl + T (Tab) abre uma nova aba. Ctrl + N abre uma nova janela." },
+                { subject: "Informática", question: "Uma impressora multifuncional é classificada como periférico de:", options: ["Apenas Entrada","Apenas Saída","Entrada e Saída","Apenas Armazenamento"], answer: 2, explanation: "É de Entrada (scanner) e Saída (impressora)." },
+                { subject: "Informática", question: "O que significa a sigla 'HTTP'?", options: ["High Transfer Text Protocol","Hypertext Transfer Protocol","Home Transfer Task Protocol","Hyperlink Text Translation Protocol"], answer: 1, explanation: "HTTP significa Hypertext Transfer Protocol (Protocolo de Transferência de Hipertexto)." },
+                { subject: "Conhecimentos Específicos", question: "Um ato administrativo que concede uma licença a um servidor, após este cumprir todos os requisitos legais, é classificado como um ato:", options: ["Discricionário", "Vinculado", "Normativo", "Enunciativo"], answer: 1, explanation: "É um ato vinculado, pois a administração é obrigada a concedê-lo se os requisitos forem cumpridos." },
+                { subject: "Conhecimentos Específicos", question: "O ciclo de vida dos documentos em arquivologia é dividido nas fases:", options: ["Criação, Uso e Descarte", "Rascunho, Oficial e Histórico", "Corrente, Intermediária e Permanente", "Ativo, Passivo e Inativo"], answer: 2, explanation: "A teoria das três idades: Corrente, Intermediária e Permanente." },
+                { subject: "Conhecimentos Específicos", question: "Um ato administrativo, emitido por autoridade, com uma decisão ou encaminhamento sobre um processo, é denominado:", options: ["Portaria", "Circular", "Apostila", "Despacho"], answer: 3, explanation: "O despacho dá andamento ou decide sobre um processo/requerimento." },
+                { subject: "Conhecimentos Específicos", question: "Qual documento é a comunicação entre unidades administrativas de um mesmo órgão?", options: ["Ofício", "Exposição de Motivos", "Memorando", "Aviso"], answer: 2, explanation: "O memorando é a comunicação interna por excelência." },
+                { subject: "Conhecimentos Específicos", question: "A juntada definitiva de um processo a outro por terem o mesmo objeto é chamada de:", options: ["Apensação", "Desmembramento", "Anexação", "Autuação"], answer: 2, explanation: "Anexação é a união permanente. Apensação é temporária." },
+                { subject: "Conhecimentos Específicos", question: "O atributo que permite à Administração executar seus atos diretamente, sem o Judiciário, é a:", options: ["Presunção de Legitimidade", "Imperatividade", "Tipicidade", "Autoexecutoriedade"], answer: 3, explanation: "A autoexecutoriedade é a capacidade de executar as próprias decisões." },
+                { subject: "Conhecimentos Específicos", question: "O instrumento arquivístico que determina o tempo de guarda e a destinação de um documento é a:", options: ["Plano de Classificação", "Tabela de Temporalidade", "Inventário Documental", "Índice de Assuntos"], answer: 1, explanation: "A Tabela de Temporalidade define prazos de guarda e destinação final." },
+                { subject: "Conhecimentos Específicos", question: "O ato que dá início a um processo administrativo, com capa e numeração, é chamado de:", options: ["Protocolo", "Distribuição", "Autuação", "Tramitação"], answer: 2, explanation: "Autuação é o ato de formar o processo." },
+                { subject: "Conhecimentos Específicos", question: "A extinção de um ato administrativo por conveniência e oportunidade é feita por:", options: ["Anulação", "Revogação", "Cassação", "Caducidade"], answer: 1, explanation: "A revogação extingue um ato válido por não ser mais oportuno. A anulação ocorre por ilegalidade." },
+                { subject: "Conhecimentos Específicos", question: "O método de gestão de materiais que classifica itens em categorias (A, B, C) por valor de demanda é:", options: ["Curva ABC", "Estoque Mínimo", "Just-in-Time", "Custo Padrão"], answer: 0, explanation: "A Curva ABC prioriza itens com base no valor de demanda." },
+                { subject: "Conhecimentos Específicos", question: "O poder da Administração de apurar infrações e aplicar penalidades aos seus servidores é o poder:", options: ["Hierárquico", "Regulamentar", "De Polícia", "Disciplinar"], answer: 3, explanation: "O Poder Disciplinar permite à Administração punir internamente seus agentes." },
+                { subject: "Conhecimentos Específicos", question: "Qual princípio arquivístico diz que documentos de uma fonte não devem ser misturados com os de outra?", options: ["Princípio da Unicidade", "Princípio da Proveniência", "Princípio da Cumulatividade", "Princípio da Ordem Original"], answer: 1, explanation: "O Princípio da Proveniência (ou respeito aos fundos) é a base da arquivologia." },
+                { subject: "Conhecimentos Específicos", question: "A conferência que compara o material recebido com a nota fiscal e o pedido de compra é a:", options: ["Qualitativa", "Intrínseca", "Quantitativa", "Logística"], answer: 2, explanation: "A conferência quantitativa verifica se as quantidades estão corretas." },
+                { subject: "Conhecimentos Específicos", question: "A Lei Orgânica do Município é considerada a:", options: ["Principal lei tributária do município.", "Lei que organiza apenas o Poder Executivo.", "Constituição do Município, definindo sua estrutura e funcionamento.", "Norma que regula as eleições municipais."], answer: 2, explanation: "A Lei Orgânica é a 'Constituição Municipal', sua lei mais importante." },
+                { subject: "Conhecimentos Específicos", question: "O registro cronológico de recebimento e expedição de documentos é função do serviço de:", options: ["Arquivo", "Protocolo", "Almoxarifado", "Comunicação Social"], answer: 1, explanation: "O protocolo controla o fluxo de entrada e saída de documentos." },
+                { subject: "Conhecimentos Específicos", question: "Qual das seguintes opções é uma forma de provimento de cargo público efetivo?", options: ["Exoneração", "Demissão", "Readaptação", "Nomeação"], answer: 3, explanation: "Nomeação é a forma originária de provimento. As outras são vacância ou provimento derivado." },
+                { subject: "Conhecimentos Específicos", question: "Diferentemente de uma biblioteca, um arquivo é composto por:", options: ["Documentos de valor artístico.", "Documentos produzidos/recebidos por uma instituição em suas atividades.", "Livros e periódicos para consulta.", "Coleções de objetos raros."], answer: 1, explanation: "Um documento de arquivo tem natureza orgânica, sendo resultado das atividades de uma instituição." },
+                { subject: "Conhecimentos Específicos", question: "Um documento que contém um pronunciamento de um órgão colegiado sobre um assunto é um(a):", options: ["Ata", "Relatório", "Parecer", "Requerimento"], answer: 2, explanation: "O parecer é a manifestação técnica ou administrativa para subsidiar uma decisão." },
+                { subject: "Conhecimentos Específicos", question: "O ato de eliminar documentos que já cumpriram seus prazos de guarda é chamado de:", options: ["Recolhimento", "Transferência", "Descarte", "Alienação"], answer: 2, explanation: "O descarte é a destruição formal de documentos sem valor permanente." },
+                { subject: "Conhecimentos Específicos", question: "Os poderes Executivo e Legislativo do município são exercidos por:", options: ["Câmara Municipal e Prefeito.", "Prefeito e Secretários.", "Prefeito e Câmara Municipal.", "Juiz de Direito e Promotor de Justiça."], answer: 2, explanation: "Executivo é o Prefeito; Legislativo é a Câmara Municipal." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual atividade agrícola foi a base da economia de Arapiraca, rendendo-lhe o apelido de 'Capital Brasileira do Fumo'?", options: ["Cultura do algodão", "Cultura da cana-de-açúcar", "Cultura do fumo", "Cultura do milho"], answer: 2, explanation: "A cultura do fumo foi o motor do desenvolvimento de Arapiraca no século XX." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "A cidade de Arapiraca está localizada em qual mesorregião de Alagoas?", options: ["Leste Alagoano", "Sertão Alagoano", "Agreste Alagoano", "Zona da Mata Alagoana"], answer: 2, explanation: "Arapiraca é a cidade-polo do Agreste Alagoano." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a Lei Orgânica de Arapiraca, o Poder Legislativo é exercido:", options: ["Pelo Prefeito e seus Secretários.", "Pela Câmara Municipal.", "Pelos Juízes de Direito da comarca.", "Pelo Conselho Municipal de Educação."], answer: 1, explanation: "A função legislativa municipal é da Câmara Municipal." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Além da bandeira e do hino, qual é o outro símbolo oficial de Arapiraca?", options: ["A árvore Arapiraca", "O Mercado do Artesanato", "O Brasão de Armas", "O Bosque das Arapiracas"], answer: 2, explanation: "Os símbolos oficiais são a bandeira, o hino e o brasão." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Atualmente, a economia de Arapiraca é fortemente marcada pelo dinamismo de qual setor?", options: ["Indústria pesada", "Extrativismo mineral", "Comércio e Serviços", "Agropecuária de larga escala"], answer: 2, explanation: "Arapiraca consolidou-se como um grande polo regional de comércio e serviços." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a tradição e a ciência, o nome 'Arapiraca' refere-se a:", options: ["Um rio de águas claras.", "Um líder indígena da região.", "Uma árvore da família das Leguminosas Mimosáceas (Angico Branco).", "Uma formação rochosa."], answer: 2, explanation: "O nome 'Arapiraca' vem de uma árvore de angico branco, sob a qual o fundador Manoel André descansou. A tradição popular diz que significa 'ramo que arara visita'." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual foi o motivo principal que levou Manoel André Correia dos Santos a se estabelecer na região que viria a ser Arapiraca em 1848?", options: ["Ele estava fugindo da convocação para a Guerra do Paraguai.", "Ele foi enviado por seu sogro, Capitão Amaro da Silva Valente, para ocupar terras após um incidente familiar.", "Ele estava em uma expedição em busca de ouro.", "Ele foi nomeado administrador da região pelo governo provincial."], answer: 1, explanation: "O sogro de Manoel André, Capitão Amaro da Silva Valente, o enviou para ocupar as terras de Alto do Espigão do Simão de Cangandu devido a um sério incidente com seu cunhado." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual foi a primeira construção de referência erguida por Manoel André no local que se tornaria o centro de Arapiraca?", options: ["A sede de uma grande fazenda de gado.", "Uma casa de farinha.", "Uma cabana de madeira coberta com cascas de angico, à sombra da árvore Arapiraca.", "Uma fortaleza para defesa contra ataques."], answer: 2, explanation: "Antes mesmo da primeira casa, Manoel André construiu uma cabana provisória sob a árvore Arapiraca, que se tornou o marco inicial do povoado." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "Além de Manoel André, qual outro genro do Capitão Amaro da Silva Valente foi um dos primeiros povoadores, ocupando a parte sul da propriedade?", options: ["Manoel Cupertino de Albuquerque", "José Veríssimo dos Santos", "Domingos Nunes Barbosa", "Pedro Cavalcante de Albuquerque"], answer: 1, explanation: "O texto informa que em 1858, o Capitão Amaro enviou outro genro, José Veríssimo dos Santos, para ocupar a parte sul da propriedade, denominada Cacimbas." },
+                { subject: "Conhecimentos Gerais sobre o Município", question: "A formação do povoado de Arapiraca foi marcada por um forte entrelaçamento familiar. Quem era o sogro em comum dos pioneiros Manoel André e José Veríssimo?", options: ["José Ferreira de Macedo", "Manoel Cupertino de Albuquerque", "Capitão Amaro da Silva Valente Macedo", "Bernardino José dos Santos"], answer: 2, explanation: "O texto deixa claro que tanto Manoel André quanto José Veríssimo eram genros do Capitão Amaro da Silva Valente Macedo, que foi o proprietário original das terras e orquestrou a ocupação inicial." }
             ],
             '2': [
                 { subject: "Português", question: "A palavra 'história' é acentuada por ser uma:", options: ["Oxítona terminada em 'a'.", "Proparoxítona.", "Paroxítona terminada em ditongo.", "Monossílaba tônica."], answer: 2, explanation: "Acentuam-se as paroxítonas terminadas em ditongo crescente, como 'his-tó-ria'." },
@@ -588,41 +636,80 @@
         const clearHistoryBtn = document.getElementById('clear-history-btn');
         
         document.querySelectorAll('.bank-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', async () => {
                 const bankId = button.dataset.bank;
                 activeBank = questionBanks[bankId];
-                populateSubjectButtons(activeBank);
+                await populateSubjectButtons(activeBank);
                 showScreen(selectionScreen);
             });
         });
 
-        function populateSubjectButtons(bank) {
+        async function populateSubjectButtons(bank) {
             const subjects = [...new Set(bank.map(q => q.subject))].sort();
+            subjectButtonsContainer.innerHTML = '<div class="spinner mx-auto col-span-1 md:col-span-2"></div>';
+
+            const answeredIds = await getAnsweredQuestionIds(); // Pega as questões já respondidas
+
+            const subjectStats = subjects.map(subject => {
+                const total = bank.filter(q => q.subject === subject).length;
+                const answered = bank.filter(q => q.subject === subject && answeredIds.has(getQuestionId(q.question))).length;
+                return { subject, total, answered };
+            });
+
+            const totalAll = bank.length;
+            const answeredAll = bank.filter(q => answeredIds.has(getQuestionId(q.question))).length;
+
             subjectButtonsContainer.innerHTML = '';
-            subjects.forEach(subject => {
+            
+            subjectStats.forEach(({ subject, total, answered }) => {
                 const button = document.createElement('button');
-                button.className = 'subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600';
+                button.className = 'subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex justify-between items-center';
                 button.dataset.subject = subject;
-                button.textContent = subject;
+                button.innerHTML = `
+                    <span>${subject}</span>
+                    <span class="text-xs font-medium ${answered === total ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-600'} px-2 py-1 rounded-full">${answered} / ${total}</span>
+                `;
                 subjectButtonsContainer.appendChild(button);
             });
+
             const allButton = document.createElement('button');
-            allButton.className = 'subject-btn w-full text-left p-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 col-span-1 md:col-span-2';
+            allButton.className = 'subject-btn w-full text-left p-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 col-span-1 md:col-span-2 flex justify-between items-center';
             allButton.dataset.subject = 'all';
-            allButton.textContent = '▶ Iniciar Simulado Completo';
+            allButton.innerHTML = `
+                <span>▶ Iniciar Simulado Completo</span>
+                <span class="text-xs font-medium ${answeredAll === totalAll ? 'bg-green-200 text-green-800' : 'bg-blue-500 text-white'} px-2 py-1 rounded-full">${answeredAll} / ${totalAll}</span>
+            `;
             subjectButtonsContainer.appendChild(allButton);
         }
 
-        subjectButtonsContainer.addEventListener('click', (event) => {
+
+        subjectButtonsContainer.addEventListener('click', async (event) => {
             const button = event.target.closest('.subject-btn');
             if (!button) return;
+            
+            button.innerHTML = '<div class="spinner mx-auto border-left-color-white"></div>'; // Feedback visual
 
             const subject = button.dataset.subject;
-            currentQuestions = (subject === 'all') ? [...activeBank] : activeBank.filter(q => q.subject === subject);
+            const allQuestionsForSubject = (subject === 'all') ? [...activeBank] : activeBank.filter(q => q.subject === subject);
+            
+            const answeredIds = await getAnsweredQuestionIds();
+            
+            const availableQuestions = allQuestionsForSubject.filter(q => !answeredIds.has(getQuestionId(q.question)));
+
+            if (availableQuestions.length === 0) {
+                showConfirmationModal('Você já respondeu todas as questões desta matéria! Deseja resetar seu progresso e começar de novo?', () => {
+                    clearProgress(); // Reseta e depois pode tentar de novo
+                });
+                await populateSubjectButtons(activeBank); // Restaura o botão
+                return;
+            }
+
+            currentQuestions = availableQuestions;
             
             showScreen(quizContainer);
             startQuiz();
         });
+
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -638,8 +725,10 @@
             quizHeader.classList.remove('hidden');
             quizBody.classList.remove('hidden');
             quizFooter.classList.remove('hidden');
+            resultsContainer.classList.add('hidden'); // Garante que a tela de resultado está oculta
             loadQuestion();
         }
+
 
         function loadQuestion() {
             selectedOptionIndex = null;
@@ -692,6 +781,7 @@
                 feedbackResult.textContent = '✅ Resposta Correta!';
                 feedbackResult.className = 'text-lg font-bold mb-2 text-green-600';
                 optionButtons[selectedOptionIndex].classList.add('correct');
+                await saveAnsweredQuestion(currentQuestionData); // NOVO: Salva progresso se acertar
             } else {
                 feedbackResult.textContent = '❌ Resposta Incorreta!';
                 feedbackResult.className = 'text-lg font-bold mb-2 text-red-600';
@@ -710,12 +800,16 @@
             if (currentQuestionIndex < currentQuestions.length) {
                 loadQuestion();
             } else {
-                showScreen(resultsContainer);
                 showResults();
             }
         }
 
         function showResults() {
+            quizHeader.classList.add('hidden');
+            quizBody.classList.add('hidden');
+            quizFooter.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+
             const percentage = (score / currentQuestions.length) * 100;
             document.getElementById('score-correct').textContent = score;
             document.getElementById('score-total').textContent = currentQuestions.length;
@@ -731,9 +825,8 @@
         nextBtn.addEventListener('click', nextQuestion);
         restartBtn.addEventListener('click', startQuiz);
         
-        // --- LÓGICA DO FIRESTORE (HISTÓRICO DE ERROS) ---
+        // --- LÓGICA DO FIRESTORE ---
         function getQuestionId(questionText) {
-            // Cria um ID "limpo" para o documento no Firestore
             return questionText.replace(/[^a-zA-Z0-9]/g, '').slice(0, 100);
         }
 
@@ -745,9 +838,38 @@
                 const docRef = doc(db, 'users', user.uid, 'incorrectQuestions', questionId);
                 await setDoc(docRef, questionData);
             } catch (error) {
-                console.error("Erro ao salvar questão:", error);
+                console.error("Erro ao salvar questão incorreta:", error);
             }
         }
+
+        // NOVO: Salva questão respondida corretamente
+        async function saveAnsweredQuestion(questionData) {
+            const user = auth.currentUser;
+            if (!user) return;
+            try {
+                const questionId = getQuestionId(questionData.question);
+                const docRef = doc(db, 'users', user.uid, 'answeredQuestions', questionId);
+                await setDoc(docRef, { answeredAt: new Date() }); // Salva apenas um timestamp para economizar espaço
+            } catch (error) {
+                console.error("Erro ao salvar progresso:", error);
+            }
+        }
+        
+        // NOVO: Pega IDs das questões já respondidas
+        async function getAnsweredQuestionIds() {
+            const user = auth.currentUser;
+            if (!user) return new Set();
+            try {
+                const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'answeredQuestions'));
+                const ids = new Set();
+                querySnapshot.forEach(doc => ids.add(doc.id));
+                return ids;
+            } catch (error) {
+                console.error("Erro ao carregar progresso:", error);
+                return new Set();
+            }
+        }
+
 
         async function loadIncorrectQuestions() {
             const user = auth.currentUser;
@@ -791,34 +913,53 @@
                 historyContent.appendChild(questionDiv);
             });
         }
-        
-        clearHistoryBtn.addEventListener('click', async () => {
-            if (!confirm('Tem certeza que deseja apagar todo o seu histórico de erros? Esta ação não pode ser desfeita.')) return;
-            
+
+        async function clearCollection(collectionName) {
             const user = auth.currentUser;
             if (!user) return;
-
-            clearHistoryBtn.disabled = true;
-            clearHistoryBtn.textContent = 'Apagando...';
-            
             try {
-                 const querySnapshot = await getDocs(collection(db, "users", user.uid, "incorrectQuestions"));
-                 const batch = writeBatch(db);
-                 querySnapshot.forEach((doc) => {
-                     batch.delete(doc.ref);
-                 });
-                 await batch.commit();
-                 loadIncorrectQuestions(); // Recarrega a lista vazia
+                const querySnapshot = await getDocs(collection(db, "users", user.uid, collectionName));
+                const batch = writeBatch(db);
+                querySnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                });
+                await batch.commit();
             } catch (error) {
-                 console.error("Erro ao limpar histórico: ", error);
-                 alert('Ocorreu um erro ao tentar limpar o histórico.');
-            } finally {
-                clearHistoryBtn.disabled = false;
-                clearHistoryBtn.textContent = 'Limpar Histórico';
+                console.error(`Erro ao limpar ${collectionName}: `, error);
+                // Apenas loga o erro, não mostra alert para o usuário
             }
+        }
+        
+        // NOVO: Função para limpar progresso
+        async function clearProgress() {
+            resetProgressBtn.disabled = true;
+            resetProgressBtn.textContent = 'Resetando...';
+            await clearCollection('answeredQuestions');
+            resetProgressBtn.disabled = false;
+            resetProgressBtn.textContent = 'Resetar Progresso do Quiz';
+        }
+
+        resetProgressBtn.addEventListener('click', () => {
+             showConfirmationModal(
+                'Tem certeza que deseja apagar todo o seu progresso? Todas as questões voltarão a aparecer nos quizzes. Esta ação não pode ser desfeita.',
+                clearProgress
+            );
+        });
+        
+        clearHistoryBtn.addEventListener('click', async () => {
+            showConfirmationModal(
+                'Tem certeza que deseja apagar seu histórico de erros? Esta ação não pode ser desfeita.',
+                async () => {
+                    clearHistoryBtn.disabled = true;
+                    clearHistoryBtn.textContent = 'Apagando...';
+                    await clearCollection('incorrectQuestions');
+                    loadIncorrectQuestions(); // Recarrega a lista vazia
+                    clearHistoryBtn.disabled = false;
+                    clearHistoryBtn.textContent = 'Limpar Histórico';
+                }
+            );
         });
 
     </script>
 </body>
 </html>
-
