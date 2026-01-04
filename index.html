@@ -2,991 +2,982 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutor de Questões - Concurso IBAM</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            overflow: hidden; /* Evita scroll enquanto o loader estiver ativo */
-        }
-        .option-btn, .subject-btn, .auth-btn, .bank-btn, .nav-btn {
-            transition: all 0.2s ease-in-out;
-        }
-        .option-btn.selected {
-            background-color: #3b82f6; /* bg-blue-500 */
-            color: white;
-            border-color: #2563eb; /* border-blue-700 */
-        }
-        .option-btn.correct {
-            background-color: #22c55e; /* bg-green-500 */
-            color: white;
-            border-color: #16a34a; /* border-green-700 */
-        }
-        .option-btn.incorrect {
-            background-color: #ef4444; /* bg-red-500 */
-            color: white;
-            border-color: #dc2626; /* border-red-600 */
-        }
-        .option-btn:not([disabled]):hover, .subject-btn:hover, .auth-btn:hover, .bank-btn:hover, .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        /* Estilos para o conteúdo do resumo */
-        #summary-content h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #1e293b; }
-        #summary-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #334155; }
-        #summary-content p { margin-bottom: 1rem; line-height: 1.6; }
-        #summary-content ul { list-style-position: inside; margin-left: 0.5rem; margin-bottom: 1rem; }
-        #summary-content li { margin-bottom: 0.5rem; }
-        #summary-content strong { color: #1e293b; }
-        
-        /* Animação do Loader */
-        #loader {
-            transition: opacity 0.5s ease-out;
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #09f;
-            animation: spin 1s ease infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <title>Sidrak Assistência Técnica</title>
+    <meta name="description" content="Ferramenta PWA profissional para técnicos de refrigeração.">
+    <meta name="theme-color" content="#0f172a">
 
-        /* Destaque da Pesquisa */
-        mark {
-            background-color: #fef08a; /* yellow-200 */
-            padding: 0 2px;
-            border-radius: 2px;
+    <!-- PWA CONFIG -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❄️</text></svg>">
+
+    <!-- LIBRARIES -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            -webkit-font-smoothing: antialiased;
+            overscroll-behavior-y: none;
+            user-select: none;
+        }
+        input, textarea, .select-all { user-select: text; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: max(1.25rem, env(safe-area-inset-top)); }
+        input, select, textarea { font-size: 16px !important; }
+        .input-field:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        .accordion-content { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .accordion-open .accordion-content { max-height: 1000px !important; opacity: 1 !important; }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-open .accordion-icon { transform: rotate(180deg); }
+        .modal-overlay { background-color: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px); }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .animate-slide-up { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .loader { border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #3498db; width: 20px; height: 20px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* ESTILOS DA TELA DE LOGIN */
+        #login-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0f172a; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        /* Animação Shake para erro */
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+        .shake-animation { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+        @media print {
+            #login-screen { display: none !important; }
+            body * { visibility: hidden; }
+            #printable-area, #printable-area * { visibility: visible; }
+            #printable-area { position: absolute; left: 0; top: 0; width: 100%; background: white; display: block !important; z-index: 9999; }
+            .no-print { display: none !important; }
+            @page { margin: 1cm; size: A4; }
         }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="text-slate-800 pb-safe">
 
-    <!-- Tela de Carregamento (Loader) -->
-    <div id="loader" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
-        <div class="spinner"></div>
-        <p class="mt-4 text-slate-600">Carregando...</p>
-    </div>
-    
-    <!-- NOVO: Modal de Confirmação -->
-    <div id="confirmation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full text-center">
-            <p id="modal-message" class="text-slate-700 mb-6"></p>
-            <div class="flex justify-center gap-4">
-                <button id="modal-cancel-btn" class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Cancelar</button>
-                <button id="modal-confirm-btn" class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700">Confirmar</button>
+    <!-- TELA DE LOGIN / CADASTRO -->
+    <div id="login-screen">
+        <div class="w-full max-w-sm px-6">
+            <div class="mb-8 text-center">
+                <div class="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center text-4xl mb-4 mx-auto shadow-lg shadow-blue-500/30">
+                    ❄️
+                </div>
+                <h1 class="text-white text-2xl font-black uppercase tracking-widest">Sidrak</h1>
+                <p class="text-blue-400 text-sm font-bold uppercase tracking-widest">Assistência Técnica</p>
             </div>
-        </div>
-    </div>
 
-
-    <main class="w-full max-w-4xl min-h-screen flex items-center justify-center p-4">
-
-        <!-- Tela de Autenticação (Login/Registro) -->
-        <div id="auth-screen" class="hidden w-full max-w-4xl">
-             <div class="bg-white rounded-2xl shadow-xl overflow-hidden md:grid md:grid-cols-2">
-                   <div class="relative hidden md:block bg-gradient-to-br from-blue-500 to-indigo-600 p-8 text-white">
-                         <div class="absolute inset-0 bg-black opacity-10"></div>
-                         <div class="relative z-10 flex flex-col justify-between h-full">
-                               <div>
-                                   <h2 class="text-3xl font-bold tracking-tight">Tutor de Estudos</h2>
-                                   <p class="mt-2 text-blue-200">Sua plataforma completa de preparação para concursos.</p>
-                               </div>
-                               <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="absolute bottom-8 right-8 opacity-20"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                        </div>
-                   </div>
-                   <div class="p-8">
-                        <h1 class="text-2xl font-bold text-slate-800 text-center mb-2">Acesso à Plataforma</h1>
-                        <p class="text-slate-500 text-center mb-8">Faça login ou crie sua conta.</p>
-                        
-                        <form id="login-form">
-                            <div class="mb-4">
-                                <label for="login-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                                <input type="email" id="login-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
-                            </div>
-                            <div class="mb-6">
-                                <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1">Senha</label>
-                                <input type="password" id="login-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
-                            </div>
-                            <button type="submit" class="auth-btn w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700">Entrar</button>
-                        </form>
-
-                        <form id="register-form" class="hidden">
-                             <div class="mb-4">
-                                <label for="register-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                                <input type="email" id="register-email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="seu@email.com">
-                            </div>
-                            <div class="mb-6">
-                                <label for="register-password" class="block text-sm font-medium text-slate-700 mb-1">Senha (mín. 6 caracteres)</label>
-                                <input type="password" id="register-password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="••••••••">
-                            </div>
-                            <button type="submit" class="auth-btn w-full bg-green-600 text-white font-bold py-2.5 rounded-lg hover:bg-green-700">Criar Conta</button>
-                        </form>
-
-                        <div id="auth-error" class="mt-4 text-center text-red-600 font-semibold h-5"></div>
-
-                        <p class="mt-6 text-center text-sm text-slate-600">
-                            <span id="login-text">Não tem uma conta? <a href="#" id="toggle-to-register" class="font-semibold text-blue-600 hover:underline">Registre-se</a></span>
-                            <span id="register-text" class="hidden">Já tem uma conta? <a href="#" id="toggle-to-login" class="font-semibold text-blue-600 hover:underline">Faça login</a></span>
-                        </p>
-                   </div>
-            </div>
-        </div>
-
-
-        <!-- Conteúdo Principal do App -->
-        <div id="app-container" class="hidden w-full">
-            
-            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
-                <!-- Cabeçalho Fixo -->
-                <div id="app-header" class="flex justify-between items-center mb-6 border-b pb-4">
+            <!-- Formulário de Login -->
+            <div id="login-form" class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-2xl">
+                <h2 class="text-white text-lg font-bold mb-4">Acesso ao Sistema</h2>
+                
+                <div class="space-y-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-slate-800">Tutor de Estudos</h1>
-                        <p id="welcome-user" class="text-slate-600 text-sm"></p>
+                        <label class="block text-blue-200 text-xs font-bold uppercase mb-1">Usuário</label>
+                        <input type="text" id="loginUser" class="w-full bg-slate-900/50 border border-slate-600 text-white rounded-xl p-3 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Seu usuário">
                     </div>
-                    <button id="logout-btn" class="text-sm bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-lg hover:bg-slate-300 transition-colors">Sair</button>
+                    <div>
+                        <label class="block text-blue-200 text-xs font-bold uppercase mb-1">Senha</label>
+                        <input type="password" id="loginPass" class="w-full bg-slate-900/50 border border-slate-600 text-white rounded-xl p-3 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Sua senha">
+                    </div>
+                    <button onclick="performLogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all active:scale-95 mt-2">
+                        ENTRAR
+                    </button>
                 </div>
 
-                <!-- Tela de Menu Principal (Dashboard) -->
-                <div id="main-menu-screen">
-                    <p class="text-slate-600 text-center mb-8">Selecione uma opção para iniciar seus estudos.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <button id="start-new-quiz-btn" class="nav-btn w-full text-left p-5 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 flex items-center gap-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-swords"><path d="m14.5 17.5 4-4-2-6-6-2-4 4 2 6 6 2Z"/><path d="m13 19 6-6"/><path d="m5.5 11.5 4-4-2-6-6-2-4 4 2 6 6 2Z"/><path d="m3 21 6-6"/></svg>
-                            <span>Iniciar Novo Quiz</span>
-                        </button>
-                         <button id="review-errors-btn" class="nav-btn w-full text-left p-5 bg-yellow-500 text-white rounded-lg font-semibold hover:bg-yellow-600 flex items-center gap-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw"><path d="M3 2v6h6"/><path d="M3 13a9 9 0 1 0 3-7.7L3 8"/></svg>
-                            <span>Revisar Meus Erros</span>
-                        </button>
-                         <button id="show-summary-btn" class="nav-btn w-full text-left p-5 bg-slate-600 text-white rounded-lg font-semibold hover:bg-slate-700 flex items-center gap-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                            <span>Consultar Resumo Teórico</span>
-                        </button>
-                        <!-- NOVO: Botão para resetar o progresso -->
-                        <button id="reset-progress-btn" class="nav-btn w-full text-left p-5 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 flex items-center gap-4">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                           <span>Resetar Progresso do Quiz</span>
-                        </button>
+                <div class="mt-6 text-center border-t border-white/10 pt-4">
+                    <p class="text-slate-400 text-xs mb-2">Não tem acesso?</p>
+                    <button onclick="toggleAuthMode('register')" class="text-blue-400 text-xs font-bold hover:text-white transition-colors uppercase">
+                        CRIAR CONTA GRÁTIS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Formulário de Cadastro (Oculto) -->
+            <div id="register-form" class="hidden bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-2xl">
+                <h2 class="text-white text-lg font-bold mb-4">Novo Cadastro</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-blue-200 text-xs font-bold uppercase mb-1">Criar Usuário</label>
+                        <input type="text" id="regUser" class="w-full bg-slate-900/50 border border-slate-600 text-white rounded-xl p-3 focus:outline-none focus:border-green-500 transition-colors" placeholder="Nome de usuário">
                     </div>
+                    <div>
+                        <label class="block text-blue-200 text-xs font-bold uppercase mb-1">Criar Senha</label>
+                        <input type="password" id="regPass" class="w-full bg-slate-900/50 border border-slate-600 text-white rounded-xl p-3 focus:outline-none focus:border-green-500 transition-colors" placeholder="Senha segura">
+                    </div>
+                    <div>
+                        <label class="block text-blue-200 text-xs font-bold uppercase mb-1">Confirmar Senha</label>
+                        <input type="password" id="regPassConfirm" class="w-full bg-slate-900/50 border border-slate-600 text-white rounded-xl p-3 focus:outline-none focus:border-green-500 transition-colors" placeholder="Repita a senha">
+                    </div>
+                    <button onclick="performRegister()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all active:scale-95 mt-2">
+                        CADASTRAR
+                    </button>
                 </div>
 
-                <!-- Tela de Seleção de Banco de Questões -->
-                <div id="bank-selection-screen" class="hidden">
-                    <p class="text-slate-600 text-center mb-8">Selecione um banco de questões para praticar.</p>
-                    <div class="grid grid-cols-1 gap-4">
-                        <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="1">
-                            <span>📚 Banco de Questões 1</span>
-                            <span class="text-sm text-slate-500">60 Questões</span>
-                        </button>
-                        <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="2">
-                             <span>✨ Banco de Questões 2</span>
-                            <span class="text-sm text-slate-500">60 Novas Questões</span>
-                        </button>
-                        <button class="bank-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex items-center justify-between" data-bank="3">
-                             <span>🏆 Simulado Completo</span>
-                            <span class="text-sm text-slate-500">20 Novas Questões</span>
-                        </button>
-                    </div>
-                     <button id="back-to-main-menu-from-banks-btn" class="mt-6 text-sm text-blue-600 hover:underline">← Voltar ao Menu Principal</button>
+                <div class="mt-6 text-center border-t border-white/10 pt-4">
+                    <button onclick="toggleAuthMode('login')" class="text-slate-400 text-xs font-bold hover:text-white transition-colors uppercase flex items-center justify-center gap-2 w-full">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar para Login
+                    </button>
                 </div>
+            </div>
+            
+            <p class="text-[10px] text-slate-600 mt-8 text-center">v6.0 • Armazenamento Local Seguro</p>
+        </div>
+    </div>
 
-                <!-- Tela de Seleção de Disciplina -->
-                <div id="selection-screen" class="hidden">
-                    <p class="text-slate-600 text-center mb-8">Escolha uma disciplina ou faça um simulado completo.</p>
-                    <div id="subject-buttons-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Botões preenchidos via JS -->
+    <!-- APP WRAPPER (Escondido até login) -->
+    <div id="app-wrapper" class="hidden min-h-[100dvh] flex flex-col items-center justify-start sm:justify-center p-0 sm:p-4 no-print">
+        
+        <!-- CARD PRINCIPAL -->
+        <div class="w-full max-w-md bg-white sm:rounded-3xl overflow-hidden border-0 sm:border border-slate-200 shadow-none sm:shadow-2xl relative z-10 flex flex-col min-h-[100dvh] sm:min-h-0">
+            
+            <!-- CABEÇALHO -->
+            <header class="bg-[#0f172a] text-white p-5 pt-safe pb-10 relative overflow-hidden flex justify-between items-center shadow-lg z-20">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600 rounded-full opacity-20 blur-3xl transform translate-x-10 -translate-y-10 pointer-events-none"></div>
+                
+                <div class="z-10 flex items-center gap-3">
+                    <div id="headerLogoArea" class="hidden w-10 h-10 bg-white rounded-lg overflow-hidden flex items-center justify-center border border-slate-700 shadow-lg">
+                        <img id="headerLogoImg" src="" alt="Logo" class="w-full h-full object-contain">
                     </div>
-                     <button id="back-to-banks-btn" class="mt-6 text-sm text-blue-600 hover:underline">← Voltar para seleção de bancos</button>
+                    <div>
+                        <div class="flex items-center gap-2 opacity-90">
+                            <i class="fa-solid fa-snowflake text-blue-400 text-sm animate-pulse"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-blue-200">Refrigeração</span>
+                        </div>
+                        <h1 class="text-lg font-black uppercase tracking-wide text-white leading-none mt-0.5">
+                            Sidrak <span class="text-blue-500">Assistência</span>
+                        </h1>
+                    </div>
                 </div>
                 
-                <!-- Tela de Resumo Teórico -->
-                <div id="summary-screen" class="hidden">
-                    <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 border-b pb-4">
-                         <h2 class="text-xl font-bold text-slate-800 m-0">Resumo Teórico - Arapiraca/AL</h2>
-                         <div class="relative w-full md:w-auto">
-                            <input type="search" id="summary-search-input" placeholder="Pesquisar no resumo..." class="w-full md:w-64 pl-4 pr-10 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                         </div>
-                         <button id="back-to-main-menu-from-summary-btn" class="text-sm text-blue-600 hover:underline font-semibold whitespace-nowrap">← Voltar ao Menu</button>
-                    </div>
-                    <p id="search-results-info" class="text-sm text-slate-500 mb-4 hidden"></p>
-                    <div id="summary-content" class="max-h-[60vh] overflow-y-auto pr-2 text-slate-700">
-                        <!-- O CONTEÚDO SERÁ INSERIDO AQUI VIA JAVASCRIPT -->
-                    </div>
+                <div class="flex gap-2">
+                    <button onclick="logout()" class="z-10 text-white bg-red-500/20 hover:bg-red-500/40 transition-colors w-9 h-9 flex items-center justify-center rounded-xl backdrop-blur-md" title="Sair">
+                        <i class="fa-solid fa-right-from-bracket text-sm text-red-400"></i>
+                    </button>
+                    <button onclick="toggleHistory()" class="z-10 text-white bg-white/10 hover:bg-white/20 transition-colors w-9 h-9 flex items-center justify-center rounded-xl backdrop-blur-md" title="Histórico">
+                        <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+                    </button>
+                    <button onclick="toggleSettings()" class="z-10 text-white bg-white/10 hover:bg-white/20 transition-colors w-9 h-9 flex items-center justify-center rounded-xl backdrop-blur-md" title="Configurações">
+                        <i class="fa-solid fa-gear text-sm"></i>
+                    </button>
                 </div>
+            </header>
 
-                <!-- Tela de Histórico de Erros -->
-                <div id="history-screen" class="hidden">
-                     <div class="flex justify-between items-center mb-6 border-b pb-4">
-                         <h2 class="text-xl font-bold text-slate-800">Revisão de Questões Erradas</h2>
-                         <button id="clear-history-btn" class="text-sm bg-red-100 text-red-700 font-semibold px-4 py-2 rounded-lg hover:bg-red-200 transition-colors">Limpar Histórico</button>
-                    </div>
-                    <div id="history-content" class="max-h-[60vh] overflow-y-auto pr-2 space-y-4">
-                        <!-- Conteúdo do histórico aqui -->
-                    </div>
-                    <button id="back-to-main-menu-from-history-btn" class="mt-6 text-sm text-blue-600 hover:underline">← Voltar ao Menu Principal</button>
-                </div>
+            <!-- CONTEÚDO SCROLLÁVEL -->
+            <div class="relative -mt-6 bg-white rounded-t-[1.5rem] flex-grow shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.1)] z-30 overflow-y-auto pb-20">
+                <div class="p-5 pt-6">
+                    
+                    <!-- TELA 1: INPUTS -->
+                    <div id="input-section" class="space-y-5">
+                        
+                        <!-- BOTÃO AFILIADO -->
+                        <a href="https://mercadolivre.com/sec/1bpYUnD" target="_blank" class="block w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-xs py-3 rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all transform active:scale-[0.98] group relative overflow-hidden border border-blue-500/30">
+                            <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <i class="fa-solid fa-gift text-yellow-300 text-sm group-hover:animate-bounce"></i>
+                            <span class="tracking-wide">OFERTAS DA SEMANA</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60 ml-1"></i>
+                        </a>
 
+                        <!-- Dados Cliente -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-3 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                            <label class="block text-xs font-bold text-blue-600 uppercase tracking-wide mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-user-tag"></i> Dados do Orçamento
+                            </label>
+                            
+                            <input type="text" id="nomePrestador" placeholder="Seu Nome / Sua Empresa" class="input-field w-full p-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none placeholder-slate-400 transition-all">
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" id="nomeCliente" placeholder="Nome do Cliente" class="col-span-2 input-field w-full p-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none placeholder-slate-400 transition-all">
+                                
+                                <!-- ENDEREÇO -->
+                                <input type="text" id="enderecoCliente" placeholder="Endereço (Rua, Nº, Bairro)" class="col-span-2 input-field w-full p-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none placeholder-slate-400 transition-all">
 
-                <!-- Tela do Quiz -->
-                <div id="quiz-container" class="hidden">
-                    <div id="quiz-header" class="mb-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <button id="back-to-subjects-btn" class="text-sm text-blue-600 hover:underline">← Mudar Disciplina</button>
-                            <span id="question-counter" class="text-sm font-semibold text-slate-500 bg-slate-200 px-3 py-1 rounded-full"></span>
+                                <input type="tel" id="telefoneCliente" placeholder="(DD) 9XXXX-XXXX" maxlength="15" onkeyup="mascaraTelefone(this)" class="col-span-2 input-field w-full p-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none placeholder-slate-400 transition-all">
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="col-span-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Data</label>
+                                    <input type="date" id="dataServico" class="input-field w-full p-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none text-center">
+                                </div>
+                                <div class="col-span-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Hora</label>
+                                    <input type="time" id="horaServico" value="09:00" class="input-field w-full p-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none text-center">
+                                </div>
+                                <div class="col-span-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Garantia</label>
+                                    <div class="relative">
+                                        <input type="number" id="inputGarantia" placeholder="90" value="90" class="input-field w-full p-2 pr-6 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none text-center">
+                                        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 font-bold">D</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                         <div class="w-full bg-slate-200 rounded-full h-2.5">
-                            <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"></div>
+
+                        <!-- Serviços -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center px-1">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wide flex items-center gap-2">
+                                    <i class="fa-solid fa-screwdriver-wrench"></i> Serviços
+                                </label>
+                                <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">Itens</span>
+                            </div>
+                            <div id="services-container" class="space-y-3"></div>
+                            
+                            <button onclick="adicionarServico()" class="w-full py-3 border-2 border-dashed border-slate-300 rounded-xl text-xs font-bold text-slate-500 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 transition-all flex items-center justify-center gap-2 active:scale-95 touch-manipulation">
+                                <i class="fa-solid fa-circle-plus"></i> ADICIONAR ITEM
+                            </button>
+                            
+                            <div class="relative">
+                                <i class="fa-solid fa-pen-to-square absolute top-3 left-3 text-slate-300 text-xs"></i>
+                                <textarea id="detalhesServico" rows="2" placeholder="Observações técnicas (Ex: Tubulação de cobre, suporte...)" class="input-field w-full pl-9 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none resize-none placeholder-slate-400 transition-all"></textarea>
+                            </div>
                         </div>
-                    </div>
 
-                    <div id="quiz-body">
-                        <p id="question-subject" class="mb-2 text-sm font-semibold text-blue-600"></p>
-                        <h2 id="question-text" class="text-lg font-semibold text-slate-700 mb-6"></h2>
-                        <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                        <div id="feedback-container" class="mt-6 hidden">
-                            <div id="feedback-result" class="text-lg font-bold mb-2"></div>
-                            <div id="feedback-explanation" class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-slate-600"></div>
+                        <!-- Custos -->
+                        <div class="pt-4 border-t border-slate-100">
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-calculator"></i> Custos Operacionais
+                            </label>
+                            <div class="relative group mb-3">
+                                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">R$</div>
+                                <input type="text" id="custoPecas" placeholder="0,00" onkeyup="formatarMoeda(this)" class="input-field w-full pl-10 pr-28 py-3 bg-white border border-slate-200 rounded-xl text-lg font-bold text-slate-700 focus:outline-none transition-all" inputmode="numeric">
+                                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-300 uppercase pointer-events-none bg-slate-50 px-2 py-1 rounded">Material</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="relative">
+                                    <i class="fa-solid fa-route absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                    <input type="number" id="distanciaKm" placeholder="Km Total" class="input-field w-full pl-9 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none transition-all" inputmode="numeric">
+                                </div>
+                                <div class="relative">
+                                    <i class="fa-regular fa-clock absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                    <input type="number" id="tempoHoras" placeholder="Horas" class="input-field w-full pl-9 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none transition-all" inputmode="decimal">
+                                </div>
+                            </div>
                         </div>
+
+                        <button onclick="calcularPrecos()" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg shadow-blue-600/30 active:scale-[0.98] transition-transform text-lg mt-4 flex items-center justify-center gap-3 mb-10">
+                            CALCULAR AGORA <i class="fa-solid fa-arrow-right animate-bounce-x"></i>
+                        </button>
                     </div>
 
-                    <div id="quiz-footer" class="mt-8 flex justify-end">
-                        <button id="check-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">Verificar</button>
-                        <button id="next-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors hidden">Próxima Questão</button>
-                    </div>
+                    <!-- TELA 2: RESULTADOS -->
+                    <div id="results-section" class="hidden space-y-5 animate-slide-up pb-10">
+                        
+                        <!-- Valor Final -->
+                        <div class="bg-[#0f172a] p-6 rounded-3xl shadow-xl text-white text-center relative overflow-hidden ring-4 ring-slate-100">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full opacity-20 blur-2xl"></div>
+                            <div class="relative z-10">
+                                <p class="text-[10px] font-bold text-blue-300 uppercase mb-2 tracking-widest">Valor Sugerido</p>
+                                <p class="text-5xl font-black mb-5 tracking-tighter drop-shadow-lg" id="displayPrecoFinal">R$ 0,00</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 text-left">
+                                    <div class="bg-white/10 p-2.5 px-3 rounded-xl border border-white/5 backdrop-blur-sm">
+                                        <p class="text-[9px] text-slate-400 uppercase font-bold mb-0.5">Lucro Líquido</p>
+                                        <p class="text-base font-bold text-green-400" id="displayLucroLiquido">R$ 0,00</p>
+                                    </div>
+                                    <div class="bg-white/10 p-2.5 px-3 rounded-xl border border-white/5 backdrop-blur-sm">
+                                        <p class="text-[9px] text-slate-400 uppercase font-bold mb-0.5">Despesas</p>
+                                        <p class="text-base font-bold text-red-300" id="displayDespesas">R$ 0,00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div id="results-container" class="text-center hidden">
-                        <h2 class="text-3xl font-bold text-slate-800 mb-4">Quiz Finalizado!</h2>
-                        <p class="text-lg text-slate-600 mb-6">Você acertou <span id="score-correct" class="font-bold"></span> de <span id="score-total" class="font-bold"></span> questões.</p>
-                        <p class="text-4xl mb-8" id="score-emoji"></p>
-                        <div class="flex flex-col md:flex-row gap-4 justify-center">
-                            <button id="restart-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors">Refazer</button>
-                            <button id="back-to-menu-btn" class="bg-slate-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-slate-700 transition-colors">Voltar ao Início</button>
+                        <!-- Dados Restaurados -->
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="p-3 rounded-xl bg-blue-50 border border-blue-100">
+                                <i class="fa-solid fa-truck-fast text-blue-500 text-xs mb-1"></i>
+                                <div class="text-[9px] text-slate-400 font-bold uppercase">Logística</div>
+                                <div class="text-xs font-black text-slate-700" id="displayLogistica">R$ 0,00</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-green-50 border border-green-100">
+                                <i class="fa-solid fa-screwdriver-wrench text-green-500 text-xs mb-1"></i>
+                                <div class="text-[9px] text-slate-400 font-bold uppercase">Mão de Obra</div>
+                                <div class="text-xs font-black text-slate-700" id="displayMaoObra">R$ 0,00</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-orange-50 border border-orange-100">
+                                <i class="fa-solid fa-box-open text-orange-500 text-xs mb-1"></i>
+                                <div class="text-[9px] text-slate-400 font-bold uppercase">Materiais</div>
+                                <div class="text-xs font-black text-slate-700" id="displayMateriais">R$ 0,00</div>
+                            </div>
+                        </div>
+
+                        <!-- Botões de Ação -->
+                        <div class="grid grid-cols-2 gap-3">
+                             <button id="btnCompartilharPDF" onclick="compartilharPDF()" class="bg-white border-2 border-slate-100 text-slate-600 py-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors touch-manipulation">
+                                <span id="labelPDF" class="flex items-center gap-2">
+                                    <i class="fa-solid fa-share-nodes text-red-500 text-base"></i> ENVIAR ORÇAMENTO
+                                </span>
+                                <div id="loaderPDF" class="loader hidden"></div>
+                            </button>
+                            <button onclick="reiniciar()" class="bg-white border-2 border-slate-100 text-slate-600 py-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors touch-manipulation">
+                                <i class="fa-solid fa-rotate-left text-blue-500 text-base"></i> NOVO CÁLCULO
+                            </button>
+                        </div>
+
+                        <!-- Mensagens Prontas -->
+                        <div class="space-y-3 pt-4 border-t border-slate-100">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase text-center py-1 tracking-widest">Mensagens Prontas</h3>
+                            
+                            <div class="message-accordion bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm" id="acc-msg1">
+                                <button onclick="toggleAccordion('acc-msg1')" class="w-full p-4 flex justify-between items-center bg-slate-50 hover:bg-white transition-colors">
+                                    <span class="text-xs font-bold text-slate-700 uppercase flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[10px]">1</span> 
+                                        Proposta
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 text-xs accordion-icon"></i>
+                                </button>
+                                <div class="accordion-content border-t border-slate-100">
+                                    <div class="p-4 bg-slate-50">
+                                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm mb-3">
+                                            <div id="txt_proposta" class="text-xs text-slate-600 whitespace-pre-wrap font-mono leading-relaxed select-all"></div>
+                                        </div>
+                                        <button onclick="copiarTexto('txt_proposta', this)" class="w-full py-3 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 active:scale-95">
+                                            <i class="fa-regular fa-copy"></i> COPIAR TEXTO
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="message-accordion bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm" id="acc-msg2">
+                                <button onclick="toggleAccordion('acc-msg2')" class="w-full p-4 flex justify-between items-center bg-slate-50 hover:bg-white transition-colors">
+                                    <span class="text-xs font-bold text-slate-700 uppercase flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-[10px]">2</span> 
+                                        Sinal
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 text-xs accordion-icon"></i>
+                                </button>
+                                <div class="accordion-content border-t border-slate-100">
+                                    <div class="p-4 bg-slate-50">
+                                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm mb-3 relative">
+                                            <div id="txt_sinal" class="text-xs text-slate-600 whitespace-pre-wrap font-mono leading-relaxed select-all"></div>
+                                        </div>
+                                        <button onclick="copiarTexto('txt_sinal', this)" class="w-full py-3 bg-orange-500 text-white rounded-lg text-xs font-bold hover:bg-orange-600 transition-colors flex items-center justify-center gap-2 active:scale-95">
+                                            <i class="fa-regular fa-copy"></i> COPIAR TEXTO
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="message-accordion bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm" id="acc-msg3">
+                                <button onclick="toggleAccordion('acc-msg3')" class="w-full p-4 flex justify-between items-center bg-slate-50 hover:bg-white transition-colors">
+                                    <span class="text-xs font-bold text-slate-700 uppercase flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-[10px]">3</span> 
+                                        Conclusão
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 text-xs accordion-icon"></i>
+                                </button>
+                                <div class="accordion-content border-t border-slate-100">
+                                    <div class="p-4 bg-slate-50">
+                                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm mb-3 relative">
+                                            <div id="txt_final" class="text-xs text-slate-600 whitespace-pre-wrap font-mono leading-relaxed select-all"></div>
+                                        </div>
+                                        <button onclick="copiarTexto('txt_final', this)" class="w-full py-3 bg-green-600 text-white rounded-lg text-xs font-bold hover:bg-green-700 transition-colors flex items-center justify-center gap-2 active:scale-95">
+                                            <i class="fa-regular fa-copy"></i> COPIAR TEXTO
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Firebase Scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDocs, collection, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyBfG-3SV8Tkczas4cGcIQwv5atFZVcDKFs",
-            authDomain: "tutor-estudos.firebaseapp.com",
-            projectId: "tutor-estudos",
-            storageBucket: "tutor-estudos.appspot.com",
-            messagingSenderId: "691817799067",
-            appId: "1:691817799067:web:090572d64ffc44aa5dd53e"
-        };
+    <!-- ÁREA DE IMPRESSÃO (PDF) -->
+    <div id="printable-area" class="hidden">
+        <div style="font-family: 'Inter', sans-serif; color: #334155; max-width: 800px; margin: 0 auto; padding: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 30px;">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <img id="printLogo" src="" style="height: 70px; width: auto; object-fit: contain; display: none;">
+                    <div>
+                        <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;" id="printPrestador">Prestador</h1>
+                        <p style="font-size: 14px; color: #64748b; margin: 5px 0 0 0;">Orçamento Profissional</p>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Data de Emissão</div>
+                    <div style="font-size: 16px; font-weight: 600; color: #0f172a;" id="printData">--/--/----</div>
+                </div>
+            </div>
+            <div style="background-color: #f8fafc; padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e2e8f0;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <h3 style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin: 0 0 8px 0;">Cliente</h3>
+                            <p style="font-size: 16px; font-weight: 700; color: #0f172a; margin: 0;" id="printCliente">Nome do Cliente</p>
+                            <p style="font-size: 14px; color: #64748b; margin: 4px 0 0 0;" id="printTelefone">Tel: --</p>
+                            <!-- ENDEREÇO IMPRESSO -->
+                            <p style="font-size: 14px; color: #64748b; margin: 2px 0 0 0;" id="printEndereco">End: --</p>
+                        </td>
+                        <td style="vertical-align: top; text-align: right; width: 40%;">
+                            <h3 style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin: 0 0 8px 0;">Observações</h3>
+                            <p style="font-size: 13px; color: #475569; margin: 0; line-height: 1.5;" id="printDetalhes">...</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #0f172a;">
+                        <th style="text-align: left; padding: 12px 0; font-size: 11px; text-transform: uppercase; color: #0f172a; font-weight: 800;">Descrição do Serviço</th>
+                        <th style="text-align: center; padding: 12px 0; font-size: 11px; text-transform: uppercase; color: #0f172a; font-weight: 800;">Qtd</th>
+                        <th style="text-align: right; padding: 12px 0; font-size: 11px; text-transform: uppercase; color: #0f172a; font-weight: 800;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="printServicesList" style="font-size: 14px; color: #334155;"></tbody>
+            </table>
+            <div style="display: flex; justify-content: flex-end;">
+                <div style="width: 280px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: #64748b;">
+                        <span>Peças/Materiais:</span>
+                        <span style="font-weight: 600;" id="printMateriais">R$ 0,00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-top: 2px solid #e2e8f0; padding-top: 15px; margin-top: 10px;">
+                        <span style="font-size: 14px; font-weight: 800; color: #0f172a; text-transform: uppercase;">Total Geral</span>
+                        <span style="font-size: 22px; font-weight: 900; color: #0f172a;" id="printTotal">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 60px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px dashed #cbd5e1; padding-top: 20px;">
+                <p>Garantia de <span id="printGarantia" style="font-weight: 700; color: #0f172a;">90 dias</span> sobre os serviços prestados.</p>
+                <p style="margin-top: 5px;">Orçamento gerado via <strong>Sidrak Assistência Técnica</strong></p>
+            </div>
+        </div>
+    </div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    <!-- MODAIS E JS -->
+    <div id="settingsModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleSettings()"></div>
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-6 h-[85vh] sm:h-auto overflow-y-auto transform transition-transform duration-300 translate-y-full shadow-2xl" id="modalContent">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2"><i class="fa-solid fa-sliders text-blue-600"></i> Ajustes</h2>
+                <button onclick="toggleSettings()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-6">
+                <!-- Branding -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-image text-blue-500 mr-1"></i> Seu Logótipo</h3>
+                    <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(this)" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                    <button onclick="removerLogo()" class="text-[10px] text-red-500 font-bold mt-2 uppercase hover:underline">Remover Logo</button>
+                </div>
 
-        // --- Variáveis de UI ---
-        const loader = document.getElementById('loader');
-        const authScreen = document.getElementById('auth-screen');
-        const appContainer = document.getElementById('app-container');
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const authError = document.getElementById('auth-error');
-        const toggleToRegister = document.getElementById('toggle-to-register');
-        const toggleToLogin = document.getElementById('toggle-to-login');
-        const loginText = document.getElementById('login-text');
-        const registerText = document.getElementById('register-text');
-        const logoutBtn = document.getElementById('logout-btn');
-        const welcomeUser = document.getElementById('welcome-user');
-        
-        // Telas de Navegação
-        const mainMenuScreen = document.getElementById('main-menu-screen');
-        const bankSelectionScreen = document.getElementById('bank-selection-screen');
-        const selectionScreen = document.getElementById('selection-screen');
-        const quizContainer = document.getElementById('quiz-container');
-        const summaryScreen = document.getElementById('summary-screen');
-        const historyScreen = document.getElementById('history-screen');
-        const resultsContainer = document.getElementById('results-container');
+                <!-- CONFIG SINAL -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-percent text-blue-500 mr-1"></i> Configuração de Pagamento</h3>
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-slate-700">Sinal exigido (%)</label>
+                        <div class="relative w-24">
+                            <input type="number" id="configSinal" placeholder="30" class="input-field w-full p-2 pr-6 rounded-lg border border-slate-200 text-xs text-center font-bold text-slate-700 outline-none" onchange="salvarConfiguracoes()">
+                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">%</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2">Define a % cobrada na mensagem de "Cobrança de Sinal".</p>
+                </div>
 
-        // Botões de Navegação
-        const startNewQuizBtn = document.getElementById('start-new-quiz-btn');
-        const reviewErrorsBtn = document.getElementById('review-errors-btn');
-        const showSummaryBtn = document.getElementById('show-summary-btn');
-        const resetProgressBtn = document.getElementById('reset-progress-btn'); // NOVO
-        const backToMainMenuFromBanksBtn = document.getElementById('back-to-main-menu-from-banks-btn');
-        const backToBanksBtn = document.getElementById('back-to-banks-btn');
-        const backToMenuFromSummaryBtn = document.getElementById('back-to-main-menu-from-summary-btn');
-        const backToMainMenuFromHistoryBtn = document.getElementById('back-to-main-menu-from-history-btn');
-        const backToSubjectsBtn = document.getElementById('back-to-subjects-btn');
-        const backToMenuBtn = document.getElementById('back-to-menu-btn');
+                <!-- BACKUP -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-cloud-arrow-up text-blue-500 mr-1"></i> Backup & Segurança</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="exportarDados()" class="flex flex-col items-center justify-center p-3 bg-white border border-green-200 rounded-xl hover:bg-green-50 transition-colors">
+                            <i class="fa-solid fa-download text-green-500 text-lg mb-1"></i>
+                            <span class="text-[10px] font-bold text-slate-600">BAIXAR BACKUP</span>
+                        </button>
+                        <label class="flex flex-col items-center justify-center p-3 bg-white border border-blue-200 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer">
+                            <i class="fa-solid fa-upload text-blue-500 text-lg mb-1"></i>
+                            <span class="text-[10px] font-bold text-slate-600">RESTAURAR</span>
+                            <input type="file" accept=".json" onchange="importarDados(this)" class="hidden">
+                        </label>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2 text-center">Salve o arquivo no Google Drive/iCloud para não perder seus dados.</p>
+                </div>
 
-        // Modal de Confirmação
-        const confirmationModal = document.getElementById('confirmation-modal');
-        const modalMessage = document.getElementById('modal-message');
-        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
-        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+                <!-- Gestor de Serviços -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-list text-blue-500 mr-1"></i> Preços Base</h3>
+                    <div class="flex gap-2 mb-3">
+                        <input type="text" id="novoServicoNome" placeholder="Nome do Serviço" class="input-field flex-grow p-2 rounded-lg border border-slate-200 text-xs">
+                        <input type="number" id="novoServicoValor" placeholder="R$" class="input-field w-20 p-2 rounded-lg border border-slate-200 text-xs">
+                        <button onclick="adicionarServicoBase()" class="bg-blue-600 text-white p-2 rounded-lg"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div id="listaServicosBase" class="max-h-40 overflow-y-auto space-y-1 pr-1"></div>
+                </div>
+                <button onclick="salvarConfiguracoes()" class="w-full bg-[#0f172a] text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg">SALVAR ALTERAÇÕES</button>
+            </div>
+        </div>
+    </div>
 
+    <div id="historyModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleHistory()"></div>
+        <div class="absolute inset-y-0 right-0 w-full max-w-sm bg-white p-0 h-full overflow-y-auto transform transition-transform duration-300 translate-x-full shadow-2xl flex flex-col" id="historyContent">
+            <div class="bg-[#0f172a] text-white p-6 pb-6 flex justify-between items-center sticky top-0 z-10">
+                <div>
+                    <h2 class="text-lg font-black uppercase"><i class="fa-solid fa-clock-rotate-left mr-2"></i> Histórico</h2>
+                    <p class="text-[10px] text-slate-400">Últimos orçamentos salvos</p>
+                </div>
+                <button onclick="toggleHistory()" class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="historyList" class="flex-grow p-4 space-y-3 bg-slate-50">
+                <div class="text-center text-slate-400 py-10 text-xs">Nenhum orçamento recente.</div>
+            </div>
+            <div class="p-4 border-t border-slate-200 bg-white pb-safe">
+                <button onclick="limparHistorico()" class="w-full py-3 text-red-500 font-bold text-xs border border-red-100 rounded-xl hover:bg-red-50">LIMPAR TUDO</button>
+            </div>
+        </div>
+    </div>
 
-        // --- LÓGICA DE NAVEGAÇÃO ENTRE TELAS ---
-        function showScreen(screenToShow) {
-            [mainMenuScreen, bankSelectionScreen, selectionScreen, quizContainer, summaryScreen, historyScreen, resultsContainer].forEach(screen => {
-                screen.classList.add('hidden');
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('SW OK'))
+                    .catch(err => console.log('SW Error:', err));
             });
-            // Esconde o contêiner de resultados dentro do quiz-container
-            if (screenToShow === quizContainer) {
-                resultsContainer.classList.add('hidden');
-            }
-            screenToShow.classList.remove('hidden');
         }
 
-        startNewQuizBtn.addEventListener('click', () => showScreen(bankSelectionScreen));
-        reviewErrorsBtn.addEventListener('click', () => {
-            loadIncorrectQuestions();
-            showScreen(historyScreen);
-        });
-        showSummaryBtn.addEventListener('click', () => showScreen(summaryScreen));
-        
-        backToMainMenuFromBanksBtn.addEventListener('click', () => showScreen(mainMenuScreen));
-        backToBanksBtn.addEventListener('click', () => showScreen(bankSelectionScreen));
-        backToMenuFromSummaryBtn.addEventListener('click', () => showScreen(mainMenuScreen));
-        backToMainMenuFromHistoryBtn.addEventListener('click', () => showScreen(mainMenuScreen));
-        backToSubjectsBtn.addEventListener('click', () => showScreen(selectionScreen));
-        backToMenuBtn.addEventListener('click', () => showScreen(mainMenuScreen));
-        
-        // --- LÓGICA DO MODAL DE CONFIRMAÇÃO (NOVO) ---
-        let confirmCallback = null;
-        function showConfirmationModal(message, callback) {
-            modalMessage.textContent = message;
-            confirmCallback = callback;
-            confirmationModal.classList.remove('hidden');
+        const HVAC_SERVICES = [
+            { nome: "Instalação Split 9000/12000 BTUs", min: 500 },
+            { nome: "Instalação Split 18000/24000 BTUs", min: 750 },
+            { nome: "Instalação Piso Teto / Cassete", min: 1200 },
+            { nome: "Instalação Multi-Split (Por Evaporadora)", min: 450 },
+            { nome: "Desinstalação de Equipamento", min: 250 },
+            { nome: "Limpeza e Higienização (Simples)", min: 200 },
+            { nome: "Limpeza Química (Desmontagem Completa)", min: 350 },
+            { nome: "PMOC (Manutenção Mensal)", min: 80 },
+            { nome: "Carga de Gás (R410A/R22/R32)", min: 280 },
+            { nome: "Troca de Capacitor / Relé", min: 180 },
+            { nome: "Troca de Compressor (Mão de Obra)", min: 450 },
+            { nome: "Correção de Vazamento (Flange/Solda)", min: 250 },
+            { nome: "Teste de Estanqueidade (Nitrogênio)", min: 150 },
+            { nome: "Vácuo no Sistema", min: 150 },
+            { nome: "Visita Técnica / Diagnóstico", min: 120 },
+            { nome: "Infraestrutura (Metro Linear)", min: 100 },
+            { nome: "Instalação de Bomba de Dreno", min: 180 },
+            { nome: "Troca de Placa Eletrônica", min: 200 },
+            { nome: "Higienização de Dutos", min: 400 },
+            { nome: "Reparo em Comando Elétrico", min: 250 }
+        ];
+
+        let state = { 
+            veiculo: 'hatch', 
+            gasolina: 6.15, 
+            logoBase64: null, 
+            meusServicos: [], 
+            historico: [],
+            sinalPercent: 30,
+            appPin: "1234"
+        };
+        const DATA_VEICULOS = { utilitario: { eficiencia: 10.5, custoKm: 0.88 }, hatch: { eficiencia: 11.0, custoKm: 0.45 }, moto: { eficiencia: 35.0, custoKm: 0.20 } };
+
+        const formatBRL = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        function formatarMoeda(input) {
+            let v = input.value.replace(/\D/g, "");
+            v = (v / 100).toFixed(2) + "";
+            v = v.replace(".", ",");
+            v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+            input.value = v === "0,00" ? "" : v; 
+        }
+        function parseMoeda(valorString) {
+            if (!valorString) return 0;
+            return parseFloat(valorString.replace(/\./g, '').replace(',', '.'));
+        }
+        function mascaraTelefone(input) {
+            let v = input.value.replace(/\D/g, "");
+            v = v.substring(0, 11); 
+            if (v.length > 10) v = v.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+            else if (v.length > 5) v = v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+            else if (v.length > 2) v = v.replace(/^(\d\d)(\d{0,5}).*/, "($1) $2");
+            else v = v.replace(/^(\d*)/, "($1");
+            input.value = v;
         }
 
-        modalConfirmBtn.addEventListener('click', () => {
-            if (confirmCallback) {
-                confirmCallback();
-            }
-            confirmationModal.classList.add('hidden');
-        });
-
-        modalCancelBtn.addEventListener('click', () => {
-            confirmationModal.classList.add('hidden');
-        });
-        
-
-        // --- LÓGICA DE AUTENTICAÇÃO ---
-        toggleToRegister.addEventListener('click', (e) => { e.preventDefault(); loginForm.classList.add('hidden'); registerForm.classList.remove('hidden'); loginText.classList.add('hidden'); registerText.classList.remove('hidden'); authError.textContent = ''; });
-        toggleToLogin.addEventListener('click', (e) => { e.preventDefault(); registerForm.classList.add('hidden'); loginForm.classList.remove('hidden'); registerText.classList.add('hidden'); loginText.classList.remove('hidden'); authError.textContent = ''; });
-        
-        const showAuthError = (message) => { authError.textContent = message; };
-
-        const handleAuthSubmit = (e, authFunction) => {
-            e.preventDefault();
-            const form = e.target;
-            const email = form.querySelector('input[type="email"]').value;
-            const password = form.querySelector('input[type="password"]').value;
-            const button = form.querySelector('button[type="submit"]');
-            
-            button.disabled = true;
-            button.textContent = 'Aguarde...';
-            showAuthError('');
-
-            authFunction(auth, email, password)
-              .catch((error) => {
-                  if (error.code === 'auth/weak-password') showAuthError('Senha muito fraca. Use pelo menos 6 caracteres.');
-                  else if (error.code === 'auth/email-already-in-use') showAuthError('Este email já está em uso.');
-                  else if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') showAuthError('Email ou senha inválidos.');
-                  else showAuthError('Ocorreu um erro. Tente novamente.');
-              })
-              .finally(() => {
-                  button.disabled = false;
-                  button.textContent = form.id === 'login-form' ? 'Entrar' : 'Criar Conta';
-              });
+        window.onload = () => {
+            initLogin(); // Inicializa tela de bloqueio
+            loadState();
+            if(state.meusServicos.length === 0) state.meusServicos = JSON.parse(JSON.stringify(HVAC_SERVICES));
+            document.getElementById('dataServico').valueAsDate = new Date();
+            adicionarServico(); renderListaServicosBase(); 
         };
 
-        registerForm.addEventListener('submit', (e) => handleAuthSubmit(e, createUserWithEmailAndPassword));
-        loginForm.addEventListener('submit', (e) => handleAuthSubmit(e, signInWithEmailAndPassword));
-        logoutBtn.addEventListener('click', () => signOut(auth));
+        function loadState() {
+            const saved = localStorage.getItem('refrigBlindadoV5'); 
+            if(saved) state = { ...state, ...JSON.parse(saved) };
+            if(!state.sinalPercent) state.sinalPercent = 30; 
+            if(!state.appPin) state.appPin = "1234";
+            applyConfigToUI();
+            if (!state.historico) state.historico = [];
+        }
+        function saveState() { localStorage.setItem('refrigBlindadoV5', JSON.stringify(state)); }
 
-        onAuthStateChanged(auth, (user) => {
+        function applyConfigToUI() {
+            if(state.logoBase64) {
+                document.getElementById('headerLogoArea').classList.remove('hidden');
+                document.getElementById('headerLogoImg').src = state.logoBase64;
+                document.getElementById('printLogo').src = state.logoBase64;
+                document.getElementById('printLogo').style.display = 'block';
+            } else {
+                document.getElementById('headerLogoArea').classList.add('hidden');
+                document.getElementById('printLogo').style.display = 'none';
+            }
+            document.getElementById('nomePrestador').value = state.prestadorPadrao || "";
+            document.getElementById('configSinal').value = state.sinalPercent || 30;
+        }
+
+        // --- LÓGICA DE LOGIN COM USUÁRIO E SENHA ---
+        
+        function initLogin() {
+            // Se já tem sessão, libera o app
+            if(sessionStorage.getItem('sidrak_session')) {
+                unlockApp();
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('sidrak_users') || "[]");
+            // Se não existem usuários, exibe formulário de cadastro primeiro ou avisa
+            // Mas aqui vamos deixar o login como padrão, e o usuário clica em "Criar Conta"
+        }
+
+        function toggleAuthMode(mode) {
+            const loginForm = document.getElementById('login-form');
+            const regForm = document.getElementById('register-form');
+            
+            if(mode === 'register') {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+            } else {
+                regForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            }
+        }
+
+        function performRegister() {
+            const user = document.getElementById('regUser').value.trim();
+            const pass = document.getElementById('regPass').value;
+            const passConf = document.getElementById('regPassConfirm').value;
+
+            if(!user || !pass) return alert("Preencha todos os campos.");
+            if(pass !== passConf) return alert("As senhas não conferem.");
+
+            const users = JSON.parse(localStorage.getItem('sidrak_users') || "[]");
+            
+            if(users.find(u => u.user === user)) {
+                return alert("Usuário já existe.");
+            }
+
+            users.push({ user, pass }); // Nota: Em produção real, senhas nunca devem ser salvas em texto puro.
+            localStorage.setItem('sidrak_users', JSON.stringify(users));
+            
+            alert("Usuário criado com sucesso! Faça login.");
+            toggleAuthMode('login');
+        }
+
+        function performLogin() {
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value;
+
+            const users = JSON.parse(localStorage.getItem('sidrak_users') || "[]");
+            const found = users.find(u => u.user === user && u.pass === pass);
+
+            if(found) {
+                sessionStorage.setItem('sidrak_session', 'true');
+                unlockApp();
+            } else {
+                alert("Usuário ou senha incorretos.");
+                // Shake effect no form
+                const form = document.getElementById('login-form');
+                form.classList.add('shake-animation');
+                setTimeout(() => form.classList.remove('shake-animation'), 500);
+            }
+        }
+
+        function unlockApp() {
+            const loginScreen = document.getElementById('login-screen');
+            loginScreen.style.opacity = '0';
             setTimeout(() => {
-                if (user) {
-                    appContainer.classList.remove('hidden');
-                    authScreen.classList.add('hidden');
-                    welcomeUser.textContent = `Logado como: ${user.email}`;
-                    showScreen(mainMenuScreen);
-                } else {
-                    appContainer.classList.add('hidden');
-                    authScreen.classList.remove('hidden');
-                }
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }, 500);
-            }, 1000); 
-        });
+                loginScreen.style.display = 'none';
+                document.getElementById('app-wrapper').classList.remove('hidden');
+            }, 500);
+        }
 
-        // --- CONTEÚDO E PESQUISA DO RESUMO TEÓRICO ---
-        const summaryContentContainer = document.getElementById('summary-content');
-        const summarySearchInput = document.getElementById('summary-search-input');
-        const searchResultsInfo = document.getElementById('search-results-info');
-        const originalSummaryHTML = `
-            <h2>1. Informações Gerais sobre o Município de Arapiraca</h2>
-            <h3>Dados Históricos, Geográficos e Econômicos</h3>
-            <p><strong>História:</strong> O povoamento de Arapiraca começou na primeira metade do século XIX. A fundação é atribuída a Manoel André Correia dos Santos. Em 1864, ele construiu a capela de Santa Cruz, dedicando-a a Nossa Senhora do Bom Conselho, padroeira da cidade. O nome "Arapiraca" deriva de uma árvore (angico branco) e, segundo a tradição, significa "ramo que arara visita".</p>
-            <p><strong>Evolução Administrativa:</strong> Foi elevada a município em 30 de outubro de 1924, desmembrada de Limoeiro.</p>
-            <p><strong>Localização:</strong> Agreste alagoano, a 125 km de Maceió.</p>
-            <p><strong>População (Censo 2022):</strong> 234.696 habitantes, sendo a 2ª maior cidade de Alagoas.</p>
-            <p><strong>Economia:</strong> Polo de comércio e serviços. Foi conhecida como "Capital do Fumo" pela grande produção de tabaco no passado.</p>
-            <h3>Datas e Atrativos</h3>
-            <ul>
-                <li><strong>2 de Fevereiro:</strong> Feriado da padroeira, Nossa Senhora do Bom Conselho.</li>
-                <li><strong>30 de Outubro:</strong> Emancipação Política.</li>
-                <li><strong>Atrativos:</strong> Lago da Perucaba, Bosque das Arapiracas, Parque Ceci Cunha, Museu Zezito Guedes, Planetário Digital (maior do gênero no Brasil).</li>
-            </ul>
-            <h2>2. Lei Orgânica do Município</h2>
-            <h3>Princípios e Organização</h3>
-            <p><strong>Autonomia:</strong> O município possui autonomia política, administrativa e financeira (Art. 1º).</p>
-            <p><strong>Poderes:</strong> Executivo (Prefeito) e Legislativo (Câmara Municipal), independentes e harmônicos (Art. 6º).</p>
-            <p><strong>Câmara Municipal:</strong> Composta por 19 vereadores (Art. 7º, §1º).</p>
-            <p><strong>Iniciativa Popular:</strong> Exige assinatura de 1% do eleitorado (Art. 24).</p>
-            <p><strong>Educação:</strong> O município deve aplicar, no mínimo, 25% da receita de impostos em educação (Art. 167).</p>
-             <h2>3. Plano de Cargos e Carreiras</h2>
-            <p>A Lei Orgânica prevê regime jurídico único e planos de carreira, com ingresso por concurso público (Art. 75, 77).</p>
-            <h2>4. Atos Administrativos</h2>
-            <p><strong>Conceito:</strong> Manifestações da Administração Pública. <strong>Espécies:</strong> Normativos (decretos), Ordinatórios (portarias), Negociais (licenças), Enunciativos (certidões) e Punitivos (multas).</p>
-            <h2>5. Documentação e Arquivo</h2>
-            <p><strong>Ciclo Vital:</strong> Corrente, Intermediária e Permanente. <strong>Instrumentos:</strong> Plano de Classificação (organiza por assunto) e Tabela de Temporalidade (define prazos de guarda e destinação).</p>
-            <h2>6. Funções de Protocolo</h2>
-            <p><strong>Atividades:</strong> Recebimento, autuação (criação do processo), tramitação (movimentação), distribuição e expedição de documentos.</p>
-        `;
-        summaryContentContainer.innerHTML = originalSummaryHTML;
+        function logout() {
+            sessionStorage.removeItem('sidrak_session');
+            location.reload();
+        }
 
-        summarySearchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.trim();
-            summaryContentContainer.innerHTML = originalSummaryHTML; // Restaura
+        // --- FUNÇÕES DE BACKUP ---
+        function exportarDados() {
+            const dataStr = JSON.stringify(state);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = 'backup_refrigerista_data.json';
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
 
-            if (searchTerm === '') {
-                searchResultsInfo.classList.add('hidden');
-                return;
-            }
+        function importarDados(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const loadedState = JSON.parse(e.target.result);
+                    if(loadedState && loadedState.meusServicos) {
+                        state = loadedState;
+                        saveState();
+                        alert("Restaurado com sucesso!");
+                        location.reload();
+                    } else { alert("Arquivo inválido."); }
+                } catch(err) { alert("Erro ao ler backup."); }
+            };
+            reader.readAsText(file);
+        }
 
-            const regex = new RegExp(searchTerm, 'gi');
-            let count = 0;
-            const highlightedHTML = originalSummaryHTML.replace(regex, (match) => {
-                count++;
-                return `<mark>${match}</mark>`;
-            });
-
-            summaryContentContainer.innerHTML = highlightedHTML;
-            searchResultsInfo.classList.remove('hidden');
-            searchResultsInfo.textContent = `${count} resultado(s) encontrado(s).`;
-            searchResultsInfo.className = count > 0 ? 'text-sm text-green-600 mb-4' : 'text-sm text-red-600 mb-4';
-        });
-
-        // --- BANCO DE QUESTÕES ---
-        const questionBanks = {
-            '1': [
-                { subject: "Português", question: "Assinale a alternativa em que o uso do acento grave indicativo da crase está CORRETO:", options: ["O pesquisador se dedicou à uma nova teoria.","Eles foram para a praia às pressas.","O documento foi entregue à ele.","As aulas começarão à partir de amanhã."], answer: 1, explanation: "A crase é usada corretamente em 'às pressas', uma locução adverbial feminina." },
-                { subject: "Português", question: "A pontuação está empregada corretamente em:", options: ["O menino, que era muito curioso, abriu a caixa.","O menino que era muito curioso abriu a caixa.","O menino, que era muito curioso abriu a caixa.","O menino que era muito curioso, abriu a caixa."], answer: 0, explanation: "A oração 'que era muito curioso' é uma oração subordinada adjetiva explicativa, devendo ser isolada por vírgulas." },
-                { subject: "Português", question: "Qual das frases abaixo apresenta concordância verbal INCORRETA?", options: ["Fazem cinco anos que não o vejo.","Havia muitos problemas a serem resolvidos.","A maioria dos alunos passou no teste.","Um bando de pássaros sobrevoou a cidade."], answer: 0, explanation: "O verbo 'fazer', indicando tempo, é impessoal. O correto é: 'Faz cinco anos'." },
-                { subject: "Português", question: "Na frase 'Tenho aversão ___ mentiras', a regência nominal do substantivo 'aversão' exige a preposição:", options: ["de","com","a","por"], answer: 2, explanation: "Quem tem aversão, tem aversão 'a' algo. Portanto, 'Tenho aversão a mentiras'." },
-                { subject: "Português", question: "A colocação do pronome oblíquo átono está INCORRETA em:", options: ["Não me diga tal coisa.","Me empresta o livro, por favor?","O assunto que se discute é complexo.","Far-lhe-ei uma visita amanhã."], answer: 1, explanation: "Não se deve iniciar frase com pronome oblíquo átono na norma culta. Correto: 'Empresta-me o livro'." },
-                { subject: "Português", question: "Assinale a alternativa em que todas as palavras estão grafadas corretamente.", options: ["Exceção, ascenção, privilégio.","Paralizar, analisar, pesquisar.","Ansiedade, espontâneo, impecilho.","Pretenção, obsessão, muçulmano."], answer: 2, explanation: "Os erros são: (A) 'ascensão'; (B) 'paralisar'; (D) 'pretensão'." },
-                { subject: "Português", question: "Na frase 'Aquele político é uma raposa', encontramos qual figura de linguagem?", options: ["Metonímia","Hipérbole","Comparação","Metáfora"], answer: 3, explanation: "É uma metáfora, uma comparação implícita." },
-                { subject: "Português", question: "Em 'O saber é o bem mais valioso', a palavra 'saber' é classificada morfologicamente como:", options: ["Verbo","Adjetivo","Substantivo","Advérbio"], answer: 2, explanation: "'Saber' é um verbo substantivado pelo artigo 'O'." },
-                { subject: "Português", question: "Na oração 'Precisa-se de funcionários competentes', o sujeito é:", options: ["Oculto","Indeterminado","Inexistente","Simples (funcionários competentes)"], answer: 1, explanation: "Verbo transitivo indireto + 'se' = sujeito indeterminado." },
-                { subject: "Português", question: "Todas as palavras são acentuadas pela mesma regra em:", options: ["pálido, lâmpada, trânsito","saúde, baú, egoísta","herói, chapéu, anéis","táxi, júri, bônus"], answer: 0, explanation: "Na alternativa A, todas são proparoxítonas." },
-                { subject: "Ética", question: "Segundo a CF/88, a administração pública obedecerá aos princípios de:", options: ["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência.","Legalidade, Pessoalidade, Moralidade, Sigilo e Eficácia.","Soberania, Cidadania, Dignidade da pessoa humana, e Valores sociais.","Probidade, Honestidade, Decoro, Zelo e Lealdade."], answer: 0, explanation: "É o mnemônico LIMPE, do Art. 37 da Constituição Federal." },
-                { subject: "Ética", question: "Constitui ato de improbidade administrativa que importa enriquecimento ilícito:", options: ["Negar publicidade aos atos oficiais.","Frustrar a licitude de concurso público.","Receber vantagem econômica indevida para tolerar a exploração de jogo de azar.","Deixar de prestar contas quando obrigado."], answer: 2, explanation: "Receber vantagem indevida é o núcleo do enriquecimento ilícito (Art. 9º da Lei de Improbidade)." },
-                { subject: "Ética", question: "Conforme a Lei de Acesso à Informação, o prazo para o órgão fornecer a informação é de até:", options: ["10 dias, prorrogável por igual período.","15 dias, improrrogáveis.","20 dias, prorrogável por mais 10 dias.","30 dias, improrrogáveis."], answer: 2, explanation: "O prazo é de 20 dias, prorrogável por mais 10, conforme Art. 11 da LAI." },
-                { subject: "Ética", question: "Qual dos itens abaixo representa um dever fundamental do servidor público?", options: ["Recusar fé a documentos públicos.","Exercer com zelo e dedicação as atribuições do cargo.","Opor resistência injustificada ao andamento de processo.","Promover manifestação de apreço no recinto da repartição."], answer: 1, explanation: "Zelo e dedicação são deveres essenciais ligados ao princípio da eficiência." },
-                { subject: "Ética", question: "A diferença fundamental entre Ética e Moral é que:", options: ["Ética é a prática, Moral é a teoria.","Moral refere-se aos costumes, enquanto Ética é a reflexão filosófica sobre esses costumes.","Não há diferença, os termos são sinônimos.","Moral é universal, enquanto a Ética é cultural."], answer: 1, explanation: "Moral é o conjunto de regras de um grupo; Ética é a reflexão sobre essas regras." },
-                { subject: "Ética", question: "O princípio que impõe ao servidor realizar suas atribuições com presteza e perfeição é o da:", options: ["Moralidade","Publicidade","Legalidade","Eficiência"], answer: 3, explanation: "Eficiência busca os melhores resultados com os menores custos, incluindo presteza e perfeição." },
-                { subject: "Ética", question: "A conduta de tratar os colegas e o público com cortesia e respeito é mais associada ao princípio da:", options: ["Produtividade","Assiduidade","Urbanidade","Lealdade"], answer: 2, explanation: "Urbanidade é o dever de civilidade e cortesia no trato com as pessoas." },
-                { subject: "Ética", question: "A lealdade do servidor à instituição que serve visa, principalmente:", options: ["Proteger seus superiores hierárquicos.","Garantir os objetivos da instituição, alinhados ao interesse público.","Evitar a fiscalização externa.","Obter vantagens pessoais."], answer: 1, explanation: "A lealdade é para com a instituição e o interesse público, não para com indivíduos." },
-                { subject: "Ética", question: "A probidade administrativa está diretamente ligada ao dever de:", options: ["Agir sempre com honestidade e integridade no trato da coisa pública.","Apenas cumprir os prazos e horários.","Divulgar todos os atos administrativos, sem exceção.","Obedecer a ordens manifestamente ilegais."], answer: 0, explanation: "Probidade é sinônimo de honestidade e retidão na gestão pública." },
-                { subject: "Ética", question: "Atenta contra os princípios da administração pública a conduta de:", options: ["Adquirir bens com valor desproporcional ao seu patrimônio.","Facilitar aquisição de bem por preço superior ao de mercado.","Receber vantagem para omitir ato de ofício.","Revelar fato sigiloso de que tem ciência em razão das atribuições."], answer: 3, explanation: "Revelar fato sigiloso viola os princípios da administração (Art. 11 da Lei de Improbidade)." },
-                { subject: "Informática", question: "Qual componente de hardware é o 'cérebro' do computador?", options: ["Memória RAM","Disco Rígido (HD/SSD)","CPU (Unidade Central de Processamento)","Placa de Vídeo"], answer: 2, explanation: "A CPU (Unidade Central de Processamento) é responsável por executar a maioria das instruções." },
-                { subject: "Informática", question: "Qual das seguintes opções NÃO é um sistema operacional?", options: ["Windows 10","Linux Ubuntu","Microsoft Word","Android"], answer: 2, explanation: "Microsoft Word é um software aplicativo (processador de texto)." },
-                { subject: "Informática", question: "Em segurança da informação, qual é a principal função de um firewall?", options: ["Remover vírus de arquivos infectados.","Criar cópias de segurança dos dados.","Filtrar o tráfego de rede, com base em regras de segurança.","Criptografar e-mails para garantir o sigilo."], answer: 2, explanation: "Um firewall atua como uma barreira controlando o tráfego de rede." },
-                { subject: "Informática", question: "No Excel ou Calc, qual fórmula calcula a soma do intervalo de A1 a A10?", options: ["=SOMA(A1:A10)","=TOTAL(A1-A10)","=ADICIONAR(A1..A10)","=S(A1+A10)"], answer: 0, explanation: "A função padrão é SOMA(célula_inicial:célula_final)." },
-                { subject: "Informática", question: "A principal diferença entre Internet e Intranet é:", options: ["A Intranet é mais rápida.","São a mesma tecnologia.","Internet usa cabos e Intranet usa sem fio.","A Internet é pública e global, a Intranet é privada e restrita."], answer: 3, explanation: "A Intranet é uma rede corporativa privada que usa a tecnologia da Internet." },
-                { subject: "Informática", question: "A LGPD (Lei Geral de Proteção de Dados) tem como principal objetivo:", options: ["Regular o comércio eletrônico.","Punir crimes cibernéticos.","Proteger os direitos de liberdade e de privacidade da pessoa natural.","Definir regras para redes sociais."], answer: 2, explanation: "O foco da LGPD é a proteção de dados pessoais e a privacidade." },
-                { subject: "Informática", question: "Qual aplicativo do LibreOffice é o equivalente ao Microsoft PowerPoint?", options: ["Writer","Calc","Impress","Draw"], answer: 2, explanation: "Impress é o software de apresentações do pacote LibreOffice." },
-                { subject: "Informática", question: "Qual atalho de teclado abre uma nova aba em navegadores?", options: ["Ctrl + N","Ctrl + T","Ctrl + W","Alt + Tab"], answer: 1, explanation: "Ctrl + T (Tab) abre uma nova aba. Ctrl + N abre uma nova janela." },
-                { subject: "Informática", question: "Uma impressora multifuncional é classificada como periférico de:", options: ["Apenas Entrada","Apenas Saída","Entrada e Saída","Apenas Armazenamento"], answer: 2, explanation: "É de Entrada (scanner) e Saída (impressora)." },
-                { subject: "Informática", question: "O que significa a sigla 'HTTP'?", options: ["High Transfer Text Protocol","Hypertext Transfer Protocol","Home Transfer Task Protocol","Hyperlink Text Translation Protocol"], answer: 1, explanation: "HTTP significa Hypertext Transfer Protocol (Protocolo de Transferência de Hipertexto)." },
-                { subject: "Conhecimentos Específicos", question: "Um ato administrativo que concede uma licença a um servidor, após este cumprir todos os requisitos legais, é classificado como um ato:", options: ["Discricionário", "Vinculado", "Normativo", "Enunciativo"], answer: 1, explanation: "É um ato vinculado, pois a administração é obrigada a concedê-lo se os requisitos forem cumpridos." },
-                { subject: "Conhecimentos Específicos", question: "O ciclo de vida dos documentos em arquivologia é dividido nas fases:", options: ["Criação, Uso e Descarte", "Rascunho, Oficial e Histórico", "Corrente, Intermediária e Permanente", "Ativo, Passivo e Inativo"], answer: 2, explanation: "A teoria das três idades: Corrente, Intermediária e Permanente." },
-                { subject: "Conhecimentos Específicos", question: "Um ato administrativo, emitido por autoridade, com uma decisão ou encaminhamento sobre um processo, é denominado:", options: ["Portaria", "Circular", "Apostila", "Despacho"], answer: 3, explanation: "O despacho dá andamento ou decide sobre um processo/requerimento." },
-                { subject: "Conhecimentos Específicos", question: "Qual documento é a comunicação entre unidades administrativas de um mesmo órgão?", options: ["Ofício", "Exposição de Motivos", "Memorando", "Aviso"], answer: 2, explanation: "O memorando é a comunicação interna por excelência." },
-                { subject: "Conhecimentos Específicos", question: "A juntada definitiva de um processo a outro por terem o mesmo objeto é chamada de:", options: ["Apensação", "Desmembramento", "Anexação", "Autuação"], answer: 2, explanation: "Anexação é a união permanente. Apensação é temporária." },
-                { subject: "Conhecimentos Específicos", question: "O atributo que permite à Administração executar seus atos diretamente, sem o Judiciário, é a:", options: ["Presunção de Legitimidade", "Imperatividade", "Tipicidade", "Autoexecutoriedade"], answer: 3, explanation: "A autoexecutoriedade é a capacidade de executar as próprias decisões." },
-                { subject: "Conhecimentos Específicos", question: "O instrumento arquivístico que determina o tempo de guarda e a destinação de um documento é a:", options: ["Plano de Classificação", "Tabela de Temporalidade", "Inventário Documental", "Índice de Assuntos"], answer: 1, explanation: "A Tabela de Temporalidade define prazos de guarda e destinação final." },
-                { subject: "Conhecimentos Específicos", question: "O ato que dá início a um processo administrativo, com capa e numeração, é chamado de:", options: ["Protocolo", "Distribuição", "Autuação", "Tramitação"], answer: 2, explanation: "Autuação é o ato de formar o processo." },
-                { subject: "Conhecimentos Específicos", question: "A extinção de um ato administrativo por conveniência e oportunidade é feita por:", options: ["Anulação", "Revogação", "Cassação", "Caducidade"], answer: 1, explanation: "A revogação extingue um ato válido por não ser mais oportuno. A anulação ocorre por ilegalidade." },
-                { subject: "Conhecimentos Específicos", question: "O método de gestão de materiais que classifica itens em categorias (A, B, C) por valor de demanda é:", options: ["Curva ABC", "Estoque Mínimo", "Just-in-Time", "Custo Padrão"], answer: 0, explanation: "A Curva ABC prioriza itens com base no valor de demanda." },
-                { subject: "Conhecimentos Específicos", question: "O poder da Administração de apurar infrações e aplicar penalidades aos seus servidores é o poder:", options: ["Hierárquico", "Regulamentar", "De Polícia", "Disciplinar"], answer: 3, explanation: "O Poder Disciplinar permite à Administração punir internamente seus agentes." },
-                { subject: "Conhecimentos Específicos", question: "Qual princípio arquivístico diz que documentos de uma fonte não devem ser misturados com os de outra?", options: ["Princípio da Unicidade", "Princípio da Proveniência", "Princípio da Cumulatividade", "Princípio da Ordem Original"], answer: 1, explanation: "O Princípio da Proveniência (ou respeito aos fundos) é a base da arquivologia." },
-                { subject: "Conhecimentos Específicos", question: "A conferência que compara o material recebido com a nota fiscal e o pedido de compra é a:", options: ["Qualitativa", "Intrínseca", "Quantitativa", "Logística"], answer: 2, explanation: "A conferência quantitativa verifica se as quantidades estão corretas." },
-                { subject: "Conhecimentos Específicos", question: "A Lei Orgânica do Município é considerada a:", options: ["Principal lei tributária do município.", "Lei que organiza apenas o Poder Executivo.", "Constituição do Município, definindo sua estrutura e funcionamento.", "Norma que regula as eleições municipais."], answer: 2, explanation: "A Lei Orgânica é a 'Constituição Municipal', sua lei mais importante." },
-                { subject: "Conhecimentos Específicos", question: "O registro cronológico de recebimento e expedição de documentos é função do serviço de:", options: ["Arquivo", "Protocolo", "Almoxarifado", "Comunicação Social"], answer: 1, explanation: "O protocolo controla o fluxo de entrada e saída de documentos." },
-                { subject: "Conhecimentos Específicos", question: "Qual das seguintes opções é uma forma de provimento de cargo público efetivo?", options: ["Exoneração", "Demissão", "Readaptação", "Nomeação"], answer: 3, explanation: "Nomeação é a forma originária de provimento. As outras são vacância ou provimento derivado." },
-                { subject: "Conhecimentos Específicos", question: "Diferentemente de uma biblioteca, um arquivo é composto por:", options: ["Documentos de valor artístico.", "Documentos produzidos/recebidos por uma instituição em suas atividades.", "Livros e periódicos para consulta.", "Coleções de objetos raros."], answer: 1, explanation: "Um documento de arquivo tem natureza orgânica, sendo resultado das atividades de uma instituição." },
-                { subject: "Conhecimentos Específicos", question: "Um documento que contém um pronunciamento de um órgão colegiado sobre um assunto é um(a):", options: ["Ata", "Relatório", "Parecer", "Requerimento"], answer: 2, explanation: "O parecer é a manifestação técnica ou administrativa para subsidiar uma decisão." },
-                { subject: "Conhecimentos Específicos", question: "O ato de eliminar documentos que já cumpriram seus prazos de guarda é chamado de:", options: ["Recolhimento", "Transferência", "Descarte", "Alienação"], answer: 2, explanation: "O descarte é a destruição formal de documentos sem valor permanente." },
-                { subject: "Conhecimentos Específicos", question: "Os poderes Executivo e Legislativo do município são exercidos por:", options: ["Câmara Municipal e Prefeito.", "Prefeito e Secretários.", "Prefeito e Câmara Municipal.", "Juiz de Direito e Promotor de Justiça."], answer: 2, explanation: "Executivo é o Prefeito; Legislativo é a Câmara Municipal." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual atividade agrícola foi a base da economia de Arapiraca, rendendo-lhe o apelido de 'Capital Brasileira do Fumo'?", options: ["Cultura do algodão", "Cultura da cana-de-açúcar", "Cultura do fumo", "Cultura do milho"], answer: 2, explanation: "A cultura do fumo foi o motor do desenvolvimento de Arapiraca no século XX." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "A cidade de Arapiraca está localizada em qual mesorregião de Alagoas?", options: ["Leste Alagoano", "Sertão Alagoano", "Agreste Alagoano", "Zona da Mata Alagoana"], answer: 2, explanation: "Arapiraca é a cidade-polo do Agreste Alagoano." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a Lei Orgânica de Arapiraca, o Poder Legislativo é exercido:", options: ["Pelo Prefeito e seus Secretários.", "Pela Câmara Municipal.", "Pelos Juízes de Direito da comarca.", "Pelo Conselho Municipal de Educação."], answer: 1, explanation: "A função legislativa municipal é da Câmara Municipal." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Além da bandeira e do hino, qual é o outro símbolo oficial de Arapiraca?", options: ["A árvore Arapiraca", "O Mercado do Artesanato", "O Brasão de Armas", "O Bosque das Arapiracas"], answer: 2, explanation: "Os símbolos oficiais são a bandeira, o hino e o brasão." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Atualmente, a economia de Arapiraca é fortemente marcada pelo dinamismo de qual setor?", options: ["Indústria pesada", "Extrativismo mineral", "Comércio e Serviços", "Agropecuária de larga escala"], answer: 2, explanation: "Arapiraca consolidou-se como um grande polo regional de comércio e serviços." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "De acordo com a tradição e a ciência, o nome 'Arapiraca' refere-se a:", options: ["Um rio de águas claras.", "Um líder indígena da região.", "Uma árvore da família das Leguminosas Mimosáceas (Angico Branco).", "Uma formação rochosa."], answer: 2, explanation: "O nome 'Arapiraca' vem de uma árvore de angico branco, sob a qual o fundador Manoel André descansou. A tradição popular diz que significa 'ramo que arara visita'." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual foi o motivo principal que levou Manoel André Correia dos Santos a se estabelecer na região que viria a ser Arapiraca em 1848?", options: ["Ele estava fugindo da convocação para a Guerra do Paraguai.", "Ele foi enviado por seu sogro, Capitão Amaro da Silva Valente, para ocupar terras após um incidente familiar.", "Ele estava em uma expedição em busca de ouro.", "Ele foi nomeado administrador da região pelo governo provincial."], answer: 1, explanation: "O sogro de Manoel André, Capitão Amaro da Silva Valente, o enviou para ocupar as terras de Alto do Espigão do Simão de Cangandu devido a um sério incidente com seu cunhado." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Qual foi a primeira construção de referência erguida por Manoel André no local que se tornaria o centro de Arapiraca?", options: ["A sede de uma grande fazenda de gado.", "Uma casa de farinha.", "Uma cabana de madeira coberta com cascas de angico, à sombra da árvore Arapiraca.", "Uma fortaleza para defesa contra ataques."], answer: 2, explanation: "Antes mesmo da primeira casa, Manoel André construiu uma cabana provisória sob a árvore Arapiraca, que se tornou o marco inicial do povoado." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Além de Manoel André, qual outro genro do Capitão Amaro da Silva Valente foi um dos primeiros povoadores, ocupando a parte sul da propriedade?", options: ["Manoel Cupertino de Albuquerque", "José Veríssimo dos Santos", "Domingos Nunes Barbosa", "Pedro Cavalcante de Albuquerque"], answer: 1, explanation: "O texto informa que em 1858, o Capitão Amaro enviou outro genro, José Veríssimo dos Santos, para ocupar a parte sul da propriedade, denominada Cacimbas." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "A formação do povoado de Arapiraca foi marcada por um forte entrelaçamento familiar. Quem era o sogro em comum dos pioneiros Manoel André e José Veríssimo?", options: ["José Ferreira de Macedo", "Manoel Cupertino de Albuquerque", "Capitão Amaro da Silva Valente Macedo", "Bernardino José dos Santos"], answer: 2, explanation: "O texto deixa claro que tanto Manoel André quanto José Veríssimo eram genros do Capitão Amaro da Silva Valente Macedo, que foi o proprietário original das terras e orquestrou a ocupação inicial." }
-            ],
-            '2': [
-                { subject: "Português", question: "A palavra 'história' é acentuada por ser uma:", options: ["Oxítona terminada em 'a'.", "Proparoxítona.", "Paroxítona terminada em ditongo.", "Monossílaba tônica."], answer: 2, explanation: "Acentuam-se as paroxítonas terminadas em ditongo crescente, como 'his-tó-ria'." },
-                { subject: "Português", question: "Na frase 'Os atletas chegaram exaustos à competição', a palavra 'exaustos' funciona como:", options: ["Adjetivo", "Predicativo do sujeito", "Advérbio de modo", "Objeto direto"], answer: 1, explanation: "'Exaustos' é um predicativo do sujeito, pois caracteriza o sujeito 'Os atletas' através do verbo de ligação implícito no estado em que chegaram." },
-                { subject: "Português", question: "A concordância nominal está INCORRETA em:", options: ["É proibido entrada de estranhos.", "Água é ótima para a saúde.", "Compramos bastantes frutas na feira.", "As modelos usavam vestidos o mais elegantes possível."], answer: 0, explanation: "Quando o sujeito não vem determinado por artigo, o adjetivo concorda com 'proibido'. O correto seria 'É proibida a entrada...'. Sem o artigo, a forma masculina 'proibido' é usada." },
-                { subject: "Português", question: "Em 'Ele agiu contra ___ vontade dos pais', a crase é:", options: ["Obrigatória", "Facultativa", "Incorreta", "Opcional, mas não recomendada"], answer: 2, explanation: "Não se usa crase antes de substantivos masculinos ('contra o querer'). A preposição 'a' não se funde com um artigo ausente." },
-                { subject: "Português", question: "A voz passiva analítica da frase 'O governo construirá novas escolas' é:", options: ["Construir-se-ão novas escolas.", "Novas escolas serão construídas pelo governo.", "Novas escolas foram construídas pelo governo.", "O governo terá construído novas escolas."], answer: 1, explanation: "A voz passiva analítica é formada pelo verbo 'ser' no mesmo tempo do verbo principal da ativa, mais o particípio do verbo principal." },
-                { subject: "Português", question: "Qual das palavras abaixo está com a grafia INCORRETA?", options: ["Disenteria", "Previlégio", "Digladiar", "Meteorologia"], answer: 1, explanation: "A forma correta é 'privilégio', com 'i' na segunda sílaba." },
-                { subject: "Português", question: "Em 'O tempo urgia, por isso apressei o passo', a conjunção 'por isso' estabelece uma relação de:", options: ["Causa", "Condição", "Conclusão", "Concessão"], answer: 2, explanation: "A conjunção 'por isso' é conclusiva, indicando uma consequência lógica do fato anterior." },
-                { subject: "Português", question: "Qual o período composto por coordenação e subordinação?", options: ["Saí de casa e encontrei um amigo.", "Quando cheguei, a festa já tinha acabado.", "Ele disse que viria, mas não apareceu.", "O aluno que estuda, passa."], answer: 2, explanation: "Temos uma oração coordenada adversativa ('mas não apareceu') e uma oração subordinada substantiva objetiva direta ('que viria')." },
-                { subject: "Português", question: "A palavra 'imoral' é formada pelo processo de:", options: ["Derivação sufixal", "Derivação parassintética", "Composição por aglutinação", "Derivação prefixal"], answer: 3, explanation: "O prefixo 'i-' (de negação) é adicionado à palavra primitiva 'moral'." },
-                { subject: "Português", question: "Identifique a função sintática do termo destacado em 'A cidade foi cercada *de inimigos*'.", options: ["Objeto indireto", "Complemento nominal", "Agente da passiva", "Adjunto adnominal"], answer: 2, explanation: "O termo 'de inimigos' é o agente da ação na voz passiva, correspondendo ao sujeito da voz ativa ('Inimigos cercaram a cidade')." },
-                { subject: "Ética", question: "O servidor que utiliza recursos materiais da repartição em serviços ou atividades particulares comete ato que atenta contra o princípio da:", options: ["Eficiência", "Legalidade", "Moralidade", "Publicidade"], answer: 2, explanation: "Usar bens públicos para fins privados é uma violação direta da moralidade e da probidade administrativa." },
-                { subject: "Ética", question: "A recusa de um servidor em fornecer informações públicas, não protegidas por sigilo, fere qual princípio e qual lei?", options: ["Princípio da Eficiência e Lei de Improbidade.", "Princípio da Impessoalidade e Constituição Federal.", "Princípio da Publicidade e Lei de Acesso à Informação.", "Princípio da Legalidade e Estatuto do Servidor."], answer: 2, explanation: "A publicidade é o princípio que rege a transparência dos atos, e a recusa fere diretamente a Lei nº 12.527/2011 (LAI)." },
-                { subject: "Ética", question: "Um servidor que recebe um presente de alto valor de uma empresa que tem contrato com seu órgão pode ser enquadrado em:", options: ["Conflito de Interesses", "Exercício regular de direito", "Mero ato de cortesia", "Dever de urbanidade"], answer: 0, explanation: "Receber vantagens de partes interessadas nas decisões do agente público configura um claro conflito entre o interesse público e o privado." },
-                { subject: "Ética", question: "O dever de manter sigilo sobre assuntos da repartição abrange:", options: ["Apenas informações secretas de Estado.", "Todas as informações, internas e externas.", "Fatos de que tenha ciência em razão do cargo e que não sejam públicos.", "Apenas conversas com superiores hierárquicos."], answer: 2, explanation: "O dever de sigilo se refere a informações não públicas às quais o servidor tem acesso devido ao exercício de suas funções." },
-                { subject: "Ética", question: "A diferença primordial entre improbidade administrativa e infração disciplinar é:", options: ["A improbidade gera demissão, a infração não.", "A improbidade é julgada pelo Judiciário com sanções mais amplas; a infração é apurada administrativamente com sanções funcionais.", "Não há diferença, são termos para o mesmo ato.", "A improbidade é um crime, a infração é um ato administrativo."], answer: 1, explanation: "A infração disciplinar é apurada no âmbito administrativo (sindicância, PAD), com penas como advertência ou demissão. A improbidade é uma ilegalidade qualificada, julgada na esfera judicial, com sanções mais graves como perda de direitos políticos e ressarcimento." },
-                { subject: "Ética", question: "O zelo no serviço público significa:", options: ["Trabalhar além do horário para mostrar serviço.", "Cuidar dos bens públicos como se fossem seus e desempenhar as funções com cuidado e atenção.", "Apenas ser pontual e assíduo.", "Cumprir ordens sem questionar, mesmo que pareçam incorretas."], answer: 1, explanation: "Zelo envolve o cuidado com o patrimônio público e a dedicação na execução das tarefas." },
-                { subject: "Ética", question: "Qual conduta NÃO é vedada ao servidor público?", options: ["Retirar, sem prévia anuência da autoridade, qualquer documento ou objeto da repartição.", "Promover manifestação de apreço ou desapreço no recinto da repartição.", "Participar de gerência ou administração de empresa privada, na condição de acionista.", "Valer-se do cargo para lograr proveito pessoal."], answer: 2, explanation: "A lei veda a participação na gerência ou administração, mas não proíbe ser acionista ou cotista, desde que não haja conflito de interesses." },
-                { subject: "Ética", question: "O direito de petição, assegurado ao servidor e aos cidadãos, está ligado ao princípio da:", options: ["Inafastabilidade da jurisdição", "Ampla defesa e contraditório", "Democracia e cidadania", "Eficiência administrativa"], answer: 2, explanation: "O direito de petição é uma expressão da cidadania, permitindo que qualquer pessoa se dirija ao poder público para defender direitos ou se manifestar contra ilegalidades." },
-                { subject: "Ética", question: "A honestidade no serviço público se manifesta quando o servidor:", options: ["Apenas não furta ou desvia bens públicos.", "Age com retidão, transparência e sinceridade, sem buscar vantagens indevidas.", "Trata bem seus colegas de trabalho.", "Completa todas as suas tarefas no prazo."], answer: 1, explanation: "A honestidade é um conceito amplo que vai além da apropriação de bens, incluindo a retidão de caráter e a transparência em todas as ações." },
-                { subject: "Ética", question: "A publicidade dos atos administrativos, como regra, visa garantir:", options: ["O controle social e a transparência.", "Apenas a validade jurídica do ato.", "A autopromoção dos gestores públicos.", "A arrecadação de taxas e emolumentos."], answer: 0, explanation: "A principal função da publicidade é permitir que a sociedade fiscalize as ações da administração pública, promovendo a transparência e o controle social." },
-                { subject: "Informática", question: "O que é um 'phishing' no contexto de segurança digital?", options: ["Um tipo de vírus que se replica automaticamente.", "Um software que protege o computador contra-ataques.", "Uma técnica para enganar usuários e obter informações confidenciais, como senhas e dados bancários.", "Uma falha de segurança em um sistema operacional."], answer: 2, explanation: "'Phishing' (pescaria) é uma fraude eletrônica onde o criminoso se passa por uma entidade confiável para 'pescar' informações sensíveis da vítima." },
-                { subject: "Informática", question: "Qual é a principal vantagem de um SSD (Solid State Drive) em comparação com um HD (Hard Disk Drive) tradicional?", options: ["Maior capacidade de armazenamento pelo mesmo preço.", "Maior durabilidade contra quedas e impactos.", "Velocidade de leitura e escrita de dados significativamente maior.", "Compatibilidade com sistemas operacionais mais antigos."], answer: 2, explanation: "SSDs não possuem partes móveis, o que lhes permite acessar dados de forma quase instantânea, resultando em um sistema muito mais rápido." },
-                { subject: "Informática", question: "No Google Chrome, qual o atalho para reabrir a última aba que foi fechada?", options: ["Ctrl + T", "Ctrl + Shift + R", "Ctrl + H", "Ctrl + Shift + T"], answer: 3, explanation: "Ctrl + Shift + T é um atalho extremamente útil para restaurar abas fechadas acidentalmente." },
-                { subject: "Informática", question: "O que significa 'armazenamento em nuvem' (Cloud Storage)?", options: ["Salvar arquivos em um servidor remoto acessível pela internet.", "Usar um pendrive de alta capacidade.", "Fazer um backup em um HD externo.", "Criar uma partição especial no disco rígido do computador."], answer: 0, explanation: "Serviços como Google Drive, OneDrive e Dropbox armazenam seus arquivos em servidores de data centers, permitindo o acesso de qualquer lugar com internet." },
-                { subject: "Informática", question: "Qual dos seguintes formatos de arquivo é mais comumente usado para documentos de texto que preservam a formatação original e não são facilmente editáveis?", options: [".DOCX", ".TXT", ".PDF", ".XLSX"], answer: 2, explanation: "PDF (Portable Document Format) foi criado para apresentar documentos de maneira consistente, independentemente do software, hardware ou sistema operacional." },
-                { subject: "Informática", question: "Para que serve a 'limpeza de cache' em um navegador de internet?", options: ["Para apagar senhas salvas e histórico de navegação.", "Para remover arquivos temporários que podem causar problemas de visualização em sites.", "Para aumentar a velocidade da conexão com a internet.", "Para desinstalar extensões e plugins indesejados."], answer: 1, explanation: "O cache armazena partes de sites (imagens, scripts) para carregá-los mais rápido no futuro. Limpá-lo força o navegador a baixar as versões mais recentes, resolvendo problemas de exibição." },
-                { subject: "Informática", question: "Em uma planilha eletrônica (Excel/Calc), se a célula A1 tem o valor 10 e a célula A2 tem o valor 20, qual será o resultado da fórmula '=SE(A1>5;A2*2;A2/2)'?", options: ["10", "20", "40", "5"], answer: 2, explanation: "A fórmula SE testa uma condição. Como A1 (10) é maior que 5 (verdadeiro), a fórmula executa a segunda parte: A2 (20) * 2, que resulta em 40." },
-                { subject: "Informática", question: "Qual é a função do 'Modo de Segurança' do Windows?", options: ["Navegar na internet de forma anônima.", "Iniciar o sistema com um conjunto mínimo de drivers e serviços para solucionar problemas.", "Proteger o computador contra ransomware.", "Executar aplicativos em um ambiente isolado."], answer: 1, explanation: "O Modo de Segurança é uma ferramenta de diagnóstico que carrega apenas o essencial para o funcionamento do Windows, ajudando a identificar e resolver falhas." },
-                { subject: "Informática", question: "A topologia de rede em que todos os computadores se conectam a um dispositivo central, como um switch ou hub, é chamada de:", options: ["Anel (Ring)", "Barramento (Bus)", "Estrela (Star)", "Malha (Mesh)"], answer: 2, explanation: "Na topologia em estrela, a falha de um cabo afeta apenas um computador, e a falha do dispositivo central paralisa a rede." },
-                { subject: "Informática", question: "Qual a diferença entre CC e CCO no envio de um e-mail?", options: ["Não há diferença prática.", "CC envia uma cópia visível a todos; CCO envia uma cópia oculta dos outros destinatários.", "CCO é para respostas; CC é para novos e-mails.", "CC é para destinatários principais; CCO é para secundários."], answer: 1, explanation: "CC (Com Cópia) permite que todos vejam quem recebeu a mensagem. CCO (Com Cópia Oculta) esconde os endereços dos outros destinatários, garantindo a privacidade." },
-                { subject: "Conhecimentos Específicos", question: "Quais são os cinco elementos ou requisitos de validade do ato administrativo?", options: ["Legalidade, Moralidade, Finalidade, Motivo e Objeto.", "Competência, Finalidade, Forma, Motivo e Objeto.", "Sujeito, Vontade, Causa, Objeto e Forma.", "Agente, Eficiência, Publicidade, Forma e Causa."], answer: 1, explanation: "São os elementos essenciais para a validade de qualquer ato administrativo: Competência (quem pode praticar), Finalidade (o interesse público a ser alcançado), Forma (o modo como se exterioriza), Motivo (a situação de fato e de direito) e Objeto (o conteúdo do ato)." },
-                { subject: "Conhecimentos Específicos", question: "A anulação de um ato administrativo difere da revogação porque:", options: ["A anulação tem efeitos para o futuro (ex nunc); a revogação retroage (ex tunc).", "A anulação decorre de ilegalidade e retroage; a revogação ocorre por conveniência e não retroage.", "A anulação só pode ser feita pelo Judiciário; a revogação, pela própria Administração.", "A anulação é para atos vinculados; a revogação, para atos discricionários."], answer: 1, explanation: "A anulação é a extinção de um ato ilegal, com efeitos retroativos (ex tunc). A revogação é a extinção de um ato legal, mas que se tornou inoportuno, com efeitos para o futuro (ex nunc)." },
-                { subject: "Conhecimentos Específicos", question: "O que é um arquivo setorial ou de gestão?", options: ["É o arquivo central de um órgão, que guarda documentos permanentes.", "É o arquivo de uma unidade específica (setor, departamento) que guarda seus documentos de uso corrente.", "É um arquivo localizado em outro prédio.", "É o local onde os documentos são eliminados."], answer: 1, explanation: "Os arquivos setoriais são descentralizados e ficam próximos aos setores que produzem e utilizam os documentos com frequência (fase corrente)." },
-                { subject: "Conhecimentos Específicos", question: "Qual modalidade de licitação é utilizada para a compra de bens e serviços comuns, de qualquer valor, por meio de lances em sessão pública?", options: ["Convite", "Tomada de Preços", "Concorrência", "Pregão"], answer: 3, explanation: "O Pregão, principalmente em sua forma eletrônica, é a modalidade preferencial para bens e serviços comuns, caracterizado pela disputa de preços por meio de lances." },
-                { subject: "Conhecimentos Específicos", question: "A avaliação de desempenho de um servidor público visa principalmente:", options: ["Justificar punições e demissões.", "Promover a competição entre os servidores.", "Identificar necessidades de capacitação e subsidiar a progressão na carreira.", "Controlar o horário de entrada e saída dos funcionários."], answer: 2, explanation: "É uma ferramenta de gestão de pessoas para desenvolver os servidores, melhorar o serviço e dar base para promoções e outras formas de desenvolvimento na carreira." },
-                { subject: "Conhecimentos Específicos", question: "O poder da Administração de editar atos gerais e abstratos para complementar as leis e permitir sua fiel execução é o poder:", options: ["Disciplinar", "Hierárquico", "De Polícia", "Regulamentar (ou Normativo)"], answer: 3, explanation: "O Poder Regulamentar se manifesta por meio de decretos e regulamentos, que detalham a aplicação da lei, sem inovar ou contrariá-la." },
-                { subject: "Conhecimentos Específicos", question: "O que é 'desmembramento' no contexto da gestão de processos?", options: ["A união de dois processos em um só.", "A separação de partes de um processo para formar um novo processo.", "O cancelamento de um processo.", "A inserção de folhas em um processo já existente."], answer: 1, explanation: "O desmembramento ocorre quando um ou mais documentos de um processo são separados para formar um novo processo, por tratarem de matéria diversa." },
-                { subject: "Conhecimentos Específicos", question: "O ato administrativo que impõe uma obrigação ou restrição a um particular, como uma multa de trânsito, possui qual atributo?", options: ["Negocial", "Autoexecutoriedade", "Imperatividade", "Tipicidade"], answer: 2, explanation: "A imperatividade é o atributo pelo qual o ato se impõe a terceiros, independentemente de sua concordância, criando obrigações unilaterais." },
-                { subject: "Conhecimentos Específicos", question: "Um documento de arquivo é considerado 'ostensivo' quando:", options: ["Seu acesso é restrito por sigilo legal.", "Ele é antigo e de valor histórico.", "Seu acesso é público e irrestrito.", "Ele foi produzido em formato digital."], answer: 2, explanation: "Documentos ostensivos são aqueles que não contêm informações sigilosas e, portanto, podem ser acessados livremente pelo público." },
-                { subject: "Conhecimentos Específicos", question: "O documento administrativo que formaliza a gravação dos fatos, deliberações e decisões de uma reunião ou assembleia é a:", options: ["Ata", "Portaria", "Circular", "Relatório"], answer: 0, explanation: "A ata é o registro fiel e sucinto de tudo o que ocorreu em uma sessão ou reunião, servindo como documento de valor probatório." },
-                { subject: "Conhecimentos Específicos", question: "A fase do processo de aquisição de materiais que envolve a pesquisa de fornecedores e a cotação de preços é a:", options: ["Seleção", "Recebimento", "Licitação", "Compra"], answer: 3, explanation: "A fase de compra (ou aquisição) é onde se realizam os procedimentos para efetivamente adquirir o material, o que inclui a cotação de preços e a escolha do fornecedor, muitas vezes por meio de licitação." },
-                { subject: "Conhecimentos Específicos", question: "O que é 'vacância' de um cargo público?", options: ["É a nomeação de um novo servidor.", "É quando o cargo público fica vago, ou seja, sem titular.", "É a promoção do servidor para um cargo superior.", "É a licença do servidor para tratar de assuntos particulares."], answer: 1, explanation: "A vacância ocorre quando o vínculo do servidor com o cargo é extinto, deixando o cargo livre para ser preenchido novamente. Exoneração e demissão são exemplos de vacância." },
-                { subject: "Conhecimentos Específicos", question: "O princípio arquivístico da 'Ordem Original' determina que:", options: ["Os arquivos devem ser organizados por ordem alfabética.", "A organização interna de um fundo de arquivo deve ser mantida ou respeitada.", "Os documentos mais antigos devem ser guardados separadamente.", "Apenas os documentos originais devem ser arquivados."], answer: 1, explanation: "Este princípio, também chamado de 'princípio do respeito à ordem interna', defende que a ordem dada pelo produtor do arquivo reflete suas atividades e deve ser preservada." },
-                { subject: "Conhecimentos Específicos", question: "A comunicação oficial enviada por um chefe de poder a outro (ex: Prefeito para Presidente da Câmara) é tipicamente feita por:", options: ["Memorando", "Ofício", "Exposição de Motivos", "Mensagem"], answer: 3, explanation: "Mensagem é a comunicação oficial entre chefes dos poderes, especialmente do Executivo para o Legislativo, para fazer comunicações importantes, como o veto a um projeto de lei." },
-                { subject: "Conhecimentos Específicos", question: "O estágio probatório, período em que se avalia a aptidão do servidor para o cargo, tem duração, segundo a Constituição Federal, de:", options: ["Dois anos", "Três anos", "Cinco anos", "Um ano"], answer: 1, explanation: "Após a Emenda Constitucional nº 19/1998, o prazo do estágio probatório para aquisição da estabilidade foi fixado em 3 anos de efetivo exercício." },
-                { subject: "Conhecimentos Específicos", question: "O ato de ordenar documentos de acordo com um método preestabelecido (alfabético, numérico, etc.) é chamado de:", options: ["Classificação", "Catalogação", "Ordenação", "Protocolo"], answer: 2, explanation: "A ordenação é a disposição física dos documentos dentro das pastas ou caixas, seguindo uma sequência lógica. A classificação é a etapa anterior, que define os assuntos." },
-                { subject: "Conhecimentos Específicos", question: "A 'dispensa de licitação' ocorre quando:", options: ["A Administração pode escolher livremente com quem contratar.", "Embora a competição seja possível, a lei autoriza a contratação direta em certas situações.", "Não existe nenhum fornecedor para o bem ou serviço desejado.", "O valor da compra é muito alto."], answer: 1, explanation: "Na dispensa, há viabilidade de competição, mas a lei faculta à Administração não realizar a licitação por razões específicas (ex: baixo valor, emergência)." },
-                { subject: "Conhecimentos Específicos", question: "Qual dos seguintes direitos NÃO é assegurado ao servidor público pela Constituição Federal?", options: ["Greve, nos termos da lei.", "Livre associação sindical.", "Irredutibilidade de subsídio.", "Acumulação remunerada de quaisquer cargos públicos."], answer: 3, explanation: "A acumulação de cargos é vedada como regra geral, com poucas exceções previstas na própria Constituição (ex: dois cargos de professor)." },
-                { subject: "Conhecimentos Específicos", question: "O que é 'Tombamento' no contexto do patrimônio público?", options: ["A demolição de um prédio público sem valor.", "O registro contábil de um bem móvel.", "O ato administrativo que reconhece o valor histórico ou cultural de um bem, protegendo-o.", "A venda de um bem público em leilão."], answer: 2, explanation: "O tombamento é um instrumento legal de proteção do patrimônio cultural, que impõe restrições à destruição ou descaracterização do bem protegido." },
-                { subject: "Conhecimentos Específicos", question: "A tramitação de um processo consiste em:", options: ["Seu registro inicial no protocolo.", "Sua movimentação entre os diferentes setores do órgão.", "Seu arquivamento definitivo.", "Sua análise por um especialista para emissão de parecer."], answer: 1, explanation: "Tramitação é o curso do processo dentro da repartição, passando pelas diversas unidades administrativas competentes para análise e providências." }
-            ],
-            '3': [
-                { subject: "Conhecimentos Específicos", question: "De acordo com a Lei Orgânica de Arapiraca, o controle externo da Câmara Municipal é exercido com o auxílio de qual órgão?", options: ["Procuradoria Geral do Município", "Conselho do Município", "Tribunal de Contas do Estado de Alagoas", "Secretaria de Finanças do Município"], answer: 2, explanation: "O Artigo 29 da Lei Orgânica estabelece que 'O controle externo da Câmara Municipal será exercido com o auxílio do Tribunal de Contas do Estado de Alagoas, através de parecer prévio sobre as contas que o Prefeito e a Mesa da Câmara deverão prestar anualmente'." },
-                { subject: "Conhecimentos Específicos", question: "A iniciativa popular para a apresentação de um projeto de lei à Câmara de Vereadores de Arapiraca exige a subscrição de, no mínimo:", options: ["1% do eleitorado do Município.", "5% do eleitorado do Município.", "1/3 (um terço) dos membros da Câmara Municipal.", "10% do eleitorado do Município."], answer: 0, explanation: "O Artigo 24 da Lei Orgânica determina que a iniciativa popular será exercida pela apresentação à Câmara de Vereadores de projeto de lei subscrito por, no mínimo, 'um por cento do eleitorado do Município'." },
-                { subject: "Conhecimentos Específicos", question: "No contexto dos atos administrativos, o que é um 'Despacho'?", options: ["Ato que certifica ou atesta um fato ou situação.", "Ato normativo expedido pelo Chefe do Executivo para regulamentar uma lei.", "Decisão proferida por autoridade administrativa em requerimentos, processos ou documentos.", "Ato que estabelece regras de organização interna de um órgão."], answer: 2, explanation: "O Despacho é o ato administrativo pelo qual a autoridade competente toma uma decisão ou dá andamento a um processo ou requerimento. Exemplos comuns são 'defiro', 'indefiro', 'encaminhe-se ao setor X'." },
-                { subject: "Conhecimentos Específicos", question: "Documentos que são consultados com frequência e que são essenciais para as atividades correntes de um órgão administrativo pertencem a qual fase do ciclo vital dos documentos?", options: ["Fase intermediária", "Fase permanente", "Fase preparatória", "Fase corrente"], answer: 3, explanation: "A fase corrente (ou primeira idade) compreende os documentos em tramitação ou que são objeto de consultas frequentes. Eles são mantidos nos escritórios ou locais de trabalho para fácil acesso e uso contínuo." },
-                { subject: "Conhecimentos Específicos", question: "Qual o prazo de validade de um concurso público realizado pelo Município de Arapiraca, conforme a Lei Orgânica?", options: ["Até 1 (um) ano, improrrogável.", "Até 2 (dois) anos, prorrogável uma vez, por igual período.", "Até 4 (quatro) anos, improrrogável.", "Até 1 (um) ano, prorrogável uma vez, por igual período."], answer: 1, explanation: "O Artigo 75, § 1º, da Lei Orgânica de Arapiraca, alinhado à Constituição Federal, estipula que 'O prazo de validade do concurso será de até 02 (dois) anos, prorrogável por uma vez, por igual período'." },
-                { subject: "Conhecimentos Específicos", question: "Segundo a Lei Orgânica, a alienação de bens imóveis municipais depende, em regra, de:", options: ["Apenas decreto do Prefeito.", "Consulta popular através de plebiscito.", "Autorização legislativa e concorrência.", "Parecer favorável da Procuradoria do Município."], answer: 2, explanation: "O Artigo 113, inciso I, da Lei Orgânica é claro ao afirmar que a alienação de um bem imóvel 'dependerá de autorização legislativa e concorrência', salvo algumas exceções previstas no mesmo artigo." },
-                { subject: "Conhecimentos Específicos", question: "Na gestão de estoques, a metodologia que classifica os itens com base no seu valor de demanda (valor monetário) em três categorias (A, B e C) é conhecida como:", options: ["Curva de Demanda Sazonal", "Método Just-in-Time (JIT)", "Análise de Ponto de Pedido", "Curva ABC"], answer: 3, explanation: "A Curva ABC é uma ferramenta de gestão que classifica os itens de estoque em três categorias: 'A' (itens de maior valor e menor quantidade), 'B' (itens de valor intermediário) e 'C' (itens de menor valor e maior quantidade), permitindo um controle mais rigoroso sobre os itens mais valiosos (A)." },
-                { subject: "Conhecimentos Específicos", question: "A autuação, a tramitação e a expedição são etapas de qual processo administrativo?", options: ["Arquivamento permanente de documentos.", "Seleção e descarte de materiais.", "Gerenciamento de protocolo e processos.", "Controle de patrimônio e inventário."], answer: 2, explanation: "Essas são atividades típicas do setor de protocolo. A autuação é a formalização do processo, a tramitação é o seu movimento entre setores e a expedição é o seu envio para outros órgãos ou o arquivamento." },
-                { subject: "Português", question: "Assinale a alternativa em que a concordância verbal está INCORRETA.", options: ["A maioria dos servidores participou da reunião.", "Mais de um funcionário solicitou férias.", "Fazem cinco anos que trabalho aqui.", "Havia muitos processos na mesa."], answer: 2, explanation: "O verbo 'fazer' indicando tempo decorrido é impessoal, devendo permanecer na 3ª pessoa do singular. O correto é: 'Faz cinco anos que trabalho aqui'." },
-                { subject: "Português", question: "Complete a frase corretamente: 'Ele não veio ______ estava doente. É o _______ do seu comportamento.'", options: ["por que / porquê", "porque / porquê", "porquê / porque", "por que / porque"], answer: 1, explanation: "'Porque' (junto e sem acento) é usado em respostas e explicações. 'Porquê' (junto e com acento) é um substantivo, significando 'motivo', e geralmente vem precedido de um artigo (o, um)." },
-                { subject: "Português", question: "No trecho 'Os alunos estudaram muito; logo, foram aprovados', o conectivo em destaque estabelece uma relação de:", options: ["Oposição", "Explicação", "Conclusão", "Alternância"], answer: 2, explanation: "O conectivo 'logo' é uma conjunção conclusiva. Ele introduz uma ideia que é a consequência ou o resultado lógico do que foi afirmado anteriormente. Outros conectivos conclusivos são: portanto, por isso, assim." },
-                { subject: "Português", question: "A frase 'A educação é a luz que ilumina o caminho do futuro' contém qual figura de linguagem?", options: ["Hipérbole (exagero)", "Eufemismo (suavização)", "Metáfora (comparação implícita)", "Ironia (sentido contrário)"], answer: 2, explanation: "A metáfora ocorre quando se atribui a uma palavra uma característica que pertence a outro campo de significados, por meio de uma comparação implícita (sem o uso de conectivos como 'tal qual', 'como'). Aqui, 'educação' é comparada a uma 'luz' sem usar um termo comparativo." },
-                { subject: "Informática", question: "E-mails ou mensagens fraudulentas que tentam enganar o usuário para que ele forneça informações confidenciais (como senhas e dados bancários) são uma técnica de ataque conhecida como:", options: ["Firewall", "Spam", "Phishing", "Backup"], answer: 2, explanation: "'Phishing' (derivado de 'fishing', pescaria) é uma fraude eletrônica onde o criminoso se passa por uma entidade confiável para 'pescar' informações sensíveis da vítima." },
-                { subject: "Informática", question: "Qual é a principal diferença funcional entre a Memória RAM e um HD/SSD em um computador?", options: ["A RAM é para armazenamento permanente, e o HD/SSD para armazenamento temporário.", "A RAM é uma memória volátil usada para dados em processamento, enquanto o HD/SSD é para armazenamento permanente de dados.", "A RAM armazena o sistema operacional, e o HD/SSD armazena apenas os arquivos do usuário.", "Não há diferença funcional, apenas de velocidade."], answer: 1, explanation: "A Memória RAM é volátil, ou seja, perde seus dados quando o computador é desligado, e serve para armazenar temporariamente os programas e arquivos em uso. O HD (Hard Disk) ou SSD (Solid-State Drive) são dispositivos de armazenamento não volátil, que guardam os dados permanentemente." },
-                { subject: "Informática", question: "No LibreOffice Calc, para somar os valores contidos nas células de A1 até A10, qual fórmula deve ser utilizada?", options: ["=SOMA(A1:A10)", "=SOMAR(A1-A10)", "=TOTAL(A1+A10)", "=ADICIONAR(A1;A10)"], answer: 0, explanation: "A função para somar um intervalo de células tanto no LibreOffice Calc quanto no Microsoft Excel é SOMA(). O sinal de dois pontos (:) indica um intervalo contínuo, ou seja, de A1 até A10." },
-                { subject: "Ética", question: "Um servidor público que utiliza recursos da repartição, como impressora e papel, para imprimir trabalhos escolares de seu filho está ferindo principalmente o princípio da:", options: ["Eficiência", "Legalidade", "Publicidade", "Moralidade e Impessoalidade"], answer: 3, explanation: "Este ato fere o princípio da Moralidade, que exige conduta ética, e o da Impessoalidade, pois o servidor está usando um bem público para fins particulares, desviando-se da finalidade pública." },
-                { subject: "Ética", question: "De acordo com os preceitos da ética no serviço público, o compromisso com a assiduidade e a pontualidade é considerado um(a):", options: ["Princípio fundamental", "Recomendação opcional", "Direito do servidor", "Dever fundamental"], answer: 3, explanation: "Ser assíduo e pontual é um dever fundamental do servidor público, essencial para a continuidade e a eficiência do serviço prestado à população e para demonstrar respeito com os colegas e com o público." },
-                { subject: "Ética", question: "Embora relacionados, os conceitos de Ética e Moral se distinguem. Qual alternativa define melhor essa distinção?", options: ["Moral é um conjunto de regras universais, enquanto Ética são os costumes de um povo.", "Ética é a reflexão filosófica sobre os princípios e valores que orientam a conduta (Moral).", "Ética e Moral são sinônimos e podem ser usados de forma intercambiável.", "Moral é o estudo da lei, e Ética é o estudo dos costumes."], answer: 1, explanation: "De forma simplificada, a Moral é o conjunto de regras e costumes praticados por uma sociedade em um determinado tempo e lugar. A Ética é o campo da filosofia que estuda, reflete e questiona esses costumes e princípios morais, buscando fundamentos para a ação correta." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "A Lei Orgânica de Arapiraca estabelece que o município aplicará anualmente, para a manutenção e desenvolvimento do ensino público, nunca menos de:", options: ["15% da receita de impostos.", "20% da receita de impostos.", "25% da receita de impostos.", "30% da receita de impostos."], answer: 2, explanation: "O Artigo 167 da Lei Orgânica é claro: 'O Município de Arapiraca aplicará anualmente nunca menos de vinte e cinco por cento da receita resultante de imposto, inclusive a proveniente de transferência, para a manutenção e desenvolvimento do ensino público'." },
-                { subject: "Conhecimentos Gerais sobre o Município", question: "Conforme a Lei Orgânica, o Conselho Municipal de Saúde tem caráter deliberativo e sua composição deve ser:", options: ["Exclusivamente por membros do governo.", "Majoritariamente por prestadores de serviços.", "Paritária entre governo, prestadores, trabalhadores e usuários do SUS.", "Definida anualmente pelo Prefeito."], answer: 2, explanation: "O Artigo 148, § 2º, da Lei Orgânica, define que o Conselho Municipal de Saúde 'é composto paritariamente pelo Governo, representantes das entidades prestadoras de serviços de saúde, usuários e trabalhadores do SUS'." }
-            ]
-        };
-
-        // --- LÓGICA DO QUIZ E HISTÓRICO ---
-        let activeBank = [];
-        let currentQuestions = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let selectedOptionIndex = null;
-
-        const subjectButtonsContainer = document.getElementById('subject-buttons-container');
-        const questionCounter = document.getElementById('question-counter');
-        const progressBar = document.getElementById('progress-bar');
-        const questionSubject = document.getElementById('question-subject');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const feedbackContainer = document.getElementById('feedback-container');
-        const feedbackResult = document.getElementById('feedback-result');
-        const feedbackExplanation = document.getElementById('feedback-explanation');
-        const checkBtn = document.getElementById('check-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const quizBody = document.getElementById('quiz-body');
-        const quizFooter = document.getElementById('quiz-footer');
-        const quizHeader = document.getElementById('quiz-header');
-
-        // Histórico
-        const historyContent = document.getElementById('history-content');
-        const clearHistoryBtn = document.getElementById('clear-history-btn');
-        
-        document.querySelectorAll('.bank-btn').forEach(button => {
-            button.addEventListener('click', async () => {
-                const bankId = button.dataset.bank;
-                activeBank = questionBanks[bankId];
-                await populateSubjectButtons(activeBank);
-                showScreen(selectionScreen);
-            });
-        });
-
-        async function populateSubjectButtons(bank) {
-            const subjects = [...new Set(bank.map(q => q.subject))].sort();
-            subjectButtonsContainer.innerHTML = '<div class="spinner mx-auto col-span-1 md:col-span-2"></div>';
-
-            const answeredIds = await getAnsweredQuestionIds(); // Pega as questões já respondidas
-
-            const subjectStats = subjects.map(subject => {
-                const total = bank.filter(q => q.subject === subject).length;
-                const answered = bank.filter(q => q.subject === subject && answeredIds.has(getQuestionId(q.question))).length;
-                return { subject, total, answered };
-            });
-
-            const totalAll = bank.length;
-            const answeredAll = bank.filter(q => answeredIds.has(getQuestionId(q.question))).length;
-
-            subjectButtonsContainer.innerHTML = '';
-            
-            subjectStats.forEach(({ subject, total, answered }) => {
-                const button = document.createElement('button');
-                button.className = 'subject-btn w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 flex justify-between items-center';
-                button.dataset.subject = subject;
-                button.innerHTML = `
-                    <span>${subject}</span>
-                    <span class="text-xs font-medium ${answered === total ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-600'} px-2 py-1 rounded-full">${answered} / ${total}</span>
-                `;
-                subjectButtonsContainer.appendChild(button);
-            });
-
-            const allButton = document.createElement('button');
-            allButton.className = 'subject-btn w-full text-left p-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 col-span-1 md:col-span-2 flex justify-between items-center';
-            allButton.dataset.subject = 'all';
-            allButton.innerHTML = `
-                <span>▶ Iniciar Simulado Completo</span>
-                <span class="text-xs font-medium ${answeredAll === totalAll ? 'bg-green-200 text-green-800' : 'bg-blue-500 text-white'} px-2 py-1 rounded-full">${answeredAll} / ${totalAll}</span>
+        function adicionarServico() {
+            const container = document.getElementById('services-container');
+            const div = document.createElement('div');
+            div.className = "service-row bg-white p-3 rounded-2xl border border-slate-200 shadow-sm relative animate-slide-up";
+            let options = `<option value="" disabled selected>Selecione...</option>`;
+            state.meusServicos.forEach(s => options += `<option value="${s.nome}" data-min="${s.min}">${s.nome}</option>`);
+            div.innerHTML = `
+                <div class="mb-2 pr-6">
+                    <select class="service-select w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-700 outline-none" onchange="atualizarPrecoInput(this)">${options}</select>
+                </div>
+                <div class="flex gap-2">
+                    <div class="relative flex-grow">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">R$</span>
+                        <input type="text" class="service-price w-full pl-8 p-2 bg-white border border-slate-200 rounded-lg text-sm font-bold outline-none" placeholder="0,00" onkeyup="formatarMoeda(this)" inputmode="numeric">
+                    </div>
+                    <div class="flex items-center border border-slate-200 rounded-lg bg-slate-50 w-24">
+                        <button onclick="alterarQtd(this, -1)" class="w-8 h-full text-slate-500 font-bold hover:bg-white rounded-l-lg transition-colors">-</button>
+                        <span class="qty-value flex-grow text-center text-sm font-bold text-slate-700">1</span>
+                        <button onclick="alterarQtd(this, 1)" class="w-8 h-full text-slate-500 font-bold hover:bg-white rounded-r-lg transition-colors">+</button>
+                    </div>
+                </div>
+                <button onclick="this.closest('.service-row').remove()" class="absolute top-3 right-3 text-slate-300 hover:text-red-400 transition-colors"><i class="fa-solid fa-trash-can"></i></button>
             `;
-            subjectButtonsContainer.appendChild(allButton);
+            container.appendChild(div);
+        }
+        function atualizarPrecoInput(select) {
+            const min = select.options[select.selectedIndex].getAttribute('data-min');
+            const input = select.closest('.service-row').querySelector('.service-price');
+            input.value = parseFloat(min).toFixed(2).replace('.', ',');
+            formatarMoeda(input); 
+        }
+        function alterarQtd(btn, delta) {
+            const span = btn.parentElement.querySelector('.qty-value');
+            let v = parseInt(span.innerText) + delta;
+            if(v < 1) v = 1; span.innerText = v;
         }
 
-
-        subjectButtonsContainer.addEventListener('click', async (event) => {
-            const button = event.target.closest('.subject-btn');
-            if (!button) return;
-            
-            button.innerHTML = '<div class="spinner mx-auto border-left-color-white"></div>'; // Feedback visual
-
-            const subject = button.dataset.subject;
-            const allQuestionsForSubject = (subject === 'all') ? [...activeBank] : activeBank.filter(q => q.subject === subject);
-            
-            const answeredIds = await getAnsweredQuestionIds();
-            
-            const availableQuestions = allQuestionsForSubject.filter(q => !answeredIds.has(getQuestionId(q.question)));
-
-            if (availableQuestions.length === 0) {
-                showConfirmationModal('Você já respondeu todas as questões desta matéria! Deseja resetar seu progresso e começar de novo?', () => {
-                    clearProgress(); // Reseta e depois pode tentar de novo
-                });
-                await populateSubjectButtons(activeBank); // Restaura o botão
-                return;
-            }
-
-            currentQuestions = availableQuestions;
-            
-            showScreen(quizContainer);
-            startQuiz();
-        });
-
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        function startQuiz() {
-            shuffleArray(currentQuestions);
-            currentQuestionIndex = 0;
-            score = 0;
-            quizHeader.classList.remove('hidden');
-            quizBody.classList.remove('hidden');
-            quizFooter.classList.remove('hidden');
-            resultsContainer.classList.add('hidden'); // Garante que a tela de resultado está oculta
-            loadQuestion();
-        }
-
-
-        function loadQuestion() {
-            selectedOptionIndex = null;
-            feedbackContainer.classList.add('hidden');
-            checkBtn.classList.remove('hidden');
-            nextBtn.classList.add('hidden');
-            checkBtn.disabled = true;
-
-            const currentQuestionData = currentQuestions[currentQuestionIndex];
-            
-            questionCounter.textContent = `Questão ${currentQuestionIndex + 1} de ${currentQuestions.length}`;
-            const progressPercentage = ((currentQuestionIndex) / currentQuestions.length) * 100;
-            progressBar.style.width = `${progressPercentage}%`;
-
-            questionSubject.textContent = currentQuestionData.subject;
-            questionText.textContent = currentQuestionData.question;
-            
-            optionsContainer.innerHTML = '';
-            currentQuestionData.options.forEach((option, index) => {
-                const button = document.createElement('button');
-                button.innerHTML = `
-                    <span class="bg-slate-200 text-slate-600 font-bold w-6 h-6 flex items-center justify-center rounded-md mr-3">${String.fromCharCode(65 + index)}</span>
-                    <span>${option}</span>
-                `;
-                button.classList.add('option-btn', 'p-3', 'border-2', 'border-slate-300', 'rounded-lg', 'text-left', 'flex', 'items-center', 'w-full', 'hover:border-blue-500', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-300');
-                button.dataset.index = index;
-                button.addEventListener('click', () => selectOption(index));
-                optionsContainer.appendChild(button);
-            });
-        }
-
-        function selectOption(index) {
-            selectedOptionIndex = index;
-            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
-            document.querySelectorAll('.option-btn')[index].classList.add('selected');
-            checkBtn.disabled = false;
-        }
-
-        async function checkAnswer() {
-            const currentQuestionData = currentQuestions[currentQuestionIndex];
-            const optionButtons = document.querySelectorAll('.option-btn');
-
-            checkBtn.classList.add('hidden');
-            nextBtn.classList.remove('hidden');
-
-            const isCorrect = selectedOptionIndex === currentQuestionData.answer;
-
-            if (isCorrect) {
-                score++;
-                feedbackResult.textContent = '✅ Resposta Correta!';
-                feedbackResult.className = 'text-lg font-bold mb-2 text-green-600';
-                optionButtons[selectedOptionIndex].classList.add('correct');
-                await saveAnsweredQuestion(currentQuestionData); // NOVO: Salva progresso se acertar
-            } else {
-                feedbackResult.textContent = '❌ Resposta Incorreta!';
-                feedbackResult.className = 'text-lg font-bold mb-2 text-red-600';
-                if (selectedOptionIndex !== null) optionButtons[selectedOptionIndex].classList.add('incorrect');
-                optionButtons[currentQuestionData.answer].classList.add('correct');
-                await saveIncorrectQuestion(currentQuestionData);
-            }
-
-            feedbackExplanation.textContent = currentQuestionData.explanation;
-            feedbackContainer.classList.remove('hidden');
-            optionButtons.forEach(btn => btn.disabled = true);
-        }
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < currentQuestions.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            quizHeader.classList.add('hidden');
-            quizBody.classList.add('hidden');
-            quizFooter.classList.add('hidden');
-            resultsContainer.classList.remove('hidden');
-
-            const percentage = (score / currentQuestions.length) * 100;
-            document.getElementById('score-correct').textContent = score;
-            document.getElementById('score-total').textContent = currentQuestions.length;
-            
-            let emoji = '';
-            if (percentage >= 80) emoji = '🏆';
-            else if (percentage >= 50) emoji = '👍';
-            else emoji = '📚';
-            document.getElementById('score-emoji').textContent = emoji;
-        }
-
-        checkBtn.addEventListener('click', checkAnswer);
-        nextBtn.addEventListener('click', nextQuestion);
-        restartBtn.addEventListener('click', startQuiz);
-        
-        // --- LÓGICA DO FIRESTORE ---
-        function getQuestionId(questionText) {
-            return questionText.replace(/[^a-zA-Z0-9]/g, '').slice(0, 100);
-        }
-
-        async function saveIncorrectQuestion(questionData) {
-            const user = auth.currentUser;
-            if (!user) return;
-            try {
-                const questionId = getQuestionId(questionData.question);
-                const docRef = doc(db, 'users', user.uid, 'incorrectQuestions', questionId);
-                await setDoc(docRef, questionData);
-            } catch (error) {
-                console.error("Erro ao salvar questão incorreta:", error);
-            }
-        }
-
-        // NOVO: Salva questão respondida corretamente
-        async function saveAnsweredQuestion(questionData) {
-            const user = auth.currentUser;
-            if (!user) return;
-            try {
-                const questionId = getQuestionId(questionData.question);
-                const docRef = doc(db, 'users', user.uid, 'answeredQuestions', questionId);
-                await setDoc(docRef, { answeredAt: new Date() }); // Salva apenas um timestamp para economizar espaço
-            } catch (error) {
-                console.error("Erro ao salvar progresso:", error);
-            }
-        }
-        
-        // NOVO: Pega IDs das questões já respondidas
-        async function getAnsweredQuestionIds() {
-            const user = auth.currentUser;
-            if (!user) return new Set();
-            try {
-                const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'answeredQuestions'));
-                const ids = new Set();
-                querySnapshot.forEach(doc => ids.add(doc.id));
-                return ids;
-            } catch (error) {
-                console.error("Erro ao carregar progresso:", error);
-                return new Set();
-            }
-        }
-
-
-        async function loadIncorrectQuestions() {
-            const user = auth.currentUser;
-            if (!user) return;
-
-            historyContent.innerHTML = '<div class="spinner mx-auto"></div><p class="text-center text-slate-500 mt-2">Carregando histórico...</p>';
-            
-            try {
-                const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'incorrectQuestions'));
-                const questions = [];
-                querySnapshot.forEach((doc) => {
-                    questions.push(doc.data());
-                });
-
-                displayHistory(questions);
-            } catch (error) {
-                console.error("Erro ao carregar histórico:", error);
-                historyContent.innerHTML = '<p class="text-center text-red-500">Não foi possível carregar o histórico.</p>';
-            }
-        }
-
-        function displayHistory(questions) {
-            if (questions.length === 0) {
-                historyContent.innerHTML = '<p class="text-center text-slate-500">Você ainda não errou nenhuma questão. Continue praticando!</p>';
-                return;
-            }
-
-            historyContent.innerHTML = '';
-            questions.forEach(q => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'p-4 border rounded-lg bg-slate-50';
-                
-                const correctOptionText = q.options[q.answer];
-                
-                questionDiv.innerHTML = `
-                    <p class="text-xs font-semibold text-blue-600">${q.subject}</p>
-                    <p class="font-semibold text-slate-800">${q.question}</p>
-                    <p class="mt-2 text-sm text-green-700"><strong>Resposta Correta:</strong> ${String.fromCharCode(65 + q.answer)}) ${correctOptionText}</p>
-                    <p class="mt-1 text-sm text-slate-600 bg-slate-100 p-2 rounded"><em><strong>Explicação:</strong> ${q.explanation}</em></p>
-                `;
-                historyContent.appendChild(questionDiv);
-            });
-        }
-
-        async function clearCollection(collectionName) {
-            const user = auth.currentUser;
-            if (!user) return;
-            try {
-                const querySnapshot = await getDocs(collection(db, "users", user.uid, collectionName));
-                const batch = writeBatch(db);
-                querySnapshot.forEach((doc) => {
-                    batch.delete(doc.ref);
-                });
-                await batch.commit();
-            } catch (error) {
-                console.error(`Erro ao limpar ${collectionName}: `, error);
-                // Apenas loga o erro, não mostra alert para o usuário
-            }
-        }
-        
-        // NOVO: Função para limpar progresso
-        async function clearProgress() {
-            resetProgressBtn.disabled = true;
-            resetProgressBtn.textContent = 'Resetando...';
-            await clearCollection('answeredQuestions');
-            resetProgressBtn.disabled = false;
-            resetProgressBtn.textContent = 'Resetar Progresso do Quiz';
-        }
-
-        resetProgressBtn.addEventListener('click', () => {
-             showConfirmationModal(
-                'Tem certeza que deseja apagar todo o seu progresso? Todas as questões voltarão a aparecer nos quizzes. Esta ação não pode ser desfeita.',
-                clearProgress
-            );
-        });
-        
-        clearHistoryBtn.addEventListener('click', async () => {
-            showConfirmationModal(
-                'Tem certeza que deseja apagar seu histórico de erros? Esta ação não pode ser desfeita.',
-                async () => {
-                    clearHistoryBtn.disabled = true;
-                    clearHistoryBtn.textContent = 'Apagando...';
-                    await clearCollection('incorrectQuestions');
-                    loadIncorrectQuestions(); // Recarrega a lista vazia
-                    clearHistoryBtn.disabled = false;
-                    clearHistoryBtn.textContent = 'Limpar Histórico';
+        function calcularPrecos() {
+            let totalServicos = 0, itensParaImpressao = [];
+            document.querySelectorAll('.service-row').forEach(row => {
+                const select = row.querySelector('select');
+                if(select.selectedIndex === 0) return;
+                const nome = select.value;
+                const preco = parseMoeda(row.querySelector('.service-price').value);
+                const qtd = parseInt(row.querySelector('.qty-value').innerText);
+                if(nome && preco > 0) {
+                    totalServicos += preco * qtd;
+                    itensParaImpressao.push({ nome, qtd, total: preco * qtd, unitario: preco });
                 }
-            );
-        });
+            });
+            if(totalServicos === 0) { alert("Adicione serviços."); return; }
 
+            const mat = parseMoeda(document.getElementById('custoPecas').value);
+            const km = parseFloat(document.getElementById('distanciaKm').value) || 0;
+            const garantiaDias = document.getElementById('inputGarantia').value || 90;
+            const dadosVeiculo = DATA_VEICULOS[state.veiculo] || DATA_VEICULOS.hatch;
+            const custoLogistica = km * ((state.gasolina / dadosVeiculo.eficiencia) + dadosVeiculo.custoKm);
+            const totalFinal = totalServicos + mat + custoLogistica; 
+
+            document.getElementById('displayLogistica').innerText = formatBRL(custoLogistica);
+            document.getElementById('displayMaoObra').innerText = formatBRL(totalServicos);
+            document.getElementById('displayMateriais').innerText = formatBRL(mat);
+            document.getElementById('displayPrecoFinal').innerText = formatBRL(totalFinal);
+            document.getElementById('displayLucroLiquido').innerText = formatBRL(totalServicos); 
+            document.getElementById('displayDespesas').innerText = formatBRL(mat + custoLogistica); 
+
+            const percSinal = state.sinalPercent || 30;
+            const valorSinal = totalFinal * (percSinal / 100);
+            const valorSaldo = totalFinal - valorSinal;
+
+            window.dadosOrcamento = {
+                id: Date.now(), 
+                prestador: document.getElementById('nomePrestador').value || "Sidrak Assistência Técnica",
+                cliente: document.getElementById('nomeCliente').value || "Cliente",
+                endereco: document.getElementById('enderecoCliente').value || "",
+                telefone: document.getElementById('telefoneCliente').value || "",
+                detalhes: document.getElementById('detalhesServico').value || "",
+                data: document.getElementById('dataServico').value.split('-').reverse().join('/'),
+                hora: document.getElementById('horaServico').value,
+                itens: itensParaImpressao, 
+                total: totalFinal, 
+                sinal: valorSinal,
+                sinalPercent: percSinal, 
+                saldo: valorSaldo, 
+                mat: mat, 
+                garantia: `${garantiaDias} dias`
+            };
+            
+            salvarNoHistorico(window.dadosOrcamento);
+            gerarMensagensProntas(window.dadosOrcamento);
+            document.getElementById('input-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function gerarMensagensProntas(d) {
+            const servicosLista = d.itens.map(i => `• ${i.qtd}x ${i.nome} - ${formatBRL(i.total)}`).join('\n');
+            const endTxt = d.endereco ? `\n📍 *Local:* ${d.endereco}` : "";
+            const msg1 = `*ORÇAMENTO TÉCNICO - Sidrak Assistência *\n\nOlá ${d.cliente}! Segue o orçamento:\n\n*SERVIÇOS:*\n${servicosLista}\n\n*OBS:* ${d.detalhes}${endTxt}\n\n*INVESTIMENTO TOTAL:* ${formatBRL(d.total)}\n(Material + Mão de Obra incluso)\n\n*Garantia:* ${d.garantia}\n*Data Prevista:* ${d.data}\n\nFico no aguardo.\n${d.prestador}`;
+            document.getElementById('txt_proposta').innerText = msg1;
+            const msg2 = `Olá ${d.cliente}! 👋\n\nPara agendarmos dia *${d.data}* e comprarmos material, precisamos de um sinal.\n\n*Sinal (${d.sinalPercent}%): ${formatBRL(d.sinal)}*\n\nChave PIX: CNPJ [63.914.834/0001-22]\n\nPor favor, envie o comprovante. Obrigado!`;
+            document.getElementById('txt_sinal').innerText = msg2;
+            const msg3 = `*Serviço Concluído!* ✅\n\n${d.cliente}, equipamento pronto.\n\n*Saldo Restante:* ${formatBRL(d.saldo)}\n\nLembrando que você tem *${d.garantia}* de garantia.\n\nObrigado pela preferência!\n${d.prestador}`;
+            document.getElementById('txt_final').innerText = msg3;
+        }
+
+        async function compartilharPDF() {
+            const d = window.dadosOrcamento; if(!d) return;
+            document.getElementById('printPrestador').innerText = d.prestador;
+            document.getElementById('printCliente').innerText = d.cliente;
+            document.getElementById('printTelefone').innerText = d.telefone ? `Tel: ${d.telefone}` : "";
+            document.getElementById('printEndereco').innerText = d.endereco ? `End: ${d.endereco}` : "";
+            document.getElementById('printDetalhes').innerText = d.detalhes;
+            document.getElementById('printData').innerText = d.data;
+            document.getElementById('printMateriais').innerText = formatBRL(d.mat);
+            document.getElementById('printTotal').innerText = formatBRL(d.total);
+            document.getElementById('printGarantia').innerText = d.garantia;
+            const tbody = document.getElementById('printServicesList'); tbody.innerHTML = '';
+            d.itens.forEach(i => {
+                tbody.innerHTML += `<tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">${i.nome}</td><td style="padding: 10px 0; text-align: center;">${i.qtd}</td><td style="padding: 10px 0; text-align: right; font-weight: 600;">${formatBRL(i.total)}</td></tr>`;
+            });
+
+            const btn = document.getElementById('btnCompartilharPDF'), label = document.getElementById('labelPDF'), loader = document.getElementById('loaderPDF');
+            label.classList.add('hidden'); loader.classList.remove('hidden');
+            const elemento = document.getElementById('printable-area'); elemento.classList.remove('hidden');
+            const opt = { margin: 5, filename: `Orcamento_${d.cliente.replace(/ /g,'_')}.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+
+            try {
+                if (navigator.share && navigator.canShare) {
+                    const pdfBlob = await html2pdf().set(opt).from(elemento).output('blob');
+                    const file = new File([pdfBlob], opt.filename, { type: 'application/pdf' });
+                    if (navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: 'Orçamento HVAC', text: `Segue orçamento para ${d.cliente}` }); } 
+                    else { throw new Error("No share support"); }
+                } else { await html2pdf().set(opt).from(elemento).save(); }
+            } catch (err) { console.log("Fallback print", err); window.print(); } 
+            finally { elemento.classList.add('hidden'); loader.classList.add('hidden'); label.classList.remove('hidden'); }
+        }
+
+        function copiarTexto(id, btn) {
+            navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => {
+                const original = btn.innerHTML; btn.innerHTML = '<i class="fa-solid fa-check"></i> COPIADO!';
+                setTimeout(() => btn.innerHTML = original, 2000);
+            });
+        }
+        function salvarNoHistorico(dados) { state.historico.unshift(dados); if (state.historico.length > 10) state.historico.pop(); saveState(); }
+        function toggleHistory() {
+            const m = document.getElementById('historyModal'), c = document.getElementById('historyContent');
+            if(m.classList.contains('hidden')) { renderHistoricoUI(); m.classList.remove('hidden'); setTimeout(() => c.classList.remove('translate-x-full'), 10); } 
+            else { c.classList.add('translate-x-full'); setTimeout(() => m.classList.add('hidden'), 300); }
+        }
+        function renderHistoricoUI() {
+            const list = document.getElementById('historyList'); list.innerHTML = '';
+            if (state.historico.length === 0) return list.innerHTML = '<div class="text-center text-slate-400 py-10 text-xs">Vazio.</div>';
+            state.historico.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-3 rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 transition-colors cursor-pointer";
+                div.onclick = () => carregarDoHistorico(item);
+                div.innerHTML = `<div class="flex justify-between items-start mb-1"><span class="font-bold text-sm text-slate-800">${item.cliente}</span><span class="text-xs font-black text-blue-600">${formatBRL(item.total)}</span></div><div class="text-[10px] text-slate-400 flex justify-between"><span>${item.data}</span><span>${item.itens.length} itens</span></div>`;
+                list.appendChild(div);
+            });
+        }
+        function carregarDoHistorico(item) {
+            if(!confirm("Carregar?")) return;
+            document.getElementById('nomeCliente').value = item.cliente;
+            document.getElementById('enderecoCliente').value = item.endereco || "";
+            document.getElementById('telefoneCliente').value = item.telefone || "";
+            document.getElementById('nomePrestador').value = item.prestador;
+            document.getElementById('detalhesServico').value = item.detalhes;
+            document.getElementById('custoPecas').value = item.mat.toFixed(2).replace('.',',');
+            formatarMoeda(document.getElementById('custoPecas'));
+            const container = document.getElementById('services-container'); container.innerHTML = '';
+            item.itens.forEach(servico => {
+                const div = document.createElement('div'); div.className = "service-row bg-white p-3 rounded-2xl border border-slate-200 shadow-sm relative";
+                let options = `<option value="" disabled>Selecione...</option>`;
+                state.meusServicos.forEach(s => options += `<option value="${s.nome}" ${s.nome === servico.nome ? 'selected' : ''} data-min="${s.min}">${s.nome}</option>`);
+                const valUnit = servico.unitario ? servico.unitario.toFixed(2).replace('.',',') : '0,00';
+                div.innerHTML = `<div class="mb-2 pr-6"><select class="service-select w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-700 outline-none" onchange="atualizarPrecoInput(this)">${options}</select></div><div class="flex gap-2"><div class="relative flex-grow"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">R$</span><input type="text" class="service-price w-full pl-8 p-2 bg-white border border-slate-200 rounded-lg text-sm font-bold outline-none" value="${valUnit}" onkeyup="formatarMoeda(this)" inputmode="numeric"></div><div class="flex items-center border border-slate-200 rounded-lg bg-slate-50 w-24"><button onclick="alterarQtd(this, -1)" class="w-8 h-full text-slate-500 font-bold hover:bg-white rounded-l-lg transition-colors">-</button><span class="qty-value flex-grow text-center text-sm font-bold text-slate-700">${servico.qtd}</span><button onclick="alterarQtd(this, 1)" class="w-8 h-full text-slate-500 font-bold hover:bg-white rounded-r-lg transition-colors">+</button></div></div><button onclick="this.closest('.service-row').remove()" class="absolute top-3 right-3 text-slate-300 hover:text-red-400 transition-colors"><i class="fa-solid fa-trash-can"></i></button>`;
+                container.appendChild(div);
+            });
+            toggleHistory(); reiniciar();
+        }
+        function limparHistorico() { if(confirm("Apagar tudo?")) { state.historico = []; saveState(); renderHistoricoUI(); } }
+        
+        function reiniciar() {
+            document.getElementById('input-section').classList.remove('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            document.querySelectorAll('.accordion-content').forEach(el => el.classList.remove('accordion-open'));
+        }
+        function toggleSettings() { const m = document.getElementById('settingsModal'), c = document.getElementById('modalContent'); if(m.classList.contains('hidden')) { m.classList.remove('hidden'); setTimeout(() => c.classList.remove('translate-y-full'), 10); renderListaServicosBase(); } else { c.classList.add('translate-y-full'); setTimeout(() => m.classList.add('hidden'), 300); } }
+        function toggleAccordion(id) { document.getElementById(id).classList.toggle('accordion-open'); }
+        
+        // --- FUNÇÃO DE LOGO OTIMIZADA ---
+        function handleLogoUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const maxWidth = 300;
+                        const scaleSize = maxWidth / img.width;
+                        canvas.width = maxWidth;
+                        canvas.height = img.height * scaleSize;
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        state.logoBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                        applyConfigToUI();
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removerLogo() { state.logoBase64 = null; document.getElementById('logoInput').value = ""; applyConfigToUI(); }
+        function renderListaServicosBase() { const container = document.getElementById('listaServicosBase'); container.innerHTML = ''; state.meusServicos.forEach((srv, index) => { const div = document.createElement('div'); div.className = "flex justify-between items-center bg-white p-2 rounded border border-slate-100 text-xs"; div.innerHTML = `<span class="font-medium truncate">${srv.nome}</span><div class="flex items-center gap-2"><span class="text-slate-400 font-bold">R$ ${srv.min}</span><button onclick="removeServicoBase(${index})" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button></div>`; container.appendChild(div); }); }
+        function adicionarServicoBase() { const nome = document.getElementById('novoServicoNome').value.trim(); const min = parseFloat(document.getElementById('novoServicoValor').value); if(nome && !isNaN(min)) { state.meusServicos.push({ nome, min }); document.getElementById('novoServicoNome').value = ''; document.getElementById('novoServicoValor').value = ''; renderListaServicosBase(); } }
+        function removeServicoBase(index) { state.meusServicos.splice(index, 1); renderListaServicosBase(); }
+        function salvarConfiguracoes() { 
+            state.prestadorPadrao = document.getElementById('nomePrestador').value; 
+            state.sinalPercent = parseFloat(document.getElementById('configSinal').value) || 30;
+            saveState(); 
+            toggleSettings(); 
+            applyConfigToUI(); 
+            adicionarServico(); 
+        }
     </script>
 </body>
 </html>
-
