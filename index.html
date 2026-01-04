@@ -106,7 +106,7 @@
             </div>
             
             <p id="authMsg" class="text-center text-red-400 text-xs font-bold mt-4 h-4"></p>
-            <p class="text-[10px] text-slate-600 mt-4 text-center">v6.1 • Banco de Dados Online</p>
+            <p class="text-[10px] text-slate-600 mt-4 text-center">v6.2 • Banco de Dados Online</p>
         </div>
     </div>
 
@@ -238,7 +238,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CONFIGURAÇÕES -->
+    <!-- MODAL DE CONFIGURAÇÕES (AGORA COM GESTOR DE PRODUTOS COMPLETO) -->
     <div id="settingsModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleSettings()"></div>
         <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-6 h-[85vh] sm:h-auto overflow-y-auto transform transition-transform duration-300 translate-y-full shadow-2xl" id="modalContent">
@@ -253,6 +253,48 @@
                     <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(this)" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
                     <button onclick="removerLogo()" class="text-[10px] text-red-500 font-bold mt-2 uppercase hover:underline">Remover Logo</button>
                 </div>
+
+                <!-- CONFIG SINAL -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-percent text-blue-500 mr-1"></i> Configuração de Pagamento</h3>
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-slate-700">Sinal exigido (%)</label>
+                        <div class="relative w-24">
+                            <input type="number" id="configSinal" placeholder="30" class="input-field w-full p-2 pr-6 rounded-lg border border-slate-200 text-xs text-center font-bold text-slate-700 outline-none" onchange="salvarConfiguracoes()">
+                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">%</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2">Define a % cobrada na mensagem de "Cobrança de Sinal".</p>
+                </div>
+
+                <!-- BACKUP -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-cloud-arrow-up text-blue-500 mr-1"></i> Backup & Segurança</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="exportarDados()" class="flex flex-col items-center justify-center p-3 bg-white border border-green-200 rounded-xl hover:bg-green-50 transition-colors">
+                            <i class="fa-solid fa-download text-green-500 text-lg mb-1"></i>
+                            <span class="text-[10px] font-bold text-slate-600">BAIXAR BACKUP</span>
+                        </button>
+                        <label class="flex flex-col items-center justify-center p-3 bg-white border border-blue-200 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer">
+                            <i class="fa-solid fa-upload text-blue-500 text-lg mb-1"></i>
+                            <span class="text-[10px] font-bold text-slate-600">RESTAURAR</span>
+                            <input type="file" accept=".json" onchange="importarDados(this)" class="hidden">
+                        </label>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2 text-center">Salve o arquivo no Google Drive/iCloud para não perder seus dados.</p>
+                </div>
+
+                <!-- Gestor de Serviços (RESTAURADO E CONECTADO) -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-list text-blue-500 mr-1"></i> Gerenciar Catálogo</h3>
+                    <div class="flex gap-2 mb-3">
+                        <input type="text" id="novoServicoNome" placeholder="Nome do Serviço" class="input-field flex-grow p-2 rounded-lg border border-slate-200 text-xs">
+                        <input type="number" id="novoServicoValor" placeholder="R$" class="input-field w-20 p-2 rounded-lg border border-slate-200 text-xs">
+                        <button onclick="adicionarServicoBase()" class="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div id="listaServicosBase" class="max-h-40 overflow-y-auto space-y-1 pr-1"></div>
+                </div>
+                <button onclick="salvarConfiguracoes()" class="w-full bg-[#0f172a] text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg">SALVAR ALTERAÇÕES</button>
             </div>
         </div>
     </div>
@@ -280,7 +322,7 @@
             { nome: "Infraestrutura (Metro)", min: 100 }
         ];
 
-        let state = { logoBase64: null };
+        let state = { logoBase64: null, meusServicos: [] };
 
         // Inicializa Firebase
         try {
@@ -362,6 +404,7 @@
                     cliente: document.getElementById('nomeCliente').value,
                     endereco: document.getElementById('enderecoCliente').value,
                     telefone: document.getElementById('telefoneCliente').value,
+                    meusServicos: state.meusServicos, // Salva o catálogo na nuvem
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 firebase.firestore().collection('usuarios').doc(user.uid).set(dados, { merge: true });
@@ -376,6 +419,16 @@
                     if(d.cliente) document.getElementById('nomeCliente').value = d.cliente;
                     if(d.endereco) document.getElementById('enderecoCliente').value = d.endereco;
                     if(d.telefone) document.getElementById('telefoneCliente').value = d.telefone;
+                    if(d.meusServicos && d.meusServicos.length > 0) {
+                        state.meusServicos = d.meusServicos;
+                        renderListaServicosBase();
+                    } else {
+                        state.meusServicos = JSON.parse(JSON.stringify(HVAC_SERVICES));
+                        renderListaServicosBase();
+                    }
+                } else {
+                    state.meusServicos = JSON.parse(JSON.stringify(HVAC_SERVICES));
+                    renderListaServicosBase();
                 }
             });
         }
@@ -386,7 +439,6 @@
             adicionarServico();
             document.querySelectorAll('input, textarea').forEach(i => i.addEventListener('input', saveAutoSave));
             
-            // Service Worker (Fixed)
             if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.protocol === 'http:')) {
                 navigator.serviceWorker.register('./service-worker.js')
                     .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
@@ -398,8 +450,10 @@
             const container = document.getElementById('services-container');
             const div = document.createElement('div');
             div.className = "flex gap-2 mb-2 animate-slide-up";
+            // Use state.meusServicos which might be populated from Cloud
+            const listToUse = state.meusServicos.length > 0 ? state.meusServicos : HVAC_SERVICES;
             let opts = `<option value="" disabled selected>Selecione...</option>`;
-            HVAC_SERVICES.forEach(s => opts += `<option value="${s.min}">${s.nome}</option>`);
+            listToUse.forEach(s => opts += `<option value="${s.min}">${s.nome}</option>`);
             
             div.innerHTML = `
                 <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs outline-none" onchange="this.nextElementSibling.value=this.value; calcularPrecos()">${opts}</select>
@@ -467,11 +521,17 @@
             }
         }
 
-        // --- Configurações UI ---
+        // --- Configurações UI e Gestor de Produtos ---
         function toggleSettings() {
             const m = document.getElementById('settingsModal'), c = document.getElementById('modalContent');
-            if(m.classList.contains('hidden')) { m.classList.remove('hidden'); setTimeout(() => c.classList.remove('translate-y-full'), 10); } 
-            else { c.classList.add('translate-y-full'); setTimeout(() => m.classList.add('hidden'), 300); }
+            if(m.classList.contains('hidden')) { 
+                m.classList.remove('hidden'); 
+                setTimeout(() => c.classList.remove('translate-y-full'), 10); 
+                renderListaServicosBase(); // Mostra a lista ao abrir
+            } else { 
+                c.classList.add('translate-y-full'); 
+                setTimeout(() => m.classList.add('hidden'), 300); 
+            }
         }
 
         function handleLogoUpload(input) {
@@ -504,6 +564,47 @@
             document.getElementById('logoInput').value = "";
             document.getElementById('headerLogoArea').classList.add('hidden');
             document.getElementById('printLogo').style.display = 'none';
+        }
+
+        // --- GERENCIAMENTO DE CATÁLOGO (NOVO) ---
+        function renderListaServicosBase() { 
+            const container = document.getElementById('listaServicosBase'); 
+            container.innerHTML = ''; 
+            const list = state.meusServicos.length > 0 ? state.meusServicos : HVAC_SERVICES;
+            list.forEach((srv, index) => { 
+                const div = document.createElement('div'); 
+                div.className = "flex justify-between items-center bg-white p-2 rounded border border-slate-100 text-xs"; 
+                div.innerHTML = `<span class="font-medium truncate">${srv.nome}</span><div class="flex items-center gap-2"><span class="text-slate-400 font-bold">R$ ${srv.min}</span><button onclick="removeServicoBase(${index})" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button></div>`; 
+                container.appendChild(div); 
+            }); 
+        }
+        function adicionarServicoBase() { 
+            const nome = document.getElementById('novoServicoNome').value.trim(); 
+            const min = parseFloat(document.getElementById('novoServicoValor').value); 
+            if(nome && !isNaN(min)) { 
+                state.meusServicos.push({ nome, min }); 
+                document.getElementById('novoServicoNome').value = ''; 
+                document.getElementById('novoServicoValor').value = ''; 
+                renderListaServicosBase(); 
+                salvarConfiguracoes(); // Salva no Firebase imediatamente
+            } 
+        }
+        function removeServicoBase(index) { 
+            state.meusServicos.splice(index, 1); 
+            renderListaServicosBase(); 
+            salvarConfiguracoes(); // Salva no Firebase imediatamente
+        }
+        function salvarConfiguracoes() { 
+            state.prestadorPadrao = document.getElementById('nomePrestador').value; 
+            state.sinalPercent = parseFloat(document.getElementById('configSinal').value) || 30;
+            // Salva Local
+            localStorage.setItem('refrigBlindadoV5', JSON.stringify(state));
+            // Salva Cloud
+            saveAutoSave();
+            // Atualiza UI
+            // toggleSettings(); // Não fechar, apenas salvar
+            // applyConfigToUI(); 
+            // adicionarServico(); 
         }
     </script>
 </body>
