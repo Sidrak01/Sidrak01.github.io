@@ -11,6 +11,7 @@
     <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
 
@@ -40,7 +41,11 @@
         .accordion-icon { transition: transform 0.3s ease; }
         .accordion-open .accordion-icon { transform: rotate(180deg); }
         .modal-overlay { background-color: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px); }
-        #login-screen { position: fixed; inset: 0; background-color: #0f172a; z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        #login-screen { position: fixed; inset: 0; background-color: #0f172a; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .shake-animation { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+        .animate-slide-up { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .loader { border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #3498db; width: 20px; height: 20px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @media print { #login-screen { display: none !important; } .no-print { display: none !important; } #printable-area { display: block !important; } }
@@ -48,7 +53,7 @@
 </head>
 <body class="text-slate-800 pb-safe">
 
-    <!-- TELA DE LOGIN (NUVEM) -->
+    <!-- TELA DE LOGIN (FIREBASE) -->
     <div id="login-screen">
         <div class="w-full max-w-sm px-6">
             <div class="mb-8 text-center">
@@ -74,13 +79,14 @@
                     </button>
                 </div>
                 <div class="mt-6 text-center border-t border-white/10 pt-4">
+                    <p class="text-slate-400 text-xs mb-2">Novo por aqui?</p>
                     <button onclick="toggleAuth('register')" class="text-blue-400 text-xs font-bold hover:text-white uppercase">CRIAR CONTA</button>
                 </div>
             </div>
 
             <!-- Register Form -->
             <div id="register-form" class="hidden bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-2xl">
-                <h2 class="text-white text-lg font-bold mb-4">Novo Usuário</h2>
+                <h2 class="text-white text-lg font-bold mb-4">Nova Conta</h2>
                 <div class="space-y-4">
                     <div>
                         <label class="block text-blue-200 text-xs font-bold uppercase mb-1">E-mail</label>
@@ -100,6 +106,7 @@
             </div>
             
             <p id="authMsg" class="text-center text-red-400 text-xs font-bold mt-4 h-4"></p>
+            <p class="text-[10px] text-slate-600 mt-4 text-center">v6.1 • Banco de Dados Online</p>
         </div>
     </div>
 
@@ -109,7 +116,11 @@
             
             <!-- HEADER -->
             <header class="bg-[#0f172a] text-white p-5 pt-safe pb-10 relative overflow-hidden flex justify-between items-center shadow-lg z-20">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600 rounded-full opacity-20 blur-3xl transform translate-x-10 -translate-y-10 pointer-events-none"></div>
                 <div class="z-10 flex items-center gap-3">
+                    <div id="headerLogoArea" class="hidden w-10 h-10 bg-white rounded-lg overflow-hidden flex items-center justify-center border border-slate-700 shadow-lg">
+                        <img id="headerLogoImg" src="" alt="Logo" class="w-full h-full object-contain">
+                    </div>
                     <div class="flex flex-col">
                         <span class="text-[10px] font-bold uppercase tracking-widest text-green-400 flex items-center gap-1"><i class="fa-solid fa-wifi text-[8px]"></i> ONLINE</span>
                         <h1 class="text-lg font-black uppercase tracking-wide text-white leading-none mt-0.5">Sidrak <span class="text-blue-500">App</span></h1>
@@ -118,6 +129,7 @@
                 </div>
                 <div class="flex gap-2">
                     <button onclick="logoutCloud()" class="z-10 text-white bg-red-500/20 w-9 h-9 flex items-center justify-center rounded-xl"><i class="fa-solid fa-right-from-bracket text-red-400 text-sm"></i></button>
+                    <button onclick="toggleSettings()" class="z-10 text-white bg-white/10 hover:bg-white/20 transition-colors w-9 h-9 flex items-center justify-center rounded-xl backdrop-blur-md"><i class="fa-solid fa-gear text-sm"></i></button>
                 </div>
             </header>
 
@@ -126,6 +138,14 @@
                 <div class="p-5 pt-6">
                     <div id="input-section" class="space-y-5">
                         
+                        <!-- BOTÃO AFILIADO -->
+                        <a href="https://mercadolivre.com/sec/1bpYUnD" target="_blank" class="block w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-xs py-3 rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all transform active:scale-[0.98] group relative overflow-hidden border border-blue-500/30">
+                            <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <i class="fa-solid fa-gift text-yellow-300 text-sm group-hover:animate-bounce"></i>
+                            <span class="tracking-wide">OFERTAS DA SEMANA</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60 ml-1"></i>
+                        </a>
+
                         <!-- CAMPOS -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-3">
                             <label class="block text-xs font-bold text-blue-600 uppercase mb-2">Dados do Orçamento</label>
@@ -179,9 +199,12 @@
     <div id="printable-area" class="hidden">
         <div style="font-family: 'Inter', sans-serif; color: #334155; max-width: 800px; margin: 0 auto; padding: 40px;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 30px;">
-                <div>
-                    <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;" id="printPrestador">Prestador</h1>
-                    <p style="font-size: 14px; color: #64748b; margin: 5px 0 0 0;">Orçamento Profissional</p>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <img id="printLogo" src="" style="height: 70px; width: auto; object-fit: contain; display: none;">
+                    <div>
+                        <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;" id="printPrestador">Prestador</h1>
+                        <p style="font-size: 14px; color: #64748b; margin: 5px 0 0 0;">Orçamento Profissional</p>
+                    </div>
                 </div>
                 <div style="text-align: right;">
                     <div style="font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Data</div>
@@ -215,6 +238,25 @@
         </div>
     </div>
 
+    <!-- MODAL DE CONFIGURAÇÕES -->
+    <div id="settingsModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleSettings()"></div>
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-6 h-[85vh] sm:h-auto overflow-y-auto transform transition-transform duration-300 translate-y-full shadow-2xl" id="modalContent">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2"><i class="fa-solid fa-sliders text-blue-600"></i> Ajustes</h2>
+                <button onclick="toggleSettings()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-6">
+                <!-- Branding -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><i class="fa-solid fa-image text-blue-500 mr-1"></i> Seu Logótipo</h3>
+                    <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(this)" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                    <button onclick="removerLogo()" class="text-[10px] text-red-500 font-bold mt-2 uppercase hover:underline">Remover Logo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- SCRIPT -->
     <script>
         // CONFIGURAÇÃO DO FIREBASE
@@ -227,32 +269,18 @@
             appId: "1:691817799067:web:090572d64ffc44aa5dd53e"
         };
 
-        // LISTA DE SERVIÇOS COMPLETA
+        // LISTA DE SERVIÇOS
         const HVAC_SERVICES = [
-            { nome: "Instalação Split 9000/12000 BTUs", min: 500 },
-            { nome: "Instalação Split 18000/24000 BTUs", min: 750 },
-            { nome: "Instalação Piso Teto / Cassete", min: 1200 },
-            { nome: "Instalação Multi-Split (Por Evaporadora)", min: 450 },
-            { nome: "Desinstalação de Equipamento", min: 250 },
-            { nome: "Limpeza e Higienização (Simples)", min: 200 },
-            { nome: "Limpeza Química (Desmontagem Completa)", min: 350 },
-            { nome: "PMOC (Manutenção Mensal)", min: 80 },
-            { nome: "Carga de Gás (R410A/R22/R32)", min: 280 },
-            { nome: "Troca de Capacitor / Relé", min: 180 },
-            { nome: "Troca de Compressor (Mão de Obra)", min: 450 },
-            { nome: "Correção de Vazamento (Flange/Solda)", min: 250 },
-            { nome: "Teste de Estanqueidade (Nitrogênio)", min: 150 },
-            { nome: "Vácuo no Sistema", min: 150 },
-            { nome: "Visita Técnica / Diagnóstico", min: 120 },
-            { nome: "Infraestrutura (Metro Linear)", min: 100 },
-            { nome: "Instalação de Bomba de Dreno", min: 180 },
-            { nome: "Troca de Placa Eletrônica", min: 200 },
-            { nome: "Higienização de Dutos", min: 400 },
-            { nome: "Reparo em Comando Elétrico", min: 250 }
+            { nome: "Instalação Split 9/12k BTUs", min: 500 },
+            { nome: "Instalação Split 18/24k BTUs", min: 750 },
+            { nome: "Limpeza e Higienização", min: 200 },
+            { nome: "Carga de Gás", min: 280 },
+            { nome: "Troca de Capacitor", min: 180 },
+            { nome: "Visita Técnica", min: 120 },
+            { nome: "Infraestrutura (Metro)", min: 100 }
         ];
 
-        const DATA_VEICULOS = { utilitario: { eficiencia: 10.5, custoKm: 0.88 }, hatch: { eficiencia: 11.0, custoKm: 0.45 }, moto: { eficiencia: 35.0, custoKm: 0.20 } };
-        let state = { veiculo: 'hatch', gasolina: 6.15 };
+        let state = { logoBase64: null };
 
         // Inicializa Firebase
         try {
@@ -298,6 +326,8 @@
                 .catch((error) => {
                     btn.disabled = false; btn.innerText = "ENTRAR";
                     msg.innerText = "Erro: " + error.message;
+                    document.getElementById('login-form').classList.add('shake-animation');
+                    setTimeout(() => document.getElementById('login-form').classList.remove('shake-animation'), 500);
                 });
         }
 
@@ -355,6 +385,13 @@
             document.getElementById('dataServico').valueAsDate = new Date();
             adicionarServico();
             document.querySelectorAll('input, textarea').forEach(i => i.addEventListener('input', saveAutoSave));
+            
+            // Service Worker (Fixed)
+            if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.protocol === 'http:')) {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
+                    .catch(err => console.log('Falha ao registrar Service Worker:', err));
+            }
         };
 
         function adicionarServico() {
@@ -377,10 +414,7 @@
             document.querySelectorAll('.service-price').forEach(el => total += Number(el.value));
             const mat = Number(document.getElementById('custoPecas').value) || 0;
             const km = Number(document.getElementById('distanciaKm').value) || 0;
-            
-            // Custo Logística Simplificado
-            const logistica = km * 1.50; // R$ 1,50 por km (média)
-            
+            const logistica = km * 1.50; 
             const final = total + mat + logistica;
             document.getElementById('displayPrecoFinal').innerText = final.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
             return { total, mat, logistica, final };
@@ -431,6 +465,45 @@
             } finally {
                 element.classList.add('hidden');
             }
+        }
+
+        // --- Configurações UI ---
+        function toggleSettings() {
+            const m = document.getElementById('settingsModal'), c = document.getElementById('modalContent');
+            if(m.classList.contains('hidden')) { m.classList.remove('hidden'); setTimeout(() => c.classList.remove('translate-y-full'), 10); } 
+            else { c.classList.add('translate-y-full'); setTimeout(() => m.classList.add('hidden'), 300); }
+        }
+
+        function handleLogoUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const maxWidth = 300;
+                        const scaleSize = maxWidth / img.width;
+                        canvas.width = maxWidth;
+                        canvas.height = img.height * scaleSize;
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        state.logoBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                        document.getElementById('headerLogoArea').classList.remove('hidden');
+                        document.getElementById('headerLogoImg').src = state.logoBase64;
+                        document.getElementById('printLogo').src = state.logoBase64;
+                        document.getElementById('printLogo').style.display = 'block';
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        function removerLogo() {
+            state.logoBase64 = null;
+            document.getElementById('logoInput').value = "";
+            document.getElementById('headerLogoArea').classList.add('hidden');
+            document.getElementById('printLogo').style.display = 'none';
         }
     </script>
 </body>
